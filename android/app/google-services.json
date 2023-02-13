@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "10110812979",
+    "project_id": "aikyam-e3e25",
+    "storage_bucket": "aikyam-e3e25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10110812979:android:2163b00b7136d263643446",
+        "android_client_info": {
+          "package_name": "com.aikyam.aikyam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10110812979-ub0gkg58ilvcfdmldohkr466ap1gim8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGURJMfq7r2AxvJ1Y9w1qARTNxrF-ZM3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10110812979-n0u2725m82v308sg56odjkjk2qc6os44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
