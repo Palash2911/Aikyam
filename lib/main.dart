@@ -1,7 +1,10 @@
-import 'package:aikyam/demoScreen.dart';
+import 'package:aikyam/views/Screens/User/ActivityScreen.dart';
+import 'package:aikyam/views/Screens/User/ChatScreen.dart';
+import 'package:aikyam/views/Screens/User/HomeScreen.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +17,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Aikyam',
-      home: DemoScreen(),
+      initialRoute: '/',
+      // theme: aikyamTheme,
+      routes: {
+        '/': (context) => CustomBottomBar(),
+        HomeScreen.routeName: (context) => HomeScreen(),
+        ChatScreen.routeName: (context) => ChatScreen(),
+        ActivityScreen.routeName: (context) => ActivityScreen(),
+      },
     );
   }
 }
