@@ -5,6 +5,7 @@ class ChatListItem extends StatelessWidget {
   final String message;
   final bool isOnline;
   final String imageUrl;
+  final Function() onTap;
 
   const ChatListItem({
     Key? key,
@@ -12,11 +13,13 @@ class ChatListItem extends StatelessWidget {
     required this.message,
     required this.isOnline,
     required this.imageUrl,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
         leading: CircleAvatar(
           radius: 25.0,
           backgroundImage: AssetImage(imageUrl),
