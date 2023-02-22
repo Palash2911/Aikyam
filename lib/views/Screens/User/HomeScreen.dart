@@ -1,5 +1,5 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
-import 'package:aikyam/views/widgets/Post2.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,10 +22,10 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               // Post(),
-              Post2(),
-              Post2(),
-              Post2(),
-              Post2(),
+              Post(),
+              Post(),
+              Post(),
+              Post(),
             ],
           ),
         ),

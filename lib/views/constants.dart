@@ -7,6 +7,7 @@ Color kpostColor = Color(0xfffCFEEE1);
 
 //  Theme Style
 ThemeData aikyamTheme = ThemeData(
+  iconTheme: IconThemeData(color: Color(0xfff1BB273)),
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: kprimaryColor,
     secondary: ksecondaryColor,
