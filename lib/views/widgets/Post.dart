@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../constants.dart';
 
 class Post extends StatefulWidget {
@@ -171,7 +170,7 @@ class _PostState extends State<Post> {
                           _isLike
                               ? Icon(
                                   Icons.favorite,
-                                  color: ksecondaryColor,
+                                  color: Colors.red,
                                 )
                               : Icon(
                                   Icons.favorite_border,

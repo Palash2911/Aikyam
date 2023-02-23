@@ -1,4 +1,5 @@
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/chatMessageBubble.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreenOpen extends StatefulWidget {
@@ -11,34 +12,52 @@ class ChatScreenOpen extends StatefulWidget {
 class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage:
-                      NetworkImage('https://via.placeholder.com/150'),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
                 ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
                   children: [
-                    Text(
-                      'Smile',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Container(
+                        height: 70.0,
+                        width: 70.0,
+                        color: const Color(0xffFF0E58),
+                        child: Image.asset('assets/images/dp.jpg'),
+                      ),
                     ),
-                    Text(
-                      'Active 5 mins ago',
-                      style: TextStyle(fontSize: 12),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Smile Foundation',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Active 5 mins ago',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
             Expanded(
               child: ListView(
@@ -47,101 +66,54 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                 children: [
                   MessageBubble(
                     sender: '',
-                    text: 'Hi there!',
-                    isMe: false,
+                    text:
+                        'Lorem Ipsum is simply dummy text of the printing and sdjfjsdbf Lorem Ipsum is simply dummy text of the printing and Lorem Ipsum is simply dummy text of the printing simply dummy text of the printing and sdjfjsdbf',
+                    isUser: false,
+                  ),
+                  MessageBubble(
+                    sender: '',
+                    text: 'Its on Sunday 12 onwords',
+                    isUser: false,
                   ),
                   MessageBubble(
                     sender: ' ',
-                    text: 'Hey! How are you?',
-                    isMe: true,
+                    text: 'Hey, What is the time ?, What is the ',
+                    isUser: true,
                   ),
-                  // Add more Message widgets as needed
                 ],
               ),
             ),
-            Divider(height: 1),
             Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-              ),
+              padding: EdgeInsets.all(10.0),
               child: Row(
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _textController,
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'Enter your message...',
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: () {
+                            String message = _textController.text.trim();
+                            if (message.isNotEmpty) {
+                              _textController.clear();
+                              setState(() {});
+                            }
+                          },
+                        ),
+                        hintText: 'Message',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(width: 2, color: kprimaryColor),
+                        ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () {
-                      String message = _textController.text.trim();
-                      if (message.isNotEmpty) {
-                        _textController.clear();
-                        setState(() {});
-                      }
-                    },
                   ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {required this.sender, required this.text, required this.isMe});
-
-  final String sender;
-  final String text;
-  final bool isMe;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            sender,
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.black54,
-            ),
-          ),
-          Material(
-            borderRadius: isMe
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0))
-                : BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
-            elevation: 5.0,
-            color: isMe ? kprimaryColor : Colors.white,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black54,
-                  fontSize: 15.0,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -3,8 +3,6 @@ import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/chatUser.dart';
 
-// Work IN Progress dont change anything 
-
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
@@ -15,7 +13,6 @@ class ChatScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          brightness: Brightness.dark,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           toolbarHeight: 85,
@@ -32,8 +29,7 @@ class ChatScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChatScreenOpen()),
+                      MaterialPageRoute(builder: (context) => ChatScreenOpen()),
                     );
                   },
                   name: 'Smile Foundation',

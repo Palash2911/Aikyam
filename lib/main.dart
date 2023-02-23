@@ -1,5 +1,6 @@
 import 'package:aikyam/views/Screens/User/ActivityScreen.dart';
 import 'package:aikyam/views/Screens/User/ChatScreen.dart';
+import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
@@ -19,7 +20,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       theme: aikyamTheme,
-      
       routes: {
         '/': (context) => CustomBottomBar(),
         HomeScreen.routeName: (context) => HomeScreen(),
