@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
@@ -40,13 +41,11 @@ class MessageBubble extends StatelessWidget {
             color: isUser ? kprimaryColor : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: isUser ? Colors.white : Colors.black54,
-                  fontSize: 15.0,
-                ),
-              ),
+              child: Text(text,
+                  style: TextStyle(
+                    color: isUser ? Colors.white : Colors.black54,
+                    fontSize: 15.0,
+                  )),
             ),
           ),
         ],

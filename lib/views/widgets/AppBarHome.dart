@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:aikyam/views/constants.dart';
+
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
@@ -16,7 +17,11 @@ class HomeAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CircleAvatar(
-              radius: 50.0,
+              radius: 25.0,
+              backgroundImage: AssetImage('assets/images/dp.jpg'),
+            ),
+            SizedBox(
+              width: 25.0,
             ),
             Expanded(
               child: Container(

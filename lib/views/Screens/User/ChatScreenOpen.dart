@@ -12,8 +12,6 @@ class ChatScreenOpen extends StatefulWidget {
 class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,14 +42,11 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Smile Foundation',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
+                        Text('Smile Foundation',
+                            style: kTextPopM16),
                         Text(
                           'Active 5 mins ago',
-                          style: TextStyle(fontSize: 12),
+                          style: kTextPopR12,
                         ),
                       ],
                     ),
@@ -100,7 +95,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                             }
                           },
                         ),
-                        hintText: 'Message',
+                        hintText: 'Message',hintStyle: kTextPopR14,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:

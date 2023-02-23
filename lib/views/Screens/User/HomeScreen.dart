@@ -1,4 +1,5 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
+import 'package:aikyam/views/widgets/AppDrawer.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
           toolbarHeight: 85,
           flexibleSpace: HomeAppBar(),
         ),
+        drawer: appDrawer,
         body: SingleChildScrollView(
           child: Column(
             children: [

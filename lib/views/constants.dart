@@ -39,3 +39,5 @@ TextStyle kTextPopR14 =
     GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w400);
 TextStyle kTextPopB14 =
     GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.bold);
+TextStyle kTextPopR12 =
+    GoogleFonts.poppins(fontSize: 12.0, fontWeight: FontWeight.w400);

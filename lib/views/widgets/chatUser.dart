@@ -1,3 +1,4 @@
+import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatListItem extends StatelessWidget {
@@ -26,9 +27,9 @@ class ChatListItem extends StatelessWidget {
         ),
         title: Text(
           name,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: kTextPopB14
         ),
-        subtitle: Text(message),
+        subtitle: Text(message,style: kTextPopR12,),
         trailing: isOnline
             ? Icon(Icons.circle, color: Colors.green)
             : Icon(Icons.circle, color: Colors.grey));
