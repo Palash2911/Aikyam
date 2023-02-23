@@ -33,9 +33,9 @@ BoxDecoration kfillbox20 = BoxDecoration(
 
 TextStyle kTextPopB24 =
     GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.bold);
-TextStyle kTextPopM14 =
-    GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w500);
-TextStyle kTextPopR12 =
-    GoogleFonts.poppins(fontSize: 12.0, fontWeight: FontWeight.w400);
-TextStyle kTextPopB12 =
-    GoogleFonts.poppins(fontSize: 12.0, fontWeight: FontWeight.bold);
+TextStyle kTextPopM16 =
+    GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w500);
+TextStyle kTextPopR14 =
+    GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w400);
+TextStyle kTextPopB14 =
+    GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.bold);

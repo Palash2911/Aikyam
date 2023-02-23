@@ -70,7 +70,7 @@ class _PostState extends State<Post> {
                       children: [
                         Text(
                           'smile foundation',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: kTextPopM16,
                         ),
                         GestureDetector(
                           onTap: () {},
@@ -82,11 +82,17 @@ class _PostState extends State<Post> {
                       children: [
                         Icon(Icons.calendar_today),
                         SizedBox(width: 8),
-                        Text('February 17, 2023'),
+                        Text(
+                          'February 17, 2023',
+                          style: kTextPopR14,
+                        ),
                         SizedBox(width: 16),
                         Icon(Icons.location_on),
                         SizedBox(width: 8),
-                        Text('Pune'),
+                        Text(
+                          'Pune',
+                          style: kTextPopR14,
+                        ),
                       ],
                     ),
                   ],
@@ -99,6 +105,7 @@ class _PostState extends State<Post> {
                 children: [
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed leo id risus volutpat suscipit. Sed consequat magna in enim faucibus, vel volutpat risus sagittis. Donec interdum ipsum non mauris malesuada, sit amet iaculis felis auctor.',
+                    style: kTextPopR14,
                     maxLines: _isExpanded ? null : 100,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -106,8 +113,8 @@ class _PostState extends State<Post> {
                     children: [
                       Icon(Icons.person),
                       SizedBox(width: 5),
-                      Text('No of required volunteers: '),
-                      Text('20')
+                      Text('No of required volunteers: ', style: kTextPopB14),
+                      Text('20', style: kTextPopR14)
                     ],
                   ),
                   SizedBox(height: 5),
@@ -115,8 +122,8 @@ class _PostState extends State<Post> {
                     children: [
                       Icon(Icons.location_city),
                       SizedBox(width: 5),
-                      Text('City: '),
-                      Text('Pune')
+                      Text('City: ', style: kTextPopB14),
+                      Text('Pune', style: kTextPopR14)
                     ],
                   ),
                   SizedBox(height: 5),
@@ -124,8 +131,9 @@ class _PostState extends State<Post> {
                     children: [
                       Icon(Icons.location_on),
                       SizedBox(width: 5),
-                      Text('Location: '),
-                      Text('D Y patil college of Engineering'),
+                      Text('Location: ', style: kTextPopB14),
+                      Text('D Y patil college of Engineering',
+                          style: kTextPopR14),
                     ],
                   ),
                 ],
@@ -177,7 +185,10 @@ class _PostState extends State<Post> {
                                   color: ksecondaryColor,
                                 ),
                           SizedBox(width: 8),
-                          Text('123'),
+                          Text(
+                            '123',
+                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                          ),
                         ],
                       ),
                     ),
@@ -201,7 +212,10 @@ class _PostState extends State<Post> {
                                   color: ksecondaryColor,
                                 ),
                           SizedBox(width: 8),
-                          Text('Apply'),
+                          Text(
+                            _isApply ? 'Apply' : 'Withdrow',
+                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                          ),
                         ],
                       ),
                     ),
@@ -211,7 +225,10 @@ class _PostState extends State<Post> {
                   children: [
                     Icon(Icons.person),
                     SizedBox(width: 8),
-                    Text('202'),
+                    Text(
+                      '202',
+                      style: kTextPopM16,
+                    ),
                   ],
                 ),
               ],
