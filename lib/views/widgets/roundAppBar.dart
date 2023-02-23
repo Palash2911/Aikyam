@@ -13,8 +13,12 @@ class RoundAppBar extends StatelessWidget {
     return Container(
       height: 150.0,
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          child: Text(title)),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+        child: Text(
+          title,
+          style: kTextPopB24.copyWith(color: ksecondaryColor),
+        ),
+      ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
