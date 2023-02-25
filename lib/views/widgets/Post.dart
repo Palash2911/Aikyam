@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
@@ -60,13 +61,23 @@ class _PostState extends State<Post> {
           children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    height: 50.0,
-                    width: 50.0,
-                    color: const Color(0xffFF0E58),
-                    child: Image.asset('assets/images/dp.jpg'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NgoProfile(),
+                      ),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                      height: 50.0,
+                      width: 50.0,
+                      color: const Color(0xffFF0E58),
+                      child: Image.asset('assets/images/dp.jpg'),
+                    ),
                   ),
                 ),
                 SizedBox(width: 12),
