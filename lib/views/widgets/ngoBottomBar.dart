@@ -1,19 +1,20 @@
-import 'package:aikyam/views/Screens/User/ActivityScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NchatScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:aikyam/views/constants.dart';
-import '../Screens/User/ChatScreen.dart';
-import '../Screens/User/HomeScreen.dart';
 
-class UserBottomBar extends StatefulWidget {
-  const UserBottomBar({super.key});
+class NgoBottomBar extends StatefulWidget {
+  const NgoBottomBar({super.key});
 
   @override
-  State<UserBottomBar> createState() => _UserBottomBarState();
+  State<NgoBottomBar> createState() => _NgoBottomBarState();
 }
 
-class _UserBottomBarState extends State<UserBottomBar> {
+class _NgoBottomBarState extends State<NgoBottomBar> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
@@ -32,7 +33,7 @@ class _UserBottomBarState extends State<UserBottomBar> {
 }
 
 List<Widget> _buildScreens() {
-  return [HomeScreen(), ChatScreen(), ActivityScreen()];
+  return [NHomeScreen(), NgoChatScreen(), NgoAddpost(), NgoActivityScreen()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -45,6 +46,11 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: Icon(FeatherIcons.messageSquare),
       title: ("Chat"),
+      activeColorPrimary: kprimaryColor,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.add_box_outlined),
+      title: ("Add"),
       activeColorPrimary: kprimaryColor,
     ),
     PersistentBottomNavBarItem(
