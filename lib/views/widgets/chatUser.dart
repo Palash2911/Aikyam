@@ -20,16 +20,22 @@ class ChatListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: onTap,
-        leading: CircleAvatar(
-          radius: 25.0,
-          backgroundImage: AssetImage(imageUrl),
+        onTap: onTap,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Container(
+            height: 50.0,
+            width: 50.0,
+            color: kprimaryColor,
+            child: Image.asset(imageUrl,fit: BoxFit.cover,),
+            
+          ),
         ),
-        title: Text(
-          name,
-          style: kTextPopB14
+        title: Text(name, style: kTextPopB14),
+        subtitle: Text(
+          message,
+          style: kTextPopR12,
         ),
-        subtitle: Text(message,style: kTextPopR12,),
         trailing: isOnline
             ? Icon(Icons.circle, color: Colors.green)
             : Icon(Icons.circle, color: Colors.grey));

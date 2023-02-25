@@ -34,8 +34,8 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                       child: Container(
                         height: 70.0,
                         width: 70.0,
-                        color: const Color(0xffFF0E58),
-                        child: Image.asset('assets/images/dp.jpg'),
+                        color:Colors.red,
+                        child: Image.asset('assets/images/ngo.png'),
                       ),
                     ),
                     SizedBox(width: 10),
