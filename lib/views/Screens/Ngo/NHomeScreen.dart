@@ -19,7 +19,7 @@ class NHomeScreen extends StatelessWidget {
           toolbarHeight: 85,
           flexibleSpace: HomeAppBar(),
         ),
-        drawer: appdrawer(),
+        drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
           child: Column(
             children: [
