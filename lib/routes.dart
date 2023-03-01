@@ -1,0 +1,21 @@
+import 'package:aikyam/views/Screens/User/ActivityScreen.dart';
+import 'package:aikyam/views/Screens/User/ChatScreen.dart';
+import 'package:aikyam/views/Screens/User/HomeScreen.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
+import 'package:flutter/material.dart';
+
+var approutes = <String, WidgetBuilder>{
+
+        //?User Routes
+        '/': (context) => UserBottomBar(),
+        HomeScreen.routeName: (context) => HomeScreen(),
+        ChatScreen.routeName: (context) => ChatScreen(),
+        ActivityScreen.routeName: (context) => ActivityScreen(),
+
+        // //?Ngo Route
+        //  '/': (context) => NgoBottomBar(),
+        // NHomeScreen.routeName: (context) => NHomeScreen(),
+        // NgoChatScreen.routeName: (context) => NgoChatScreen(),
+        // NgoAddpost.routeName: (context) => NgoAddpost(),
+        // NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
+};
