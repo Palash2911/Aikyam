@@ -100,14 +100,13 @@ class _PostState extends State<Post> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today),
-                        SizedBox(width: 8),
+                        SizedBox(width: 4),
                         Text(
-                          'February 17, 2023',
+                          'Feb 17,2023',
                           style: kTextPopR14,
                         ),
-                        SizedBox(width: 16),
+                        SizedBox(width: 10),
                         Icon(Icons.location_on),
-                        SizedBox(width: 8),
                         Text(
                           'Pune',
                           style: kTextPopR14,
@@ -147,12 +146,17 @@ class _PostState extends State<Post> {
                   ),
                   SizedBox(height: 5),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(Icons.location_on),
                       SizedBox(width: 5),
                       Text('Location: ', style: kTextPopB14),
-                      Text('D Y patil college of Engineering',
-                          style: kTextPopR14),
+                      Expanded(
+                        child: Text(
+                          'D Y patil college of Engineering',
+                          style: kTextPopR14,
+                        ),
+                      ),
                     ],
                   ),
                 ],
