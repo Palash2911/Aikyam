@@ -27,18 +27,19 @@ class MyApp extends StatelessWidget {
       routes: {
         //?User Routes
 
-        // '/': (context) => UserBottomBar(),
-        // HomeScreen.routeName: (context) => HomeScreen(),
-        // ChatScreen.routeName: (context) => ChatScreen(),
-        // ActivityScreen.routeName: (context) => ActivityScreen(),
+        '/': (context) => UserBottomBar(),
+        HomeScreen.routeName: (context) => HomeScreen(),
+        ChatScreen.routeName: (context) => ChatScreen(),
+        ActivityScreen.routeName: (context) => ActivityScreen(),
 
 
         //?Ngo Routes
-         '/': (context) => NgoBottomBar(),
-        NHomeScreen.routeName: (context) => NHomeScreen(),
-        NgoChatScreen.routeName: (context) => NgoChatScreen(),
-        NgoAddpost.routeName: (context) => NgoAddpost(),
-        NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
+
+        //  '/': (context) => NgoBottomBar(),
+        // NHomeScreen.routeName: (context) => NHomeScreen(),
+        // NgoChatScreen.routeName: (context) => NgoChatScreen(),
+        // NgoAddpost.routeName: (context) => NgoAddpost(),
+        // NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
       },
     );
   }
