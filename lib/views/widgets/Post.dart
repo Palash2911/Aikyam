@@ -86,14 +86,16 @@ class _PostState extends State<Post> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //why space between not working :,(
                       children: [
                         Text(
                           'smile foundation',
                           style: kTextPopM16,
                         ),
+                        Spacer(),
                         GestureDetector(
                           onTap: () {},
-                          child: Icon(Icons.share),
+                          child: const Icon(Icons.share),
                         ),
                       ],
                     ),
@@ -188,72 +190,107 @@ class _PostState extends State<Post> {
             // ),
             SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                GestureDetector(
-                  onTap: toggleLike,
-                  child: Card(
-                    color: kprimaryColor,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          _isLike
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  color: ksecondaryColor,
-                                ),
-                          SizedBox(width: 8),
-                          Text(
-                            '123',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+                Expanded(
+                  child: GestureDetector(
+                    onTap: toggleLike,
+                    child: Card(
+                      color: kprimaryColor,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _isLike
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : Icon(
+                                    Icons.favorite_border,
+                                    color: ksecondaryColor,
+                                  ),
+                            SizedBox(width: 8),
+                            Text(
+                              '123',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: toggleApply,
-                  child: Card(
-                    color: kprimaryColor,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          _isApply
-                              ? Icon(
-                                  Icons.add_box_outlined,
-                                  color: ksecondaryColor,
-                                )
-                              : Icon(
-                                  Icons.add_box_rounded,
-                                  color: ksecondaryColor,
-                                ),
-                          SizedBox(width: 8),
-                          Text(
-                            _isApply ? 'Apply' : 'Withdrow',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+                Expanded(
+                  child: GestureDetector(
+                    onTap: toggleApply,
+                    child: Card(
+                      color: kprimaryColor,
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _isApply
+                                ? Icon(
+                                    Icons.add_box_outlined,
+                                    color: ksecondaryColor,
+                                  )
+                                : Icon(
+                                    Icons.add_box_rounded,
+                                    color: ksecondaryColor,
+                                  ),
+                            SizedBox(width: 8),
+                            Text(
+                              _isApply ? 'Withdrow' : 'Apply',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(width: 8),
-                    Text(
-                      '202',
-                      style: kTextPopM16,
+                Card(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: kprimaryColor,
                     ),
-                  ],
+                    borderRadius: BorderRadius.circular(7.0),
+                  ),
+                  color: kpostColor,
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person),
+                        SizedBox(width: 8),
+                        Text(
+                          '20',
+                          style: kTextPopM16,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                // Expanded(
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Icon(Icons.person),
+                //       SizedBox(width: 8),
+                //       Text(
+                //         '202',
+                //         style: kTextPopM16,
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ],

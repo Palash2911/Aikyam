@@ -12,7 +12,7 @@ var approutes = <String, WidgetBuilder>{
         ChatScreen.routeName: (context) => ChatScreen(),
         ActivityScreen.routeName: (context) => ActivityScreen(),
 
-        // //?Ngo Route
+        //?Ngo Route
         //  '/': (context) => NgoBottomBar(),
         // NHomeScreen.routeName: (context) => NHomeScreen(),
         // NgoChatScreen.routeName: (context) => NgoChatScreen(),

@@ -8,14 +8,13 @@ Color kpostColor = Color(0xfffCFEEE1);
 
 //  Theme Style
 ThemeData aikyamTheme = ThemeData(
-  // textTheme: GoogleFonts.poppinsTextTheme(),
-  scaffoldBackgroundColor: ksecondaryColor,
-  iconTheme: IconThemeData(color: Color(0xfff1BB273)),
-  colorScheme: ColorScheme.fromSwatch().copyWith(
-    primary: kprimaryColor,
-    secondary: ksecondaryColor,
-  ),
-);
+    // textTheme: GoogleFonts.poppinsTextTheme(),
+    scaffoldBackgroundColor: ksecondaryColor,
+    iconTheme: IconThemeData(color: Color(0xfff1BB273)),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: kprimaryColor,
+      secondary: ksecondaryColor,
+    ),);
 
 //Container Decoration
 BoxDecoration kfillbox10 = BoxDecoration(
@@ -34,7 +33,7 @@ BoxDecoration kfillbox20 = BoxDecoration(
 TextStyle kTextPopB24 =
     GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.bold);
 TextStyle kTextPopM16 =
-    GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w500);
+    GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w600);
 TextStyle kTextPopB16 =
     GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.bold);
 TextStyle kTextPopR14 =
