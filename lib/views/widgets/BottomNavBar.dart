@@ -54,3 +54,56 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
         inactiveColorPrimary: kprimaryColor),
   ];
 }
+
+// class UserBottomBar extends StatefulWidget {
+//   const UserBottomBar({super.key});
+
+//   @override
+//   State<UserBottomBar> createState() => _UserBottomBarState();
+// }
+
+// class _UserBottomBarState extends State<UserBottomBar> {
+//   final PersistentTabController _controller =
+//       PersistentTabController(initialIndex: 0);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: PersistentTabView(
+//         context,
+//         controller: _controller,
+//         screens: _buildScreens(),
+//         items: _navBarsItems(),
+//         navBarStyle: NavBarStyle.style10,
+//         backgroundColor: kprimaryColor,
+//       ),
+//     );
+//   }
+// }
+
+// List<Widget> _buildScreens() {
+//   return [HomeScreen(), ChatScreen(), ActivityScreen()];
+// }
+
+// List<PersistentBottomNavBarItem> _navBarsItems() {
+//   return [
+//     PersistentBottomNavBarItem(
+//       icon: Icon(
+//         FeatherIcons.home,
+//       ),
+//       title: ("Home"),
+//       textStyle: kTextPopR12,
+//       activeColorPrimary: ksecondaryColor,
+//     ),
+//     PersistentBottomNavBarItem(
+//       icon: Icon(FeatherIcons.messageSquare),
+//       title: ("Chat"),
+//       activeColorPrimary: ksecondaryColor,
+//     ),
+//     PersistentBottomNavBarItem(
+//         icon: Icon(FeatherIcons.activity),
+//         title: ("Activity"),
+//         activeColorPrimary: ksecondaryColor,
+//         inactiveColorPrimary: ksecondaryColor),
+//   ];
+// }
