@@ -1,4 +1,4 @@
-import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/activityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,11 +22,7 @@ class NgoActivityScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Post(),
-              Post(),
-              Post(),
-              Post(),
-              Post(),
+              ActivityPost(),
             ],
           ),
         ),
