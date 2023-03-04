@@ -16,12 +16,8 @@ class HomeAppBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              radius: 25.0,
-              backgroundImage: AssetImage('assets/images/dp.jpg'),
-            ),
             SizedBox(
-              width: 25.0,
+              width: 75.0,
             ),
             Expanded(
               child: Container(

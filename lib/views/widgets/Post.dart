@@ -91,10 +91,6 @@ class _PostState extends State<Post> {
                           'smile foundation',
                           style: kTextPopM16,
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(Icons.share),
-                        ),
                       ],
                     ),
                     Row(
@@ -115,6 +111,24 @@ class _PostState extends State<Post> {
                     ),
                   ],
                 ),
+                Spacer(),
+                Row(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(width: 8),
+                    Text(
+                      '202',
+                      style: kTextPopM16,
+                    ),
+                  ],
+                ),
+                // GestureDetector(
+                //   onTap: () {},
+                //   child: Icon(
+                //     Icons.share,
+                //     size: 32.0,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 16),
@@ -238,15 +252,32 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(width: 8),
-                    Text(
-                      '202',
-                      style: kTextPopM16,
+                GestureDetector(
+                  onTap: toggleApply,
+                  child: Card(
+                    color: kprimaryColor,
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          _isApply
+                              ? Icon(
+                                  Icons.share,
+                                  color: ksecondaryColor,
+                                )
+                              : Icon(
+                                  Icons.share,
+                                  color: ksecondaryColor,
+                                ),
+                          SizedBox(width: 8),
+                          Text(
+                            _isApply ? 'Share' : 'Share',
+                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

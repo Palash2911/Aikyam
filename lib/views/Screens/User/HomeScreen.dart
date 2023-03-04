@@ -13,12 +13,20 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          brightness: Brightness.dark,
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          toolbarHeight: 85,
-          flexibleSpace: HomeAppBar(),
-        ),
+            brightness: Brightness.dark,
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            toolbarHeight: 85,
+            flexibleSpace: HomeAppBar(),
+            leading: IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: CircleAvatar(
+                radius: 25.0,
+                backgroundImage: AssetImage('assets/images/dp.jpg'),
+              ),
+            )),
         drawer: UserAppdrawer(),
         body: SingleChildScrollView(
           child: Column(
