@@ -10,14 +10,14 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150.0,
+      height: MediaQuery.of(context).size.height * 0.2,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 75.0,
+              width: MediaQuery.of(context).size.width / 6,
             ),
             Expanded(
               child: Container(
@@ -42,8 +42,8 @@ class HomeAppBar extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30)),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
           color: kprimaryColor),
     );
   }
