@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,13 +10,14 @@ Color kpostColor = Color(0xfffCFEEE1);
 
 //  Theme Style
 ThemeData aikyamTheme = ThemeData(
-    // textTheme: GoogleFonts.poppinsTextTheme(),
-    scaffoldBackgroundColor: ksecondaryColor,
-    iconTheme: IconThemeData(color: Color(0xfff1BB273)),
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: kprimaryColor,
-      secondary: ksecondaryColor,
-    ),);
+  // textTheme: GoogleFonts.poppinsTextTheme(),
+  scaffoldBackgroundColor: ksecondaryColor,
+  iconTheme: IconThemeData(color: Color(0xfff1BB273)),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    primary: kprimaryColor,
+    secondary: ksecondaryColor,
+  ),
+);
 
 //Container Decoration
 BoxDecoration kfillbox10 = BoxDecoration(
@@ -42,3 +45,5 @@ TextStyle kTextPopB14 =
     GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.bold);
 TextStyle kTextPopR12 =
     GoogleFonts.poppins(fontSize: 12.0, fontWeight: FontWeight.w400);
+
+//MediaQuery

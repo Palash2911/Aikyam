@@ -21,8 +21,8 @@ class RoundAppBar extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30)),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
           color: kprimaryColor),
     );
   }

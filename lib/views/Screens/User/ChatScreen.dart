@@ -15,7 +15,7 @@ class ChatScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: 85,
+          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           flexibleSpace: RoundAppBar(
             title: 'Chat',
           ),
