@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +7,7 @@ Color kprimaryColor = Color(0xfff1BB273);
 Color ksecondaryColor = Color(0xfffE3F0E2);
 Color kpostColor = Color(0xfffCFEEE1);
 
+const kAnimationDuration = Duration(milliseconds: 200);
 //  Theme Style
 ThemeData aikyamTheme = ThemeData(
   // textTheme: GoogleFonts.poppinsTextTheme(),
