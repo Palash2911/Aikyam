@@ -45,6 +45,7 @@ dependencies:
   persistent_bottom_nav_bar: any
   flutter_feather_icons: ^2.0.0
   flutter_otp_text_field: ^1.1.0+2
+  smooth_page_indicator: ^1.0.1
 
 dev_dependencies:
   flutter_test:

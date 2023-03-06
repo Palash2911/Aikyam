@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/Login/introduction.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
   //test screen
-  // '/': (context) => OtpScreen(),
+  '/': (context) => introScreen(),
 
   //? Login routes
   //add router of intro,login,register,otp etc screen here..
