@@ -1,14 +1,6 @@
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
-import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:aikyam/views/constants.dart';
-// import 'package:aikyam/views/Screens/Ngo/IntroScreen.dart';
-import 'package:aikyam/views/widgets/SplashContent.dart';
-import 'package:aikyam/views/widgets/SizeConfig.dart';
-import 'package:aikyam/views/widgets/DefaultButton.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class LottiePage extends StatefulWidget {
   @override

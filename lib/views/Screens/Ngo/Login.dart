@@ -23,7 +23,7 @@ class LogIn extends StatelessWidget {
                           SizedBox(
                             height: 280.0,
                             child: Lottie.asset(
-                                'assets/animation/animation3.json'),
+                                'assets/animation/animation5.json'),
                           ),
                           Container(
                             child: Center(

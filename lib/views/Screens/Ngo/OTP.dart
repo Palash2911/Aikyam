@@ -23,7 +23,7 @@ class OTP extends StatelessWidget {
                           SizedBox(
                             height: 280.0,
                             child: Lottie.asset(
-                                'assets/animation/animation4.json'),
+                                'assets/animation/animation6.json'),
                           ),
                           Container(
                             child: Center(
