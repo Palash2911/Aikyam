@@ -1,6 +1,7 @@
 import 'package:aikyam/views/Screens/Login/IntroPage1.dart';
 import 'package:aikyam/views/Screens/Login/IntroPage2.dart';
 import 'package:aikyam/views/Screens/Login/IntroPage3.dart';
+import 'package:aikyam/views/Screens/Ngo/Login.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -85,15 +86,14 @@ class _introScreenState extends State<introScreen> {
                       ))
                   : GestureDetector(
                       onTap: () {
-                        _controller.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.easeIn,
-                        );
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LogIn()));
                       },
                       child: Text(
                         "Next",
                         style: kTextPopB16.copyWith(color: ksecondaryColor),
-                      ))
+                      ),
+                    )
             ],
           ),
         ],
