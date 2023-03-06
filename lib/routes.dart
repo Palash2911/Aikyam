@@ -12,7 +12,10 @@ import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
   //test screen
-  '/': (context) => OtpScreen(),
+  // '/': (context) => OtpScreen(),
+
+  //? Login routes
+  //add router of intro,login,register,otp etc screen here..
 
   //?User Routes
   // '/': (context) => UserBottomBar(),
