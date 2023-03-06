@@ -23,7 +23,7 @@ class LogIn extends StatelessWidget {
                           SizedBox(
                             height: 280.0,
                             child: Lottie.asset(
-                                'assets/animation/animation3.json'),
+                                'assets/animation/animation5.json'),
                           ),
                           Container(
                             child: Center(
@@ -59,7 +59,7 @@ class LogIn extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => OTP()));
+                                      builder: (context) => OtpScreen()));
                             },
                             style: ElevatedButton.styleFrom(
                                 fixedSize: Size(300, 50),
