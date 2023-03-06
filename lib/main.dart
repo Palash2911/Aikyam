@@ -1,3 +1,4 @@
+import 'package:aikyam/routes.dart';
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
@@ -31,25 +32,22 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       theme: aikyamTheme,
-      // routes: approutes,
-      routes: {
-        //?User Routes
-
-        // '/': (context) => UserBottomBar(),
-        '/': (context) => Logo(),
-        HomeScreen.routeName: (context) => HomeScreen(),
-        ChatScreen.routeName: (context) => ChatScreen(),
-        ActivityScreen.routeName: (context) => ActivityScreen(),
-        // SplashScreen.routeName: (context) => SplashScreen(),
-
-        //?Ngo Routes
-
-        //  '/': (context) => NgoBottomBar(),
-        // NHomeScreen.routeName: (context) => NHomeScreen(),
-        // NgoChatScreen.routeName: (context) => NgoChatScreen(),
-        // NgoAddpost.routeName: (context) => NgoAddpost(),
-        // NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
-      },
+      routes: approutes,
+      // routes: {
+      //   //?User Routes
+      //   // '/': (context) => UserBottomBar(),
+      //   '/': (context) => Logo(),
+      //   HomeScreen.routeName: (context) => HomeScreen(),
+      //   ChatScreen.routeName: (context) => ChatScreen(),
+      //   ActivityScreen.routeName: (context) => ActivityScreen(),
+      //   // SplashScreen.routeName: (context) => SplashScreen(),
+      //   //?Ngo Routes
+      //   //  '/': (context) => NgoBottomBar(),
+      //   // NHomeScreen.routeName: (context) => NHomeScreen(),
+      //   // NgoChatScreen.routeName: (context) => NgoChatScreen(),
+      //   // NgoAddpost.routeName: (context) => NgoAddpost(),
+      //   // NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
+      // },
     );
   }
 }

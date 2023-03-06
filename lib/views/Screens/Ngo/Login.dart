@@ -59,7 +59,7 @@ class LogIn extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => OTP()));
+                                      builder: (context) => OtpScreen()));
                             },
                             style: ElevatedButton.styleFrom(
                                 fixedSize: Size(300, 50),
