@@ -23,18 +23,22 @@ class _LogInState extends State<LogIn> {
     _phoneController.text = "";
   }
 
-  Future _sendOtp() async {
+  Future _sendOtp(BuildContext ctx) async {
     var isValid = false;
-    setState(() {
-      isLoading = true;
-    });
-    Provider.of<Auth>(context, listen: false)
-        .authenticate(phoneNo)
-        .catchError((e) {
-          return;
-    }).then((_) {
-      Navigator.of(context).pushNamed(OtpScreen.routeName);
-    });
+    isLoading = true;
+    if (phoneNo.length == 13) {
+      await Provider.of<Auth>(ctx, listen: false)
+          .authenticate(phoneNo)
+          .catchError((e) {
+        print("Failure");
+      }).then((value) => Navigator.of(context).pushNamed(OtpScreen.routeName));
+    } else {
+      print("Failure");
+    }
+
+    if (isValid) {
+      Navigator.of(ctx).pushNamed(OtpScreen.routeName);
+    }
   }
 
   @override
@@ -82,7 +86,7 @@ class _LogInState extends State<LogIn> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: _sendOtp,
+                        onPressed: () => _sendOtp(context),
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(300, 50),
                             shape: RoundedRectangleBorder(
