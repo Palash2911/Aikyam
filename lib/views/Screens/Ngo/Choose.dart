@@ -48,7 +48,7 @@ class Choose extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(UserRegister.routeName);
+                      Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
                     },
                     child: Container(
                       padding: EdgeInsets.all(10.0),
@@ -103,7 +103,7 @@ class Choose extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(NgoRegister.routeName);
+                      Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
                     },
                     child: Container(
                       padding: EdgeInsets.all(10.0),

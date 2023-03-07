@@ -51,7 +51,7 @@ class LogIn extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(OtpScreen.routeName);
+                    Navigator.of(context).pushReplacementNamed(OtpScreen.routeName);
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(300, 50),

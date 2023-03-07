@@ -213,7 +213,7 @@ class _UserRegisterState extends State<UserRegister> {
                               EdgeInsets.all(20) //content padding inside button
                           ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(UserBottomBar.routeName);
+                        Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
                       },
                       child: Text(
                         "Register",

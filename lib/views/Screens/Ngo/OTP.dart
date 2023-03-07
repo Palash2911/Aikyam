@@ -86,7 +86,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(Choose.routeName);
+                          Navigator.of(context).pushReplacementNamed(Choose.routeName);
                         },
                         style: ButtonStyle(
                           foregroundColor:

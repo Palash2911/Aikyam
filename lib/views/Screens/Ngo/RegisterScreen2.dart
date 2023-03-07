@@ -207,7 +207,7 @@ class _Register2State extends State<Register2> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(NgoBottomBar.routeName);
+                  Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
                 },
               ),
             ],
