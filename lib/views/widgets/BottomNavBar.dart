@@ -7,6 +7,8 @@ import '../Screens/User/ChatScreen.dart';
 import '../Screens/User/HomeScreen.dart';
 
 class UserBottomBar extends StatefulWidget {
+  static var routeName = '/bottom_nav';
+
   const UserBottomBar({super.key});
 
   @override

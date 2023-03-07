@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class NgoActivityScreen extends StatelessWidget {
   const NgoActivityScreen({super.key});
 
-  static const routeName = '/activity_screen';
+  static const routeName = '/ngo_activity_screen';
 
   @override
   Widget build(BuildContext context) {

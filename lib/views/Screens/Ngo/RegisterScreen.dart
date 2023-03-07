@@ -1,20 +1,17 @@
-import 'package:aikyam/views/Screens/Ngo/OTP.dart';
-import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:aikyam/views/widgets/EditImage.dart';
 import 'package:aikyam/views/Screens/Ngo/RegisterScreen2.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class NgoRegister extends StatefulWidget {
+  static var routeName = '/ngo-register';
+
+  const NgoRegister({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<NgoRegister> createState() => _NgoRegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _NgoRegisterState extends State<NgoRegister> {
   var _selectedIntrest;
 
   @override

@@ -17,21 +17,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       theme: aikyamTheme,
       routes: approutes,
-      // routes: {
-      //   //?User Routes
-      //   // '/': (context) => UserBottomBar(),
-      //   '/': (context) => Logo(),
-      //   HomeScreen.routeName: (context) => HomeScreen(),
-      //   ChatScreen.routeName: (context) => ChatScreen(),
-      //   ActivityScreen.routeName: (context) => ActivityScreen(),
-      //   // SplashScreen.routeName: (context) => SplashScreen(),
-      //   //?Ngo Routes
-      //   //  '/': (context) => NgoBottomBar(),
-      //   // NHomeScreen.routeName: (context) => NHomeScreen(),
-      //   // NgoChatScreen.routeName: (context) => NgoChatScreen(),
-      //   // NgoAddpost.routeName: (context) => NgoAddpost(),
-      //   // NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
-      // },
     );
   }
 }

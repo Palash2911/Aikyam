@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NgoAddpost extends StatefulWidget {
   const NgoAddpost({super.key});
 
-    static const routeName = '/ngo_chat_screen';
+    static const routeName = '/ngo_add_post';
 
 
   @override

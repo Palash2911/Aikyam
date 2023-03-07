@@ -1,7 +1,11 @@
+import 'package:aikyam/views/Screens/Ngo/RegisterScreen.dart';
+import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 
 class Choose extends StatelessWidget {
+
+  static var routeName = "/chooseScreen";
   const Choose({super.key});
 
   @override
@@ -14,7 +18,7 @@ class Choose extends StatelessWidget {
             Container(
               child: Column(
                 children: [
-                  SizedBox(height: 15),
+                  SizedBox(height: 100),
                   Text(
                     "Tell us more",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -44,7 +48,7 @@ class Choose extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/user_register');
+                      Navigator.of(context).pushNamed(UserRegister.routeName);
                     },
                     child: Container(
                       padding: EdgeInsets.all(10.0),
@@ -98,7 +102,9 @@ class Choose extends StatelessWidget {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(NgoRegister.routeName);
+                    },
                     child: Container(
                       padding: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(

@@ -8,6 +8,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:aikyam/views/constants.dart';
 
 class NgoBottomBar extends StatefulWidget {
+  static var routeName = '/ngo_bottom_nav';
+
   const NgoBottomBar({super.key});
 
   @override

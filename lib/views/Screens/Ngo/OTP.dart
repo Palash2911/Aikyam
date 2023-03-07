@@ -1,103 +1,26 @@
-// import 'package:aikyam/views/Screens/Ngo/Choose.dart';
-// import 'package:aikyam/views/widgets/otpField.dart';
-// import 'package:flutter/material.dart';
-// import 'package:lottie/lottie.dart';
-
-// import 'package:aikyam/views/constants.dart';
-
-// class OtpScreen extends StatelessWidget {
-//   const OtpScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Container(
-//           margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               Column(
-//                 children: [
-//                   SizedBox(
-//                     height: 210.0,
-//                     child: Lottie.asset('assets/animation/otp.json'),
-//                   ),
-//                   SizedBox(
-//                     height: 20.0,
-//                   ),
-//                   Text(
-//                     "Verification Code sent",
-//                     style: kTextPopB16,
-//                   ),
-//                   SizedBox(
-//                     height: 10.0,
-//                   ),
-//                   Text(
-//                     "We have sent the Verification Code to +919876543210",
-//                     style: kTextPopR14,
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ],
-//               ),
-//               OtpForm(),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                 children: [
-//                   Expanded(
-//                     child: OutlinedButton(
-//                       style: OutlinedButton.styleFrom(
-//                         side: BorderSide(color: kprimaryColor),
-//                         foregroundColor: kprimaryColor,
-//                         textStyle: kTextPopM16,
-//                       ),
-//                       onPressed: () {},
-//                       child: Text(
-//                         "Resend",
-//                         style: kTextPopM16.copyWith(color: kprimaryColor),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     width: 10.0,
-//                   ),
-//                   Expanded(
-//                     child: ElevatedButton(
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: Colors.green,
-//                         textStyle: kTextPopM16,
-//                       ),
-//                       onPressed: () {},
-//                       child: Text("Confirm"),
-//                     ),
-//                   ),
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:aikyam/views/Screens/Ngo/Choose.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/otpField.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class OtpScreen extends StatefulWidget {
+  static var routeName = "/OtpScreen";
+
+  const OtpScreen({super.key});
+
   @override
-  _OtpState createState() => _OtpState();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpState extends State<OtpScreen> {
+class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
           child: Column(
             children: [
               Align(
@@ -111,19 +34,19 @@ class _OtpState extends State<OtpScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
-              Container(
+              SizedBox(
                 width: 200,
                 height: 200,
                 child: Lottie.asset('assets/animation/otp.json'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Text('Verification', style: kTextPopB24),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -131,11 +54,11 @@ class _OtpState extends State<OtpScreen> {
                 style: kTextPopR14,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 28,
               ),
               Container(
-                padding: EdgeInsets.all(28),
+                padding: const EdgeInsets.all(28),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
@@ -144,7 +67,7 @@ class _OtpState extends State<OtpScreen> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         textFieldOtp(first: true, last: false),
                         textFieldOtp(first: false, last: false),
                         textFieldOtp(first: false, last: false),
@@ -156,16 +79,18 @@ class _OtpState extends State<OtpScreen> {
                         // _textFieldOTP(first: false, last: true),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 22,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Choose.routeName);
+                        },
                         style: ButtonStyle(
                           foregroundColor:
-                              MaterialStateProperty.all<Color>(ksecondaryColor),
+  MaterialStateProperty.all<Color>(ksecondaryColor),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(kprimaryColor),
                           shape:
@@ -176,7 +101,7 @@ class _OtpState extends State<OtpScreen> {
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(14.0),
+                          padding: const EdgeInsets.all(14.0),
                           child: Text('Verify', style: kTextPopM16),
                         ),
                       ),
@@ -184,7 +109,7 @@ class _OtpState extends State<OtpScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Text(
@@ -192,7 +117,7 @@ class _OtpState extends State<OtpScreen> {
                 style: kTextPopR14,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Text(

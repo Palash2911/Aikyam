@@ -6,7 +6,7 @@ import '../../widgets/chatUser.dart';
 class NgoChatScreen extends StatelessWidget {
   const NgoChatScreen({super.key});
 
-  static const routeName = '/chat_screen';
+  static const routeName = '/ngo_chat_screen';
 
   @override
   Widget build(BuildContext context) {

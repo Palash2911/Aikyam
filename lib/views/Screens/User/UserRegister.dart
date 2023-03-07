@@ -1,8 +1,10 @@
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
 
 class UserRegister extends StatefulWidget {
+  static var routeName = "/user-register";
   const UserRegister({super.key});
 
   @override
@@ -211,10 +213,7 @@ class _UserRegisterState extends State<UserRegister> {
                               EdgeInsets.all(20) //content padding inside button
                           ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                        Navigator.of(context).pushNamed(UserBottomBar.routeName);
                       },
                       child: Text(
                         "Register",

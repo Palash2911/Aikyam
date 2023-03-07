@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class NHomeScreen extends StatelessWidget {
   const NHomeScreen({super.key});
 
-  static const routeName = '/home_screen';
+  static const routeName = '/ngo_home_screen';
 
   @override
   Widget build(BuildContext context) {
