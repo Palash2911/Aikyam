@@ -28,13 +28,11 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => NgoProvider(),
         ),
       ],
-      child: Consumer<Auth>(
-        builder: (context, auth, _) => MaterialApp(
+      child: MaterialApp(
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           theme: aikyamTheme,
           routes: approutes,
-        ),
       ),
     );
   }

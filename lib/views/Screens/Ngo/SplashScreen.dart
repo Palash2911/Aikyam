@@ -1,7 +1,11 @@
+import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
+import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:aikyam/views/widgets/SizeConfig.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static var routeName = "/splash";
@@ -16,8 +20,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      Navigator.of(context).pushReplacementNamed(LogIn.routeName);
+    loadScreen();
+  }
+
+  Future loadScreen() async {
+    var authProvider = Provider.of<Auth>(context, listen: false);
+    Future.delayed(const Duration(seconds: 2), () {
+      authProvider.autoLogin();
+      if (authProvider.isAuth) {
+        if (authProvider.isUser) {
+          Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+        } else {
+          Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+        }
+      } else {
+        Navigator.of(context).pushReplacementNamed(LogIn.routeName);
+      }
     });
   }
 
