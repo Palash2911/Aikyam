@@ -5,7 +5,7 @@ import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NchatScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/OTP.dart';
-import 'package:aikyam/views/Screens/Ngo/RegisterScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/SplashScreen.dart';
 import 'package:aikyam/views/Screens/User/ActivityScreen.dart';
 import 'package:aikyam/views/Screens/User/ChatScreen.dart';

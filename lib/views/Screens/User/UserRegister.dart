@@ -24,7 +24,6 @@ class _UserRegisterState extends State<UserRegister> {
   final _emailController = TextEditingController();
   final _occupationController = TextEditingController();
   final _interestController = TextEditingController();
-  final _profileUrlController = TextEditingController();
 
   String get name => _nameController.text;
   String get phone => _phoneController.text;
@@ -47,7 +46,6 @@ class _UserRegisterState extends State<UserRegister> {
     _bioController.text = "";
     _interestController.text = "";
     _occupationController.text = "";
-    _profileUrlController.text = "";
     genders.add(Gender("Male", Icons.male, false));
     genders.add(Gender("Female", Icons.female, false));
     genders.add(Gender("Others", Icons.transgender, false));
@@ -61,7 +59,6 @@ class _UserRegisterState extends State<UserRegister> {
     _bioController.dispose();
     _interestController.dispose();
     _occupationController.dispose();
-    _profileUrlController.dispose();
     super.dispose();
   }
 
@@ -102,9 +99,6 @@ class _UserRegisterState extends State<UserRegister> {
 
   @override
   Widget build(BuildContext context) {
-    var selectedGender;
-    var selectedIndex = -1;
-    int _choiceIndex;
     return Scaffold(
       body: isLoading
           ? const Center(

@@ -147,6 +147,41 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future registerNgo(String bio, String name, String phone, String email,
+      String type, String date, String registered, String city, String zipcode, String state, String category, File profile) async {
+    try {
+      var storage = FirebaseStorage.instance;
+      TaskSnapshot taskSnapshot = await storage
+          .ref()
+          .child('NProfile/${_auth.currentUser!.uid}')
+          .putFile(profile);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference users =
+      FirebaseFirestore.instance.collection('Ngo');
+      await users.doc(_auth.currentUser!.uid).set({
+        'Name': name,
+        'Bio': bio,
+        "PhoneNo": phone,
+        "UID": _auth.currentUser!.uid,
+        "Email": email,
+        "DateofEst": date,
+        "City": city,
+        "Zipcode": zipcode,
+        "State": state,
+        "IsRegistered": registered,
+        "Type": type,
+        "Category": category,
+        "ProfilePic": downloadUrl,
+      });
+      final prefs = await SharedPreferences.getInstance();
+      _profileCreated = true;
+      prefs.setBool('Profile', _profileCreated);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   @override
   Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
