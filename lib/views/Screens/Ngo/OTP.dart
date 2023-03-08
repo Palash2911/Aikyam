@@ -24,7 +24,7 @@ class _OtpScreenState extends State<OtpScreen> {
   String get otp => _otpController.text;
 
   Future _verifyOtp(BuildContext ctx) async {
-    var authProvider = Provider.of<Auth>(context, listen: false);
+    var authProvider = Provider.of<Auth>(ctx, listen: false);
     if (otp.length == 6) {
       var isValid = await authProvider
           .verifyOtp(otp)
@@ -33,18 +33,18 @@ class _OtpScreenState extends State<OtpScreen> {
       });
       if (isValid) {
         if (authProvider.isUser.toString().isEmpty) {
-          Navigator.of(context).pushReplacementNamed(Choose.routeName);
+          Navigator.of(ctx).pushReplacementNamed(Choose.routeName);
         } else if (authProvider.isUser.toString() == "Individual") {
           if (authProvider.isProfile) {
-            Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+            Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
           } else {
-            Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+            Navigator.of(ctx).pushReplacementNamed(UserRegister.routeName);
           }
         } else {
           if (authProvider.isProfile) {
-            Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+            Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
           } else {
-            Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+            Navigator.of(ctx).pushReplacementNamed(NgoRegister.routeName);
           }
         }
       }else{
