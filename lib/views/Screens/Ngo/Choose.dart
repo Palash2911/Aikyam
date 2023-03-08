@@ -1,12 +1,22 @@
+import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/RegisterScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Choose extends StatelessWidget {
-
   static var routeName = "/chooseScreen";
   const Choose({super.key});
+
+  void chooseUser(String user, BuildContext context) {
+    Provider.of<Auth>(context, listen: false).chooseUserType(user);
+    if (user == "NGO") {
+      Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+    } else {
+      Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +25,25 @@ class Choose extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              child: Column(
-                children: [
-                  SizedBox(height: 100),
-                  Text(
-                    "Tell us more",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Are you ?",
-                    style: kTextPopR12,
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                const SizedBox(height: 100),
+                const Text(
+                  "Tell us more",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Are you ?",
+                  style: kTextPopR12,
+                ),
+              ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40.0,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
               child: Column(
                 children: [
                   Row(
@@ -48,32 +57,26 @@ class Choose extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+                      chooseUser("Individual", context);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         border: Border.all(width: 2, color: kprimaryColor),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Row(
                         children: [
                           Flexible(
-                              flex: 1,
-                              child: Image.asset(
-                                'assets/images/Individual.png',
-                                height: 90.0,
-                                width: 90.0,
-                              )
-
-                              // Placeholder(
-                              //   fallbackHeight: 50.0,
-                              //   fallbackWidth: 50.0,
-                              // ),
-                              ),
-                          SizedBox(
-                            width: 10.0,
+                            flex: 1,
+                            child: Image.asset(
+                              'assets/images/Individual.png',
+                              height: 90.0,
+                              width: 90.0,
+                            ),
                           ),
+                          const SizedBox(width: 10.0),
                           Flexible(
                             flex: 2,
                             child: Text(
@@ -89,7 +92,7 @@ class Choose extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(40.0),
+              margin: const EdgeInsets.all(40.0),
               child: Column(
                 children: [
                   Row(
@@ -103,31 +106,26 @@ class Choose extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+                      chooseUser("NGO", context);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         border: Border.all(width: 2, color: kprimaryColor),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Row(
                         children: [
                           Flexible(
-                              flex: 1,
-                              child: Image.asset(
-                                'assets/images/group.png',
-                                height: 90.0,
-                                width: 90.0,
-                              )
-                              // Placeholder(
-                              //   fallbackHeight: 50.0,
-                              //   fallbackWidth: 50.0,
-                              // ),
-                              ),
-                          SizedBox(
-                            width: 10.0,
+                            flex: 1,
+                            child: Image.asset(
+                              'assets/images/group.png',
+                              height: 90.0,
+                              width: 90.0,
+                            ),
                           ),
+                          const SizedBox(width: 10.0),
                           Flexible(
                             flex: 2,
                             child: Text(

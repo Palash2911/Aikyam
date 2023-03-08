@@ -1,5 +1,8 @@
 import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/Choose.dart';
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
+import 'package:aikyam/views/Screens/Ngo/RegisterScreen.dart';
+import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
@@ -25,17 +28,29 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future loadScreen() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
-    Future.delayed(const Duration(seconds: 2), () {
-      authProvider.autoLogin();
-      if (authProvider.isAuth) {
-        if (authProvider.isUser) {
-          Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+    Future.delayed(const Duration(seconds: 2), () async{
+      await authProvider.autoLogin().then((_) {
+        if (authProvider.isAuth) {
+          print(authProvider.isUser);
+          if (authProvider.isUser.toString().isEmpty) {
+            Navigator.of(context).pushReplacementNamed(Choose.routeName);
+          } else if (authProvider.isUser.toString() == "Individual") {
+            if (authProvider.isProfile) {
+              Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+            } else {
+              Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+            }
+          } else {
+            if (authProvider.isProfile) {
+              Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+            } else {
+              Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+            }
+          }
         } else {
-          Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+          Navigator.of(context).pushReplacementNamed(LogIn.routeName);
         }
-      } else {
-        Navigator.of(context).pushReplacementNamed(LogIn.routeName);
-      }
+      });
     });
   }
 

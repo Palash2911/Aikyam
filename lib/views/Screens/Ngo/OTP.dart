@@ -1,11 +1,17 @@
+import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/Choose.dart';
+import 'package:aikyam/views/Screens/Ngo/RegisterScreen.dart';
+import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
+import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:aikyam/views/widgets/otpField.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class OtpScreen extends StatefulWidget {
-  static var routeName = "/OtpScreen";
+  static var routeName = "/otp-screen";
 
   const OtpScreen({super.key});
 
@@ -14,6 +20,41 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  final TextEditingController _otpController = TextEditingController();
+  String get otp => _otpController.text;
+
+  Future _verifyOtp(BuildContext ctx) async {
+    var authProvider = Provider.of<Auth>(context, listen: false);
+    if (otp.length == 6) {
+      var isValid = await authProvider
+          .verifyOtp(otp)
+          .catchError((e) {
+        print("Failure");
+      });
+      if (isValid) {
+        if (authProvider.isUser.toString().isEmpty) {
+          Navigator.of(context).pushReplacementNamed(Choose.routeName);
+        } else if (authProvider.isUser.toString() == "Individual") {
+          if (authProvider.isProfile) {
+            Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+          } else {
+            Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+          }
+        } else {
+          if (authProvider.isProfile) {
+            Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+          } else {
+            Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+          }
+        }
+      }else{
+        print("Failure");
+      }
+    } else {
+      print("Failure");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +92,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   height: 10,
                 ),
                 Text(
-                  "We have sent the Verification Code to  +9198********",
+                  "We have sent the Verification Code",
                   style: kTextPopR14,
                   textAlign: TextAlign.center,
                 ),
@@ -66,25 +107,35 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          textFieldOtp(first: true, last: false),
-                          textFieldOtp(first: false, last: false),
-                          textFieldOtp(first: false, last: false),
-                          textFieldOtp(first: false, last: false),
-                          textFieldOtp(first: false, last: false),
-                          textFieldOtp(first: false, last: true),
-                        ],
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: const [
+                      //     textFieldOtp(first: true, last: false),
+                      //     textFieldOtp(first: false, last: false),
+                      //     textFieldOtp(first: false, last: false),
+                      //     textFieldOtp(first: false, last: false),
+                      //     textFieldOtp(first: false, last: false),
+                      //     textFieldOtp(first: false, last: true),
+                      //   ],
+                      // ),
+                      TextField(
+                        controller: _otpController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock),
+                          hintText: 'Enter OTP',
+                          counterText: "",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        maxLength: 6,
                       ),
-                      
+                      const SizedBox(height: 10,),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(Choose.routeName);
-                          },
+                          onPressed: () => _verifyOtp(context),
                           style: ButtonStyle(
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 ksecondaryColor),

@@ -5,16 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  var _isUser = true;
+  var _isUser="";
   var _token;
   final _auth = FirebaseAuth.instance;
   var verificationId = '';
+  var _profileCreated = false;
 
   bool get isAuth {
-    return _auth.currentUser?.uid != null;
+    return _auth.currentUser?.uid != null ? true : false;
   }
 
-  bool get isUser {
+  bool get isProfile {
+    return _profileCreated;
+  }
+
+  String get isUser {
     return _isUser;
   }
 
@@ -68,6 +73,13 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future chooseUserType(String user) async {
+    _isUser = user;
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('UserType', user);
+    prefs.setBool("Profile", false);
+  }
+
   @override
   Future<void> signOut() async {
     await _auth.signOut();
@@ -80,11 +92,8 @@ class Auth extends ChangeNotifier {
       return;
     }
     _token = prefs.getString('UID');
-    if (!prefs.containsKey('NGO')) {
-      _isUser = true;
-    } else {
-      _isUser = false;
-    }
+    _isUser = prefs.getString('UserType')!;
+    _profileCreated = prefs.getBool('Profile')!;
     notifyListeners();
   }
 }

@@ -76,8 +76,9 @@ class _LogInState extends State<LogIn> {
                       TextField(
                         controller: _phoneController,
                         decoration: InputDecoration(
-                          // labelText: 'Enter Phone Number',
+                          prefixIcon: const Icon(Icons.phone),
                           hintText: 'Enter Your Mobile Number',
+                          counterText: "",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
