@@ -1,7 +1,8 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,8 +83,12 @@ class Auth extends ChangeNotifier {
   }
 
   Future registerUser(String bio, String name, String phone, String email,
-      String gender, String occupation, String interest, String profilePic) async {
+      String gender, String occupation, String interest, File profile) async {
     try {
+      var storage = FirebaseStorage.instance;
+      TaskSnapshot taskSnapshot =
+      await storage.ref().child('Profile/${_auth.currentUser!.uid}').putFile(profile);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       await users.doc(_auth.currentUser!.uid).set({
@@ -95,11 +100,12 @@ class Auth extends ChangeNotifier {
         "Gender": gender,
         "Occupation": occupation,
         "Interest": interest,
-        "ProfilePic": profilePic,
+        "ProfilePic": downloadUrl,
       });
       final prefs = await SharedPreferences.getInstance();
       _profileCreated = true;
       prefs.setBool('Profile', _profileCreated);
+      notifyListeners();
     } catch (e) {
       rethrow;
     }
@@ -107,6 +113,8 @@ class Auth extends ChangeNotifier {
 
   @override
   Future<void> signOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     await _auth.signOut();
     notifyListeners();
   }
