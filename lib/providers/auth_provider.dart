@@ -57,6 +57,40 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future<bool> checkUser() async {
+    try {
+      var user = true;
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      await users.doc(_auth.currentUser?.uid).get().then(
+            (datasnapshot) => {
+              if (!datasnapshot.exists) {user = false}
+            },
+          );
+      if (!user) {
+        CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
+        await users.doc(_auth.currentUser?.uid).get().then(
+              (datasnapshot) => {
+                if (!datasnapshot.exists) {user = false}
+              },
+            );
+        if(user)
+          {
+            _isUser = 'NGO';
+            _profileCreated = true;
+          }
+      }
+      else
+        {
+          _isUser = 'Individual';
+          _profileCreated = true;
+        }
+      return user;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<bool> verifyOtp(String otp) async {
     try {
       var cred = await _auth.signInWithCredential(
@@ -86,8 +120,10 @@ class Auth extends ChangeNotifier {
       String gender, String occupation, String interest, File profile) async {
     try {
       var storage = FirebaseStorage.instance;
-      TaskSnapshot taskSnapshot =
-      await storage.ref().child('Profile/${_auth.currentUser!.uid}').putFile(profile);
+      TaskSnapshot taskSnapshot = await storage
+          .ref()
+          .child('Profile/${_auth.currentUser!.uid}')
+          .putFile(profile);
       final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');

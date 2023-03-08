@@ -1,11 +1,6 @@
-import 'package:aikyam/views/Screens/Ngo/OTP.dart';
-import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:aikyam/views/widgets/EditImage.dart';
 
 class Register2 extends StatefulWidget {
   const Register2({super.key});

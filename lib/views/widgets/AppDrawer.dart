@@ -1,8 +1,11 @@
+import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/Login.dart';
 import 'package:aikyam/views/Screens/User/FavoritesScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserAppdrawer extends StatelessWidget {
   const UserAppdrawer({super.key});
@@ -69,7 +72,11 @@ class UserAppdrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
-            onTap: () {},
+            onTap: () {
+              Provider.of<Auth>(context, listen: false).signOut();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => LogIn()));
+            },
           ),
         ],
       ),
