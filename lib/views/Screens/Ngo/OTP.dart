@@ -20,8 +20,14 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final TextEditingController _otpController = TextEditingController();
+  final _otpController = TextEditingController();
   String get otp => _otpController.text;
+
+  @override
+  void dispose() {
+    _otpController.dispose();
+    super.dispose();
+  }
 
   Future _verifyOtp(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);

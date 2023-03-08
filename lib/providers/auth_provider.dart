@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  var _isUser="";
+  var _isUser = "";
   var _token;
   final _auth = FirebaseAuth.instance;
   var verificationId = '';
@@ -78,6 +79,30 @@ class Auth extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('UserType', user);
     prefs.setBool("Profile", false);
+  }
+
+  Future registerUser(String bio, String name, String phone, String email,
+      String gender, String occupation, String interest, String profilePic) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      await users.doc(_auth.currentUser!.uid).set({
+        'Name': name,
+        'Bio': bio,
+        "PhoneNo": phone,
+        "UID": _auth.currentUser!.uid,
+        "Email": email,
+        "Gender": gender,
+        "Occupation": occupation,
+        "Interest": interest,
+        "ProfilePic": profilePic,
+      });
+      final prefs = await SharedPreferences.getInstance();
+      _profileCreated = true;
+      prefs.setBool('Profile', _profileCreated);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
