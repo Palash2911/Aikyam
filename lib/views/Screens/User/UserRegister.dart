@@ -176,7 +176,7 @@ class _UserRegisterState extends State<UserRegister> {
                             suffixIcon: Icon(Icons.edit),
                             filled: true,
                             fillColor: Colors.grey.shade300,
-                            hintText: 'Enter bio',
+                            hintText: 'Bio',
                             hintStyle: kTextPopR14,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -207,10 +207,13 @@ class _UserRegisterState extends State<UserRegister> {
 
                       const SizedBox(height: 10.0),
                       //contact
-                      TextField(
+                      TextFormField(
+                        maxLength: 10,
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
+                          prefixText: '+91 ',
+                          prefixStyle: kTextPopB14,
                           hintText: "Contact number",
                           hintStyle: kTextPopR14,
                           icon: Icon(Icons.phone),
@@ -222,12 +225,22 @@ class _UserRegisterState extends State<UserRegister> {
                           ),
                         ),
                         textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          final phoneRegex = RegExp(r'^\+?\d{9,15}$');
+                          if (!phoneRegex.hasMatch(value)) {
+                            return 'Please enter a valid phone number';
+                          }
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 10.0),
                       //email
                       TextField(
-                        controller: _phoneController,
+                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: "Email id",
@@ -244,7 +257,7 @@ class _UserRegisterState extends State<UserRegister> {
                       ),
 
                       const SizedBox(height: 10.0),
-                      //gender
+                      //  Gender
                       Row(
                         children: [
                           Icon(
