@@ -111,278 +111,212 @@ class _NgoRegisterState extends State<NgoRegister> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: isLoading
-            ? Container(
-                margin: const EdgeInsets.only(top: 150),
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 22.0, vertical: 0.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 30.0),
-                    //profile picture
-                    Stack(
-                      children: [
-                        imageFile != null
-                            ? CircleAvatar(
-                                radius: 50,
-                                child: CircleAvatar(
-                                  backgroundImage: Image.file(
-                                    imageFile!,
-                                    fit: BoxFit.cover,
-                                  ).image,
-                                  radius: 60,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: isLoading
+              ? Container(
+                  margin: const EdgeInsets.only(top: 150),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 22.0, vertical: 0.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30.0),
+                      //profile picture
+                      Stack(
+                        children: [
+                          imageFile != null
+                              ? CircleAvatar(
+                                  radius: 50,
+                                  child: CircleAvatar(
+                                    backgroundImage: Image.file(
+                                      imageFile!,
+                                      fit: BoxFit.cover,
+                                    ).image,
+                                    radius: 60,
+                                  ),
+                                )
+                              : const CircleAvatar(
+                                  radius: 50,
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage("assets/images/group.png"),
+                                    radius: 60,
+                                  ),
                                 ),
-                              )
-                            : const CircleAvatar(
-                                radius: 50,
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage("assets/images/group.png"),
-                                  radius: 60,
+                          Positioned(
+                            bottom: 1,
+                            right: 1,
+                            child: InkWell(
+                              onTap: () {
+                                _getFromGallery();
+                              },
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.grey,
                                 ),
-                              ),
-                        Positioned(
-                          bottom: 1,
-                          right: 1,
-                          child: InkWell(
-                            onTap: () {
-                              _getFromGallery();
-                            },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.grey,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    SizedBox(
-                      width: 180,
-                      //height: 10.0,
-                      child: TextField(
-                        controller: _bioController,
-                        keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(
-                          hintText: "Description",
-                          prefixIcon: Icon(
-                            Icons.edit,
-                            color: Color.fromARGB(255, 86, 86, 86),
+                        ],
+                      ),
+                      const SizedBox(height: 20.0),
+                      Container(
+                        width: 250,
+                        //height: 10.0,
+                        child: TextField(
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
+                          controller: _bioController,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.edit),
+                            filled: true,
+                            fillColor: Colors.grey.shade300,
+                            hintText: 'Description',
+                            hintStyle: kTextPopR14,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          textInputAction: TextInputAction.next,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 30.0),
-                    // name
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60.0,
-                      child: TextField(
+
+                      const SizedBox(height: 20.0),
+                      // Row(
+                      //   children: [
+                      //     const SizedBox(width: 10),
+                      //     Text(
+                      //       "Ngo Details",
+                      //       textAlign: TextAlign.left,
+                      //       style: kTextPopB14,
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(width: 20),
+
+                      // name
+                      TextField(
                         controller: _nameController,
                         keyboardType: TextInputType.name,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.account_circle,
-                            color: Color.fromARGB(255, 39, 145, 42),
+                        decoration: InputDecoration(
+                          hintText: "NGO Name",
+                          hintStyle: kTextPopR14,
+                          icon: Icon(Icons.person),
+                          filled: true,
+                          fillColor: Colors.green.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
                           ),
-                          hintText: "Enter NGO Name",
                         ),
+                        textInputAction: TextInputAction.next,
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    //contact
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60.0,
-                      child: TextField(
-                        keyboardType: TextInputType.phone,
+                      const SizedBox(height: 10.0),
+
+                      TextFormField(
+                        maxLength: 10,
                         controller: _phoneController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            color: Colors.green,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          prefixText: '+91 ',
+                          prefixStyle: kTextPopB14,
+                          hintText: "Contact number",
+                          hintStyle: kTextPopR14,
+                          icon: Icon(Icons.phone),
+                          filled: true,
+                          fillColor: Colors.green.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
                           ),
-                          hintText: "Enter NGO Contact No",
                         ),
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          final phoneRegex = RegExp(r'^\+?\d{9,15}$');
+                          if (!phoneRegex.hasMatch(value)) {
+                            return 'Please enter a valid phone number';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    //email
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60.0,
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
+
+                      const SizedBox(height: 10.0),
+                      //email
+                      TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: Colors.green,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: "Email id",
+                          hintStyle: kTextPopR14,
+                          icon: Icon(Icons.email_rounded),
+                          filled: true,
+                          fillColor: Colors.green.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
                           ),
-                          hintText: "Enter NGO Email-ID",
                         ),
+                        textInputAction: TextInputAction.next,
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    //gender
-                    Container(
-                      decoration: BoxDecoration(
-                        // border: Border.all(color: kprimaryColor, width: 2),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      const SizedBox(height: 10.0),
+                      //gender
+                      Row(
                         children: [
-                          Text(
-                            'Type',
-                            style: kTextPopR14,
+                          Icon(
+                            Icons.attach_money_rounded,
+                            size: 32.0,
+                            color: Colors.grey,
                           ),
                           SizedBox(
-                            height: 30,
-                            width: 180,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: type.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        type.forEach((types) =>
-                                            types.isSelected = false);
-                                        type[index].isSelected = true;
-                                        ngoType = type[index].name;
-                                      });
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.only(right: 9),
-                                      child: Chip(
-                                        label: Text(
-                                          type[index].name,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: !type[index].isSelected
-                                                  ? Colors.green
-                                                  : Colors.white),
-                                        ),
-                                        backgroundColor: !type[index].isSelected
-                                            ? Colors.white
-                                            : Colors.green,
-                                      ),
-                                    ),
-                                  );
-                                }),
+                            width: 12.0,
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15.0),
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Text(
-                          "Address",
-                          textAlign: TextAlign.left,
-                          style: kTextPopB14,
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          SizedBox(
-                              width: 80.0,
-                              child: TextField(
-                                keyboardType: TextInputType.name,
-                                controller: _cityController,
-                                decoration: const InputDecoration(
-                                  hintText: "City",
-                                  focusColor: Colors.green,
-                                ),
-                              )),
-                          const SizedBox(width: 12),
-                          SizedBox(
-                              width: 80.0,
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                controller: _zipcodeController,
-                                decoration: const InputDecoration(
-                                  hintText: "Zipcode",
-                                ),
-                              )),
-                          const SizedBox(width: 12),
-                          SizedBox(
-                            width: 80.0,
-                            child: TextField(
-                              controller: _stateController,
-                              keyboardType: TextInputType.name,
-                              decoration: const InputDecoration(
-                                hintText: "State",
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 22.0, vertical: 0.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
                           Container(
                             decoration: BoxDecoration(
+                              color: Colors.green.shade100,
                               // border: Border.all(color: kprimaryColor, width: 2),
-                              borderRadius: BorderRadius.circular(5.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Row(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      'Is NGO Registered?',
-                                      style: kTextPopR14,
-                                    ),
-                                  ],
+                                SizedBox(width: 10.0),
+                                Text(
+                                  'Ngo Type',
+                                  style: kTextPopR14.copyWith(
+                                      color: Colors.black54),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
+                                SizedBox(width: 10.0),
                                 SizedBox(
-                                  height: 30,
-                                  width: 100,
+                                  height: 50,
+                                  width: 200,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,
-                                      itemCount: ngoReg.length,
+                                      itemCount: type.length,
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
                                             setState(() {
-                                              ngoReg.forEach((reg) =>
-                                                  reg.isSelected = false);
-                                              ngoReg[index].isSelected = true;
-                                              ngoRegisterd = ngoReg[index].name;
+                                              type.forEach((types) =>
+                                                  types.isSelected = false);
+                                              type[index].isSelected = true;
+                                              ngoType = type[index].name;
                                             });
                                           },
                                           child: Container(
@@ -390,16 +324,16 @@ class _NgoRegisterState extends State<NgoRegister> {
                                                 const EdgeInsets.only(right: 9),
                                             child: Chip(
                                               label: Text(
-                                                ngoReg[index].name,
+                                                type[index].name,
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    color: !ngoReg[index]
-                                                            .isSelected
-                                                        ? Colors.green
-                                                        : Colors.white),
+                                                    color:
+                                                        !type[index].isSelected
+                                                            ? Colors.green
+                                                            : Colors.white),
                                               ),
                                               backgroundColor:
-                                                  !ngoReg[index].isSelected
+                                                  !type[index].isSelected
                                                       ? Colors.white
                                                       : Colors.green,
                                             ),
@@ -407,139 +341,381 @@ class _NgoRegisterState extends State<NgoRegister> {
                                         );
                                       }),
                                 ),
+                                SizedBox(width: 10.0),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 25.0),
-                          Row(
-                            children: [
-                              Text(
-                                "Date of Establishment",
-                                textAlign: TextAlign.left,
-                                style: kTextPopB14,
-                              ),
-                            ],
+                        ],
+                      ),
+
+                      SizedBox(width: 20.0),
+                      // Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.location_on_rounded,
+                      //       size: 32.0,
+                      //       color: Colors.grey,
+                      //     ),
+                      //     SizedBox(
+                      //       width: 12.0,
+                      //     ),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         color: Colors.green.shade100,
+                      //         // border: Border.all(color: kprimaryColor, width: 2),
+                      //         borderRadius: BorderRadius.circular(10.0),
+                      //       ),
+                      //       child: Row(
+                      //         children: [
+                      //           SizedBox(width: 10.0),
+                      //           Text(
+                      //             'Address',
+                      //             style: kTextPopR14.copyWith(
+                      //                 color: Colors.black54),
+                      //           ),
+                      //           SizedBox(width: 10.0),
+                      //           SizedBox(width: 10.0),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+
+                      // Row(
+                      //   children: [
+                      //     const SizedBox(width: 10),
+                      //     Text(
+                      //       "Location Details",
+                      //       textAlign: TextAlign.left,
+                      //       style: kTextPopB14,
+                      //     ),
+                      //   ],
+                      // ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        // controller: _nameController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: "Address",
+                          hintStyle: kTextPopR14,
+                          icon: Icon(Icons.location_on_rounded),
+                          filled: true,
+                          fillColor: Colors.green.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
                           ),
-                          const SizedBox(height: 15.0),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60.0,
-                            child: TextFormField(
-                                controller: _datecontroller,
-                                // onTap: ,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.calendar_today),
-                                  labelText: "Choose Date",
+                        ),
+                        textInputAction: TextInputAction.next,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 40.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 2,
+                              child: TextField(
+                                controller: _cityController,
+                                keyboardType: TextInputType.name,
+                                decoration: InputDecoration(
+                                  hintText: "City",
+                                  hintStyle: kTextPopR14,
+                                  filled: true,
+                                  fillColor: Colors.green.shade100,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none,
+                                  ),
                                 ),
+                                textInputAction: TextInputAction.next,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              flex: 1,
+                              child: TextFormField(
+                                maxLength: 6,
+                                controller: _zipcodeController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: "Zip",
+                                  hintStyle: kTextPopR14,
+                                  filled: true,
+                                  fillColor: Colors.green.shade100,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                                textInputAction: TextInputAction.next,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Date Not Set !';
+                                  if (value!.length != 6) {
+                                    return 'Zip code must be 6 digits long';
                                   }
                                   return null;
                                 },
-                                readOnly: true,
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1950),
-                                      lastDate: DateTime(2024));
-                                  if (pickedDate != null) {
-                                    //pickedDate output format => 2021-03-10 00:00:00.000
-                                    String formattedDate =
-                                        DateFormat.yMMMMd('en_US')
-                                            .format(pickedDate);
-                                    setState(() {
-                                      _datecontroller.text =
-                                          formattedDate; //set output date to TextField value.
-                                    });
-                                  } else {}
-                                }),
-                          ),
-                          const SizedBox(height: 15.0),
-                          Row(
-                            children: [
-                              Text(
-                                "NGO focus on",
-                                textAlign: TextAlign.left,
-                                style: kTextPopB14,
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 15.0),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: double.infinity,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(255, 207, 207, 207),
-                                  width: 1),
-                              borderRadius: BorderRadius.circular(5.0),
                             ),
-                            child: DropdownButton(
-                              hint: Row(
+                          ],
+                        ),
+                      ),
+                      TextField(
+                        controller: _stateController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          hintText: "State",
+                          hintStyle: kTextPopR14,
+                          icon: Icon(
+                            Icons.location_on_rounded,
+                            color: Colors.transparent,
+                          ),
+                          filled: true,
+                          fillColor: Colors.green.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        textInputAction: TextInputAction.next,
+                      ),
+                      const SizedBox(height: 10),
+                      Divider(),
+                      const SizedBox(height: 10),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 22.0, vertical: 0.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                // border: Border.all(color: kprimaryColor, width: 2),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Row(
                                 children: [
-                                  const SizedBox(width: 10.0),
-                                  Icon(
-                                    Icons.interests_rounded,
-                                    color: kprimaryColor,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Is NGO Registered?',
+                                        style: kTextPopR14,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 10.0),
-                                  const Text('Select a category'),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 100,
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        shrinkWrap: true,
+                                        itemCount: ngoReg.length,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                ngoReg.forEach((reg) =>
+                                                    reg.isSelected = false);
+                                                ngoReg[index].isSelected = true;
+                                                ngoRegisterd =
+                                                    ngoReg[index].name;
+                                              });
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 9),
+                                              child: Chip(
+                                                label: Text(
+                                                  ngoReg[index].name,
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: !ngoReg[index]
+                                                              .isSelected
+                                                          ? Colors.green
+                                                          : Colors.white),
+                                                ),
+                                                backgroundColor:
+                                                    !ngoReg[index].isSelected
+                                                        ? Colors.white
+                                                        : Colors.green,
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                  ),
                                 ],
                               ),
-                              value: _selectedIntrest,
-                              items: [
-                                'Cleaning',
-                                'Child Care',
-                                'Women Empowerment'
-                              ].map((cat) {
-                                return DropdownMenuItem(
-                                  value: cat,
-                                  child: Text(cat),
-                                  onTap: () {
-                                    setState(() {
-                                      category = cat;
-                                    });
+                            ),
+                            const SizedBox(height: 25.0),
+                            Row(
+                              children: [
+                                Text(
+                                  "Date of Establishment",
+                                  textAlign: TextAlign.left,
+                                  style: kTextPopR14,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 15.0),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 60.0,
+                              child: TextFormField(
+                                  controller: _datecontroller,
+                                  // onTap: ,
+                                  decoration: InputDecoration(
+                                    hintText: "Date",
+                                    hintStyle: kTextPopR14,
+                                    icon: Icon(
+                                      Icons.calendar_today_rounded,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.green.shade100,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Date Not Set !';
+                                    }
+                                    return null;
                                   },
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedIntrest = value!;
-                                });
-                              },
+                                  readOnly: true,
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1950),
+                                        lastDate: DateTime(2024));
+                                    if (pickedDate != null) {
+                                      //pickedDate output format => 2021-03-10 00:00:00.000
+                                      String formattedDate =
+                                          DateFormat.yMMMMd('en_US')
+                                              .format(pickedDate);
+                                      setState(() {
+                                        _datecontroller.text =
+                                            formattedDate; //set output date to TextField value.
+                                      });
+                                    } else {}
+                                  }),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          FloatingActionButton.extended(
-                            elevation: 0,
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.green,
-                            shape: const StadiumBorder(
-                                side:
-                                    BorderSide(color: Colors.green, width: 1)),
-                            label: const Text(
-                              "        Done        ",
-                              style: TextStyle(color: Colors.white),
+                            const SizedBox(height: 15.0),
+                            Row(
+                              children: [
+                                Text(
+                                  "NGO focus on",
+                                  textAlign: TextAlign.left,
+                                  style: kTextPopR14,
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
-                              setState(() {
-                                isLoading = true;
-                              });
-                              _createProfile(context);
-                            },
-                          ),
-                        ],
+                            const SizedBox(height: 15.0),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              width: double.infinity,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade100,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: DropdownButton(
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                hint: Row(
+                                  children: [
+                                    const SizedBox(width: 10.0),
+                                    Icon(
+                                      Icons.interests_rounded,
+                                      color: kprimaryColor,
+                                    ),
+                                    const SizedBox(width: 10.0),
+                                    const Text('Select a category'),
+                                  ],
+                                ),
+                                value: _selectedIntrest,
+                                items: [
+                                  'Cleaning',
+                                  'Child Care',
+                                  'Women Empowerment'
+                                ].map((cat) {
+                                  return DropdownMenuItem(
+                                    value: cat,
+                                    child: Text(cat),
+                                    onTap: () {
+                                      setState(() {
+                                        category = cat;
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedIntrest = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              height: 60, //height of button
+                              width: 250, //width of button
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors
+                                        .green, //background color of button
+                                    shape: RoundedRectangleBorder(
+                                        //to set border radius to button
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    padding: const EdgeInsets.all(
+                                        20) //content padding inside button
+                                    ),
+                                onPressed: () {
+                                  // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  _createProfile(context);
+                                },
+                                child: const Text(
+                                  "Register",
+                                ),
+                              ),
+                            ),
+                            // FloatingActionButton.extended(
+                            //   elevation: 0,
+                            //   backgroundColor: Colors.green,
+                            //   foregroundColor: Colors.green,
+                            //   shape: const StadiumBorder(
+                            //       side: BorderSide(
+                            //           color: Colors.green, width: 1)),
+                            //   label: const Text(
+                            //     "        Done        ",
+                            //     style: TextStyle(color: Colors.white),
+                            //   ),
+                            //   onPressed: () {
+                            //     // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+                            //     setState(() {
+                            //       isLoading = true;
+                            //     });
+                            //     _createProfile(context);
+                            //   },
+                            // ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }
