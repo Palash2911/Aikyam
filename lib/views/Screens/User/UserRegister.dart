@@ -212,6 +212,7 @@ class _UserRegisterState extends State<UserRegister> {
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
+                          counterText: '',
                           prefixText: '+91 ',
                           prefixStyle: kTextPopB14,
                           hintText: "Contact number",

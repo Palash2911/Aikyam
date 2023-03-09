@@ -232,6 +232,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
+                          counterText: '',
                           prefixText: '+91 ',
                           prefixStyle: kTextPopB14,
                           hintText: "Contact number",
@@ -440,6 +441,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 controller: _zipcodeController,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
+                                  counterText: '',
                                   hintText: "Zip",
                                   hintStyle: kTextPopR14,
                                   filled: true,
