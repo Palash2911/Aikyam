@@ -29,10 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future loadScreen() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     Future.delayed(const Duration(seconds: 2), () async{
-      await authProvider.autoLogin().then((_) {
+      await authProvider.autoLogin().then((_) async{
         if (authProvider.isAuth) {
-          print(authProvider.isUser);
-          if (authProvider.isUser.toString().isEmpty) {
+          var user = await authProvider.checkUser();
+          if (authProvider.isUser.isEmpty) {
             Navigator.of(context).pushReplacementNamed(Choose.routeName);
           } else if (authProvider.isUser.toString() == "Individual") {
             if (authProvider.isProfile) {

@@ -17,7 +17,6 @@ class UserRegister extends StatefulWidget {
 }
 
 class _UserRegisterState extends State<UserRegister> {
-  var _selectedIntrest;
   final _bioController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -34,6 +33,7 @@ class _UserRegisterState extends State<UserRegister> {
   String gender = "";
   File? imageFile;
   var isLoading = false;
+  final _form = GlobalKey<FormState>();
 
   List<Gender> genders = [];
 
@@ -64,23 +64,35 @@ class _UserRegisterState extends State<UserRegister> {
 
   Future _createProfile(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
+    final isValid = _form.currentState!.validate();
     setState(() {
       isLoading = true;
     });
-    if (imageFile == null) {
-      print("Please Select Profile Pic");
-    } else {
-      await authProvider
-          .registerUser(
-              bio, name, phone, email, gender, occupation, interest, imageFile!)
-          .catchError((e) {
-        print("Failure");
-      }).then((_) {
+    _form.currentState!.save();
+    if (isValid) {
+      if (imageFile == null) {
+        print("Please Select Profile Pic");
         setState(() {
           isLoading = false;
         });
-        Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
+      } else {
+        await authProvider
+            .registerUser(bio, name, phone, email, gender, occupation, interest,
+                imageFile!)
+            .catchError((e) {
+          print("Failure");
+        }).then((_) {
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
+        });
+      }
+    } else {
+      setState(() {
+        isLoading = false;
       });
+      return;
     }
   }
 
@@ -145,17 +157,17 @@ class _UserRegisterState extends State<UserRegister> {
                                 decoration: const BoxDecoration(
                                   color: Colors.grey,
                                 ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child:
-                                      //  imageFile == null ? Icon(
-                                      //   Icons.edit,
-                                      //   color: Colors.white,
-                                      // ):
-                                      Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: imageFile != null
+                                      ? const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                        )
+                                      : const Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
                                 ),
                               ),
                             ),
@@ -165,257 +177,263 @@ class _UserRegisterState extends State<UserRegister> {
                       const SizedBox(height: 20.0),
 
                       //bio textfield
-                      Container(
-                        width: 250,
-                        //height: 10.0,
-                        child: TextField(
-                          maxLines: 1,
-                          keyboardType: TextInputType.text,
-                          controller: _bioController,
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.edit),
-                            filled: true,
-                            fillColor: Colors.grey.shade300,
-                            hintText: 'Bio',
-                            hintStyle: kTextPopR14,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none,
+                      Form(
+                        key: _form,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              //height: 10.0,
+                              child: TextFormField(
+                                maxLines: 1,
+                                keyboardType: TextInputType.text,
+                                controller: _bioController,
+                                decoration: InputDecoration(
+                                  suffixIcon: const Icon(Icons.edit),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade300,
+                                  hintText: 'Bio',
+                                  hintStyle: kTextPopR14,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please enter bio!';
+                                  }
+                                  return null;
+                                },
+                                textInputAction: TextInputAction.next,
+                              ),
                             ),
-                          ),
-                          textInputAction: TextInputAction.next,
+                            const SizedBox(height: 20.0),
+                            // name
+                            TextFormField(
+                              controller: _nameController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Name",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.person),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter name!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+
+                            const SizedBox(height: 10.0),
+                            //contact
+                            TextFormField(
+                              maxLength: 10,
+                              controller: _phoneController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                counterText: '',
+                                hintText: "Contact number",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.phone),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your phone number';
+                                }
+                                final phoneRegex = RegExp(r'^\+?\d{9,15}$');
+                                if (!phoneRegex.hasMatch(value)) {
+                                  return 'Please enter a valid phone number';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            const SizedBox(height: 10.0),
+                            //email
+                            TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                hintText: "Email-Id",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.email_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter Email-Id!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+
+                            const SizedBox(height: 10.0),
+                            //  Gender
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.male_rounded,
+                                  size: 32.0,
+                                  color: Colors.grey,
+                                ),
+                                const SizedBox(width: 12.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.green.shade100,
+                                    // border: Border.all(color: kprimaryColor, width: 2),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 10.0),
+                                      Text(
+                                        'Gender',
+                                        style: kTextPopR14.copyWith(
+                                            color: Colors.black54),
+                                      ),
+                                      const SizedBox(width: 9.0),
+                                      SizedBox(
+                                        height: 50,
+                                        width: 200,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            itemCount: genders.length,
+                                            itemBuilder: (context, index) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    genders.forEach((gender) =>
+                                                        gender.isSelected =
+                                                            false);
+                                                    genders[index].isSelected =
+                                                        true;
+                                                    gender =
+                                                        genders[index].name;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      right: 9),
+                                                  child: Chip(
+                                                    label: Text(
+                                                      genders[index].name,
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: !genders[index]
+                                                                  .isSelected
+                                                              ? Colors.green
+                                                              : Colors.white),
+                                                    ),
+                                                    backgroundColor:
+                                                        !genders[index]
+                                                                .isSelected
+                                                            ? Colors.white
+                                                            : Colors.green,
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              controller: _occupationController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                hintText: "Occupation",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.work_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter occupation!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: 10.0),
+
+                            TextFormField(
+                              controller: _interestController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                hintText: "Interest",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.interests_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter interest!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: 20.0),
+                            SizedBox(
+                              height: 60, //height of button
+                              width: 250, //width of button
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors
+                                        .green, //background color of button
+                                    shape: RoundedRectangleBorder(
+                                        //to set border radius to button
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    padding: const EdgeInsets.all(
+                                        20) //content padding inside button
+                                    ),
+                                onPressed: () => _createProfile(context),
+                                child: const Text(
+                                  "Register",
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      // name
-                      TextField(
-                        controller: _nameController,
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          hintText: "Name",
-                          hintStyle: kTextPopR14,
-                          icon: Icon(Icons.person),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        textInputAction: TextInputAction.next,
-                      ),
-
-                      const SizedBox(height: 10.0),
-                      //contact
-                      TextFormField(
-                        maxLength: 10,
-                        controller: _phoneController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          counterText: '',
-                          prefixText: '+91 ',
-                          prefixStyle: kTextPopB14,
-                          hintText: "Contact number",
-                          hintStyle: kTextPopR14,
-                          icon: Icon(Icons.phone),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          final phoneRegex = RegExp(r'^\+?\d{9,15}$');
-                          if (!phoneRegex.hasMatch(value)) {
-                            return 'Please enter a valid phone number';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      const SizedBox(height: 10.0),
-                      //email
-                      TextField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: "Email id",
-                          hintStyle: kTextPopR14,
-                          icon: Icon(Icons.email_rounded),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        textInputAction: TextInputAction.next,
-                      ),
-
-                      const SizedBox(height: 10.0),
-                      //  Gender
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.male_rounded,
-                            size: 32.0,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade100,
-                              // border: Border.all(color: kprimaryColor, width: 2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(width: 10.0),
-                                Text(
-                                  'Gender',
-                                  style: kTextPopR14.copyWith(
-                                      color: Colors.black54),
-                                ),
-                                SizedBox(width: 10.0),
-                                SizedBox(
-                                  height: 50,
-                                  width: 200,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: genders.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              genders.forEach((gender) =>
-                                                  gender.isSelected = false);
-                                              genders[index].isSelected = true;
-                                              gender = genders[index].name;
-                                            });
-                                          },
-                                          child: Container(
-                                            margin:
-                                                const EdgeInsets.only(right: 9),
-                                            child: Chip(
-                                              label: Text(
-                                                genders[index].name,
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: !genders[index]
-                                                            .isSelected
-                                                        ? Colors.green
-                                                        : Colors.white),
-                                              ),
-                                              backgroundColor:
-                                                  !genders[index].isSelected
-                                                      ? Colors.white
-                                                      : Colors.green,
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                ),
-                                SizedBox(width: 10.0),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15.0),
-                      TextField(
-                        controller: _occupationController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: "Occupation",
-                          hintStyle: kTextPopR14,
-                          icon: Icon(Icons.work_rounded),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: 10.0),
-
-                      TextField(
-                        controller: _interestController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: "Intrest",
-                          hintStyle: kTextPopR14,
-                          icon: Icon(Icons.interests_rounded),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      // Container(
-                      //   width: double.infinity,
-                      //   height: 60.0,
-                      //   child: TextField(
-                      //     keyboardType: TextInputType.name,
-                      //     controller: _occupationController,
-                      //     decoration: const InputDecoration(
-                      //       prefixIcon: Icon(
-                      //         Icons.work,
-                      //         color: Colors.green,
-                      //       ),
-                      //       hintText: "Enter Occupation",
-                      //     ),
-                      //     textInputAction: TextInputAction.next,
-                      //   ),
-                      // ),
-                      // Container(
-                      //   width: double.infinity,
-                      //   height: 60.0,
-                      //   child: TextField(
-                      //     keyboardType: TextInputType.name,
-                      //     controller: _interestController,
-                      //     decoration: const InputDecoration(
-                      //       prefixIcon: Icon(
-                      //         Icons.work,
-                      //         color: Colors.green,
-                      //       ),
-                      //       hintText: "Enter Interest",
-                      //     ),
-                      //     textInputAction: TextInputAction.done,
-                      //   ),
-                      // ),
-                      const SizedBox(height: 10.0),
-                      SizedBox(
-                        height: 60, //height of button
-                        width: 250, //width of button
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary:
-                                  Colors.green, //background color of button
-                              shape: RoundedRectangleBorder(
-                                  //to set border radius to button
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: const EdgeInsets.all(
-                                  20) //content padding inside button
-                              ),
-                          onPressed: () => _createProfile(context),
-                          child: const Text(
-                            "Register",
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

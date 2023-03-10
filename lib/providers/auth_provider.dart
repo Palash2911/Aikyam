@@ -57,6 +57,26 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future<bool> verifyOtp(String otp) async {
+    try {
+      var cred = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+          verificationId: verificationId,
+          smsCode: otp,
+        ),
+      );
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('UID', _auth.currentUser!.uid);
+      prefs.setString('UserType', "");
+      prefs.setBool('Profile', false);
+      notifyListeners();
+      return cred.user != null ? true : false;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
   Future<bool> checkUser() async {
     try {
       var user = true;
@@ -69,42 +89,21 @@ class Auth extends ChangeNotifier {
           );
       if (!user) {
         CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
-        await users.doc(_auth.currentUser?.uid).get().then(
+        await ngo.doc(_auth.currentUser?.uid).get().then(
               (datasnapshot) => {
-                if (!datasnapshot.exists) {user = false}
+                if (!datasnapshot.exists) {user = false} else {user = true}
               },
             );
-        if(user)
-          {
-            _isUser = 'NGO';
-            _profileCreated = true;
-          }
-      }
-      else
-        {
-          _isUser = 'Individual';
+        if (user) {
+          _isUser = 'NGO';
           _profileCreated = true;
         }
+      } else {
+        _isUser = 'Individual';
+        _profileCreated = true;
+      }
       return user;
     } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<bool> verifyOtp(String otp) async {
-    try {
-      var cred = await _auth.signInWithCredential(
-        PhoneAuthProvider.credential(
-          verificationId: verificationId,
-          smsCode: otp,
-        ),
-      );
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('UID', _auth.currentUser!.uid);
-      notifyListeners();
-      return cred.user != null ? true : false;
-    } catch (e) {
-      print(e);
       rethrow;
     }
   }
@@ -147,8 +146,19 @@ class Auth extends ChangeNotifier {
     }
   }
 
-  Future registerNgo(String bio, String name, String phone, String email,
-      String type, String date, String registered, String city, String zipcode, String state, String category, File profile) async {
+  Future registerNgo(
+      String bio,
+      String name,
+      String phone,
+      String email,
+      String type,
+      String date,
+      String registered,
+      String city,
+      String zipcode,
+      String state,
+      String category,
+      File profile) async {
     try {
       var storage = FirebaseStorage.instance;
       TaskSnapshot taskSnapshot = await storage
@@ -156,8 +166,7 @@ class Auth extends ChangeNotifier {
           .child('NProfile/${_auth.currentUser!.uid}')
           .putFile(profile);
       final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      CollectionReference users =
-      FirebaseFirestore.instance.collection('Ngo');
+      CollectionReference users = FirebaseFirestore.instance.collection('Ngo');
       await users.doc(_auth.currentUser!.uid).set({
         'Name': name,
         'Bio': bio,
@@ -196,7 +205,9 @@ class Auth extends ChangeNotifier {
       return;
     }
     _token = prefs.getString('UID');
-    _isUser = prefs.getString('UserType')!;
+    if (prefs.getString('UserType') != null) {
+      _isUser = prefs.getString('UserType')!;
+    }
     _profileCreated = prefs.getBool('Profile')!;
     notifyListeners();
   }

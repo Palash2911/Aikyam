@@ -75,7 +75,7 @@ class UserAppdrawer extends StatelessWidget {
             onTap: () {
               Provider.of<Auth>(context, listen: false).signOut();
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LogIn()));
+                  .push(MaterialPageRoute(builder: (context) => new LogIn()));
             },
           ),
         ],
@@ -146,7 +146,11 @@ class NgoAppdrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
-            onTap: () {},
+            onTap: () {
+              Provider.of<Auth>(context, listen: false).signOut();
+              Navigator.of(context, rootNavigator: true)
+                  .push(MaterialPageRoute(builder: (context) => new LogIn()));
+            },
           ),
         ],
       ),
