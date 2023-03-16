@@ -1,6 +1,7 @@
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
+import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
-import '../constants.dart';
+
 
 class Post extends StatefulWidget {
   @override
