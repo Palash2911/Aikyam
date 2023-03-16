@@ -35,10 +35,6 @@ class _LogInState extends State<LogIn> {
     } else {
       print("Failure");
     }
-
-    if (isValid) {
-      Navigator.of(ctx).pushNamed(OtpScreen.routeName);
-    }
   }
 
   @override
