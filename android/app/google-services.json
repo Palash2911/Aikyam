@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "10110812979",
+    "firebase_url": "https://aikyam-e3e25-default-rtdb.firebaseio.com",
     "project_id": "aikyam-e3e25",
     "storage_bucket": "aikyam-e3e25.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "10110812979-a7ujegp8f1s4h4knkcjv9vm6ie1e96p7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aikyam.aikyam",
+            "certificate_hash": "76b170dd274f35aa15c985d263c2bed3330a15a3"
+          }
+        },
         {
           "client_id": "10110812979-ub0gkg58ilvcfdmldohkr466ap1gim8e.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +38,13 @@
             {
               "client_id": "10110812979-n0u2725m82v308sg56odjkjk2qc6os44.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "10110812979-g48702sm4dinp2sn4cli7q57golr3svi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aikyam.aikyam"
+              }
             }
           ]
         }

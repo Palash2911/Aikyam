@@ -6,6 +6,8 @@
 	<string>10110812979-g48702sm4dinp2sn4cli7q57golr3svi.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.10110812979-g48702sm4dinp2sn4cli7q57golr3svi</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>10110812979-a7ujegp8f1s4h4knkcjv9vm6ie1e96p7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA9c6CWFZV9VQVJVmnZnK_I-IaLwqC9VAo</string>
 	<key>GCM_SENDER_ID</key>
@@ -30,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:10110812979:ios:1a3f862ef81b97d9643446</string>
+	<key>DATABASE_URL</key>
+	<string>https://aikyam-e3e25-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
