@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/Login/introduction_animation/introduction_animation_screen.dart';
 import 'package:aikyam/views/Screens/Ngo/Choose.dart';
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
@@ -17,7 +18,11 @@ import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
   //Inital Route
-  '/': (context) => SplashScreen(),
+  // '/': (context) => SplashScreen(),
+  // '/': (context) => NgoAddpost(),
+  '/': (context) => NgoBottomBar(),
+  // '/': (context) => IntroductionAnimationScreen(),
+  // '/': (context) => LogIn(),
 
   //Login Routes
   LogIn.routeName: (context) => LogIn(),

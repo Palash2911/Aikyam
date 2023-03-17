@@ -1,6 +1,7 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:flutter/material.dart';
 
 class NHomeScreen extends StatelessWidget {
@@ -24,7 +25,15 @@ class NHomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Post(),
-              Post(),
+              PostItem(
+                ngoname: 'smile Foundation',
+                ngocity: 'Pune',
+                drivecity: 'Pune',
+                driveaddress: 'Akurdi D Y Patil',
+                driveDate: 'driveDate',
+                applyStatus: 'apply',
+                pid: 'pid',
+              ),
               Post(),
               Post(),
               Post(),

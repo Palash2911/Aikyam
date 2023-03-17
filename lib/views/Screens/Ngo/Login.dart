@@ -1,6 +1,7 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/OTP.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +96,6 @@ class _LogInState extends State<LogIn> {
                               fontSize: 18,
                             )),
                         child: const Text('Generate OTP'),
-                        // label: const Text('Plus One'),
                       ),
                       const SizedBox(height: 15),
                       Container(
@@ -121,14 +121,31 @@ class _LogInState extends State<LogIn> {
                                   textStyle: const TextStyle(
                                     fontSize: 18,
                                   )),
-                              child: const Text(
-                                'Login with Google',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 30.0,
+                                    width: 30.0,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/google.png'),
+                                          fit: BoxFit.cover),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    'Login with Google',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
-                              // label: const Text('Plus One'),
                             ),
                           ],
                         ),
