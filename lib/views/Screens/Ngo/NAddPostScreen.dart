@@ -14,9 +14,20 @@ class NgoAddpost extends StatefulWidget {
 }
 
 class _NgoAddpostState extends State<NgoAddpost> {
+  List<String> categories = [
+    "Health",
+    "Education",
+    "Environment",
+    "Poverty",
+    "Human Rights",
+    "Animals",
+  ];
+  String? selectedCategory;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _driveTitleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _noofVoluntersController = TextEditingController();
+  final TextEditingController _noofVoluntersController =
+      TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -47,27 +58,37 @@ class _NgoAddpostState extends State<NgoAddpost> {
                 children: [
                   Row(
                     children: [
-                      Card(
-                        elevation: 0.0,
-                        color: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.add,
-                            size: 50,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                      ),
+                      _addImage(),
+                      _addImage(),
+                      _addImage(),
                     ],
                   ),
+                  SizedBox(height: 10.0),
                   TextFormField(
+                    controller: _driveTitleController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a Title';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.green.shade100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Write the title of the drive',
+                      alignLabelWithHint: true,
+                      labelText: 'Drive Title',
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    minLines: 1,
                     maxLines: 10,
-                    controller: _descriptionController,
+                    controller: _driveTitleController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a description';
@@ -75,11 +96,44 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.green.shade100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
                       hintText: 'Write what will be in the drive',
                       alignLabelWithHint: true,
                       labelText: 'Drive description',
                     ),
                   ),
+                  SizedBox(height: 10.0),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    width: double.infinity,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: kinputColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: DropdownButton<String>(
+                      hint: Text('Select a category'),
+                      value: selectedCategory,
+                      items: categories.map((String category) {
+                        return new DropdownMenuItem<String>(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCategory = newValue!;
+                        });
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 10.0),
                   TextFormField(
                     controller: _noofVoluntersController,
                     validator: (value) {
@@ -90,94 +144,183 @@ class _NgoAddpostState extends State<NgoAddpost> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.green.shade100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
                       hintText: 'How many people you required for drive',
                       alignLabelWithHint: true,
                       labelText: 'Number of volunteers',
                     ),
                   ),
                   SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60.0,
-                    child: TextFormField(
-                        controller: _dateController,
-                        // onTap: ,
-                        decoration: InputDecoration(
-                          hintText: "Date of drive",
-                          hintStyle: kTextPopR14,
-                          icon: const Icon(
-                            Icons.calendar_today_rounded,
+                  // SizedBox(
+                  //   height: 60.0,
+                  //   child: TextFormField(
+                  //     controller: _dateController,
+                  //     decoration: InputDecoration(
+                  //       hintText: "Date of drive",
+                  //       hintStyle: kTextPopR14,
+                  //       icon: const Icon(
+                  //         Icons.calendar_today_rounded,
+                  //       ),
+                  //       filled: true,
+                  //       fillColor: Colors.green.shade100,
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //         borderSide: BorderSide.none,
+                  //       ),
+                  //     ),
+                  //     validator: (value) {
+                  //       if (value == null || value.isEmpty) {
+                  //         return 'Date Not Set !';
+                  //       }
+                  //       return null;
+                  //     },
+                  //     readOnly: true,
+                  //     onTap: () async {
+                  //       DateTime? pickedDate = await showDatePicker(
+                  //           context: context,
+                  //           initialDate: DateTime.now(),
+                  //           firstDate: DateTime(1950),
+                  //           lastDate: DateTime(2024));
+                  //       if (pickedDate != null) {
+                  //         String formattedDate =
+                  //             DateFormat.yMMMMd('en_US').format(pickedDate);
+                  //         setState(() {
+                  //           _dateController.text = formattedDate;
+                  //         });
+                  //       } else {}
+                  //     },
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 10.0,
+                  // ),
+                  // SizedBox(
+                  //   height: 60.0,
+                  //   child: TextFormField(
+                  //     controller: _timeController,
+                  //     decoration: InputDecoration(
+                  //       hintText: "Time of drive",
+                  //       hintStyle: kTextPopR14,
+                  //       icon: const Icon(
+                  //         Icons.access_time_rounded,
+                  //       ),
+                  //       filled: true,
+                  //       fillColor: Colors.green.shade100,
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //         borderSide: BorderSide.none,
+                  //       ),
+                  //     ),
+                  //     validator: (value) {
+                  //       if (value == null || value.isEmpty) {
+                  //         return 'Time Not Set !';
+                  //       }
+                  //       return null;
+                  //     },
+                  //     readOnly: true,
+                  //     onTap: () async {
+                  //       TimeOfDay? pickedTime = await showTimePicker(
+                  //         context: context,
+                  //         initialTime: TimeOfDay.now(),
+                  //       );
+                  //       if (pickedTime != null) {
+                  //         String formattedTime = pickedTime.format(context);
+                  //         setState(() {
+                  //           _timeController.text = formattedTime;
+                  //         });
+                  //       } else {}
+                  //     },
+                  //   ),
+                  // ),
+                  // SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: TextFormField(
+                            controller: _dateController,
+                            decoration: InputDecoration(
+                              hintText: "Date of drive",
+                              hintStyle: kTextPopR14,
+                              icon: const Icon(Icons.calendar_today_rounded),
+                              filled: true,
+                              fillColor: Colors.green.shade100,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Date Not Set !';
+                              }
+                              return null;
+                            },
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2024));
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat.yMMMMd('en_US')
+                                        .format(pickedDate);
+                                setState(() {
+                                  _dateController.text = formattedDate;
+                                });
+                              } else {}
+                            },
                           ),
-                          filled: true,
-                          fillColor: Colors.green.shade100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Date Not Set !';
-                          }
-                          return null;
-                        },
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1950),
-                              lastDate: DateTime(2024));
-                          if (pickedDate != null) {
-                            //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                                DateFormat.yMMMMd('en_US').format(pickedDate);
-                            setState(() {
-                              _dateController.text =
-                                  formattedDate; //set output date to TextField value.
-                            });
-                          } else {}
-                        }),
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60.0,
-                    child: TextFormField(
-                      controller: _timeController,
-                      decoration: InputDecoration(
-                        hintText: "Time of drive",
-                        hintStyle: kTextPopR14,
-                        icon: const Icon(
-                          Icons.access_time_rounded,
-                        ),
-                        filled: true,
-                        fillColor: Colors.green.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Time Not Set !';
-                        }
-                        return null;
-                      },
-                      readOnly: true,
-                      onTap: () async {
-                        TimeOfDay? pickedTime = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                        if (pickedTime != null) {
-                          String formattedTime = pickedTime.format(context);
-                          setState(() {
-                            _timeController.text = formattedTime;
-                          });
-                        } else {}
-                      },
-                    ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: TextFormField(
+                            controller: _timeController,
+                            decoration: InputDecoration(
+                              hintText: "Time of drive",
+                              hintStyle: kTextPopR14,
+                              icon: const Icon(Icons.access_time_rounded),
+                              filled: true,
+                              fillColor: Colors.green.shade100,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Time Not Set !';
+                              }
+                              return null;
+                            },
+                            readOnly: true,
+                            onTap: () async {
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+                              if (pickedTime != null) {
+                                String formattedTime =
+                                    pickedTime.format(context);
+                                setState(() {
+                                  _timeController.text = formattedTime;
+                                });
+                              } else {}
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 16),
                   TextFormField(
@@ -189,26 +332,31 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.green.shade100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
                       labelText: 'Address',
                     ),
                   ),
                   SizedBox(height: 16),
                   CSCPicker(
                     showCities: true,
-                    // showStates: false,
                     countryFilter: [
                       CscCountry.India,
                     ],
                     dropdownDecoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: ksecondaryColor,
-                      border: Border.all(color: ksecondaryColor, width: 2),
+                      color: kinputColor,
+                      border: Border.all(color: kinputColor, width: 2),
                     ),
                     disabledDropdownDecoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
-                        color: ksecondaryColor,
-                        border: Border.all(color: ksecondaryColor, width: 1)),
+                        color: kinputColor,
+                        border: Border.all(color: kinputColor, width: 1)),
                     layout: Layout.vertical,
                     onCountryChanged: (country) {},
                     onStateChanged: (state) {
@@ -224,6 +372,32 @@ class _NgoAddpostState extends State<NgoAddpost> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _addImage extends StatelessWidget {
+  const _addImage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0.0,
+      color: Colors.grey[300],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Container(
+        width: 100,
+        height: 100,
+        child: Icon(
+          Icons.add,
+          size: 50,
+          color: Colors.grey[700],
         ),
       ),
     );
