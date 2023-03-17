@@ -115,9 +115,9 @@ class NgoAppdrawer extends StatelessWidget {
                       'Smile Foundation',
                       style: kTextPopM16.copyWith(color: ksecondaryColor),
                     ),
-                    FittedBox(
+                    Flexible(
                       child: Text(
-                        'What should we write here idk or we can also skip this ',
+                        'What should we write here ',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 10,
                         style: kTextPopR12.copyWith(color: ksecondaryColor),
