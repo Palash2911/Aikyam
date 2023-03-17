@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Colors
 Color kprimaryColor = Color(0xfff1BB273);
 Color ksecondaryColor = Color(0xfffE3F0E2);
+Color kinputColor = Colors.green.shade100;
 Color kpostColor = Color(0xfffCFEEE1);
 
 const kAnimationDuration = Duration(milliseconds: 200);
@@ -21,7 +21,7 @@ ThemeData aikyamTheme = ThemeData(
 
 //Container Decoration
 BoxDecoration kfillbox10 = BoxDecoration(
-  color: ksecondaryColor,
+  color: kinputColor,
   borderRadius: BorderRadius.circular(10),
 );
 BoxDecoration kfillbox20 = BoxDecoration(
