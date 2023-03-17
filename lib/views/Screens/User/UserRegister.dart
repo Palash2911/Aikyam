@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/models/users.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';

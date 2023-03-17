@@ -39,7 +39,40 @@ class NgoProvider extends ChangeNotifier {
     }
   }
 
-  Future<Ngo?> getUserDetails(String uid) async {
+  Future updateNgo(Ngo ngo) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      var storage = FirebaseStorage.instance;
+      TaskSnapshot taskSnapshot =
+          await storage.ref().child('NProfile/${ngo.id}').putFile(ngo.profile);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
+      await ngos.doc(ngo.id).update({
+        'Name': ngo.name,
+        'Bio': ngo.bio,
+        "PhoneNo": ngo.phone,
+        "UID": ngo.id,
+        "Email": ngo.email,
+        "DateofEst": ngo.date,
+        "City": ngo.city,
+        "Zipcode": ngo.zipcode,
+        "State": ngo.state,
+        "IsRegistered": ngo.registered,
+        "Type": ngo.type,
+        "Category": ngo.category,
+        "ProfilePic": downloadUrl,
+      });
+
+      prefs.setBool('Profile', true);
+      notifyListeners();
+    } catch (e) {
+      prefs.setBool('Profile', false);
+      rethrow;
+    }
+  }
+
+  Future<Ngo?> getNgoDetails(String uid) async {
     //instead of map Users user
 
     try {

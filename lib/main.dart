@@ -1,6 +1,7 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/chatProvider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
+import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/routes.dart';
 import 'package:aikyam/views/constants.dart';
@@ -31,12 +32,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (BuildContext context) => ChatProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => PostProvider(),
+        ),
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          theme: aikyamTheme,
-          routes: approutes,
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        theme: aikyamTheme,
+        routes: approutes,
       ),
     );
   }
