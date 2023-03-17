@@ -29,7 +29,10 @@ class NgoChatScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ChatScreenOpen()),
+                      MaterialPageRoute(
+                          builder: (context) => ChatScreenOpen(
+                                receiverId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
+                              )),
                     );
                   },
                   name: 'Smile Foundation',

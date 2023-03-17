@@ -1,11 +1,15 @@
+import 'package:aikyam/models/chats.dart';
 import 'package:aikyam/providers/chatProvider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/chatMessageBubble.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
-  const ChatScreenOpen({Key? key}) : super(key: key);
+  const ChatScreenOpen({required this.receiverId});
+  final String receiverId;
 
   @override
   _ChatScreenOpenState createState() => _ChatScreenOpenState();
@@ -13,17 +17,30 @@ class ChatScreenOpen extends StatefulWidget {
 
 class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
-
-
+  final auth = FirebaseAuth.instance;
+  CollectionReference messageRef =
+      FirebaseFirestore.instance.collection('Users');
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    messageRef = messageRef
+        .doc('CvKdycC9GTkkI1q6aKjV')
+        .collection('Chats')
+        .doc(widget.receiverId)
+        .collection('Messages');
     // Provider.of<ChatProvider>(context, listen: false).createChatRoom("ChatRoom", "Chatting");
-    Provider.of<ChatProvider>(context, listen: false).sendMessage("hello", "Palash", "_textController.text");
   }
 
   void sendMessage(BuildContext ctx) {
-
+    Provider.of<ChatProvider>(context, listen: false).sendMessage(
+      Chats(
+        receiverId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
+        senderId: 'CvKdycC9GTkkI1q6aKjV',
+        message: _textController.text,
+        dateTime: DateTime.now().toString(),
+      ),
+    );
+    _textController.clear();
   }
 
   @override
@@ -33,7 +50,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         child: Column(
           children: [
             Card(
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20.0),
                   bottomRight: Radius.circular(20.0),
@@ -48,16 +65,15 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                       child: Container(
                         height: 70.0,
                         width: 70.0,
-                        color:Colors.red,
+                        color: Colors.red,
                         child: Image.asset('assets/images/ngo.png'),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Smile Foundation',
-                            style: kTextPopM16),
+                        Text('Smile Foundation', style: kTextPopM16),
                         Text(
                           'Active 5 mins ago',
                           style: kTextPopR12,
@@ -69,27 +85,26 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
               ),
             ),
             Expanded(
-              child: ListView(
-                reverse: true,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                children: [
-                  MessageBubble(
-                    sender: '',
-                    text:
-                        'Lorem Ipsum is simply dummy text of the printing and sdjfjsdbf Lorem Ipsum is simply dummy text of the printing and Lorem Ipsum is simply dummy text of the printing simply dummy text of the printing and sdjfjsdbf',
-                    isUser: false,
-                  ),
-                  MessageBubble(
-                    sender: '',
-                    text: 'Its on Sunday 12 onwords',
-                    isUser: false,
-                  ),
-                  MessageBubble(
-                    sender: ' ',
-                    text: 'Hey, What is the time ?, What is the ',
-                    isUser: true,
-                  ),
-                ],
+              child: StreamBuilder<QuerySnapshot>(
+                stream: messageRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView(
+                      children: snapshot.data!.docs.map((document) {
+                        return MessageBubble(
+                          sender: "Palash",
+                          text: document['Message'],
+                          isUser: document['isUser'],
+                          dateTime: document['DateTime'],
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
               ),
             ),
             Container(
@@ -98,18 +113,16 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: _textController,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            String message = _textController.text.trim();
-                            if (message.isNotEmpty) {
-                              _textController.clear();
-                              setState(() {});
-                            }
+                            sendMessage(context);
                           },
                         ),
-                        hintText: 'Message',hintStyle: kTextPopR14,
+                        hintText: 'Message',
+                        hintStyle: kTextPopR14,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
