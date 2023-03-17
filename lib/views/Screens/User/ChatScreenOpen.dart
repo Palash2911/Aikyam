@@ -1,6 +1,8 @@
+import 'package:aikyam/providers/chatProvider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/chatMessageBubble.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
   const ChatScreenOpen({Key? key}) : super(key: key);
@@ -11,6 +13,18 @@ class ChatScreenOpen extends StatefulWidget {
 
 class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
+
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Provider.of<ChatProvider>(context, listen: false).createChatRoom("ChatRoom", "Chatting");
+    Provider.of<ChatProvider>(context, listen: false).sendMessage("hello", "Palash", "_textController.text");
+  }
+
+  void sendMessage(BuildContext ctx) {
+
+  }
 
   @override
   Widget build(BuildContext context) {

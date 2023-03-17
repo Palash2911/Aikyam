@@ -50,6 +50,7 @@ dependencies:
   shared_preferences: ^2.0.18
   image_picker: ^0.8.6+4
   intl: ^0.17.0
+  firebase_database: ^10.0.16
 
 dev_dependencies:
   flutter_test:
