@@ -80,16 +80,19 @@ class _UserRegisterState extends State<UserRegister> {
       } else {
         print("hi");
         await userProvider
-            .registerUser(Users(
-                id: authProvider.token,
-                bio: bio,
-                name: name,
-                email: email,
-                phone: phone,
-                gender: gender,
-                occupation: occupation,
-                interest: interest,
-                profile: imageFile!))
+            .registerUser(
+          Users(
+            id: authProvider.token,
+            bio: bio,
+            name: name,
+            email: email,
+            phone: phone,
+            gender: gender,
+            occupation: occupation,
+            interest: interest,
+            profile: imageFile!,
+          ),
+        )
             .catchError((e) {
           print("Failure");
         }).then((_) {

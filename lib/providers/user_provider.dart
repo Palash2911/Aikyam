@@ -63,6 +63,7 @@ class UserProvider extends ChangeNotifier {
       });
 
       print(user!.bio);
+      notifyListeners();
       return user;
     } catch (e) {
       print(e);

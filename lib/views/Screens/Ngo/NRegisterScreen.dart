@@ -89,20 +89,23 @@ class _NgoRegisterState extends State<NgoRegister> {
         print("Please Select Profile Pic");
       } else {
         await ngoProvider
-            .registerNgo(Ngo(
-                id: authProvider.token,
-                bio: bio,
-                name: name,
-                email: email,
-                phone: phone,
-                type: ngoType,
-                date: date,
-                registered: ngoRegisterd,
-                city: city,
-                state: state,
-                zipcode: zipcode,
-                category: category,
-                profile: imageFile!))
+            .registerNgo(
+          Ngo(
+            id: authProvider.token,
+            bio: bio,
+            name: name,
+            email: email,
+            phone: phone,
+            type: ngoType,
+            date: date,
+            registered: ngoRegisterd,
+            city: city,
+            state: state,
+            zipcode: zipcode,
+            category: category,
+            profile: imageFile!,
+          ),
+        )
             .catchError((e) {
           print("Failure");
         }).then((_) {

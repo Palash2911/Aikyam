@@ -67,8 +67,8 @@ class NgoProvider extends ChangeNotifier {
             category: data["Category"],
             profile: File(data["ProfilePic"])) as CollectionReference<Ngo?>;
       });
-
       print(ngo!.bio);
+      notifyListeners();
       return ngo;
     } catch (e) {
       print(e);

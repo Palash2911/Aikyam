@@ -1,6 +1,7 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/Choose.dart';
 import 'package:aikyam/views/Screens/Ngo/Login.dart';
+import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.of(context).pushReplacementNamed(Choose.routeName);
           } else if (authProvider.isUser.toString() == "Individual") {
             if (authProvider.isProfile) {
-              Navigator.of(context).pushReplacementNamed(UserBottomBar.routeName);
+              Navigator.of(context).pushReplacementNamed(NgoAddpost.routeName);
             } else {
               Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
             }
