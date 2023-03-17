@@ -112,24 +112,8 @@ class _PostState extends State<Post> {
                     ),
                   ],
                 ),
-                Spacer(),
-                Row(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(width: 8),
-                    Text(
-                      '202',
-                      style: kTextPopM16,
-                    ),
-                  ],
-                ),
-                // GestureDetector(
-                //   onTap: () {},
-                //   child: Icon(
-                //     Icons.share,
-                //     size: 32.0,
-                //   ),
-                // ),
+                
+                
               ],
             ),
             SizedBox(height: 16),
@@ -219,7 +203,7 @@ class _PostState extends State<Post> {
                           SizedBox(width: 8),
                           Text(
                             '123',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                           style: kTextPopR14.copyWith(color: ksecondaryColor),
                           ),
                         ],
                       ),
@@ -246,7 +230,7 @@ class _PostState extends State<Post> {
                           SizedBox(width: 8),
                           Text(
                             _isApply ? 'Apply' : 'Withdrow',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                           style: kTextPopR14.copyWith(color: ksecondaryColor),
                           ),
                         ],
                       ),
@@ -273,7 +257,7 @@ class _PostState extends State<Post> {
                           SizedBox(width: 8),
                           Text(
                             _isApply ? 'Share' : 'Share',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                            style: kTextPopR14.copyWith(color: ksecondaryColor),
                           ),
                         ],
                       ),

@@ -20,8 +20,8 @@ var approutes = <String, WidgetBuilder>{
   //Inital Route
   // '/': (context) => SplashScreen(),
   // '/': (context) => NgoAddpost(),
-  // '/': (context) => NgoBottomBar(),
-  '/': (context) => IntroductionAnimationScreen(),
+  '/': (context) => NgoBottomBar(),
+  // '/': (context) => IntroductionAnimationScreen(),
   // '/': (context) => LogIn(),
 
   //Login Routes

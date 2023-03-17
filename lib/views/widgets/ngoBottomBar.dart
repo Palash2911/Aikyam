@@ -44,10 +44,11 @@ List<Widget> _buildScreens() {
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-        icon: Icon(FeatherIcons.home),
-        title: ("Home"),
-        activeColorPrimary: kprimaryColor,
-        inactiveColorPrimary: kprimaryColor),
+      icon: Icon(FeatherIcons.home),
+      title: ("Home"),
+      activeColorPrimary: kprimaryColor,
+      inactiveColorPrimary: kprimaryColor,
+    ),
     PersistentBottomNavBarItem(
       icon: Icon(FeatherIcons.messageSquare),
       title: ("Chat"),
