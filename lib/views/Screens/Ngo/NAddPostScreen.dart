@@ -1,8 +1,15 @@
+import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
+import 'package:aikyam/models/users.dart';
+import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/post.dart';
 
 class NgoAddpost extends StatefulWidget {
   const NgoAddpost({super.key});
@@ -35,6 +42,88 @@ class _NgoAddpostState extends State<NgoAddpost> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
+
+  String get address => _addressController.text;
+  String get driveTitle => _driveTitleController.text;
+  String get description => _descriptionController.text;
+  String get noofVolunteers => _noofVoluntersController.text;
+  String get date => _dateController.text;
+  String get time => _timeController.text;
+  String get state => _stateController.text;
+  String get city => _cityController.text;
+  String get country => _countryController.text;
+
+  var isLoading = false;
+
+  //what to do of imGE?
+  @override
+  void initState() {
+    super.initState();
+    _addressController.text = "";
+    _driveTitleController.text = "";
+    _descriptionController.text = "";
+    _noofVoluntersController.text = "";
+    _dateController.text = "";
+    _timeController.text = "";
+    _stateController.text = "";
+    _cityController.text = "";
+    _countryController.text = "";
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    _driveTitleController.dispose();
+    _descriptionController.dispose();
+    _noofVoluntersController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+    _stateController.dispose();
+    _cityController.dispose();
+    _countryController.dispose();
+    super.dispose();
+  }
+
+  Future _createPost(BuildContext ctx) async {
+    var authProvider = Provider.of<Auth>(ctx, listen: false);
+    var postProvider = Provider.of<PostProvider>(ctx,
+        listen: false); //in post section post provider & auth
+    final isValid = _formKey.currentState!.validate();
+    setState(() {
+      isLoading = true;
+    });
+    _formKey.currentState!.save();
+    if (isValid) {
+      await postProvider
+          .createPost(Post(
+              category: "",
+              description: description,
+              ngoid: "",
+              id: "",
+              noofVolunters: noofVolunteers,
+              date: date,
+              time: time,
+              city: city,
+              driveTitle: driveTitle,
+              state: state,
+              address: address,
+              country: country,
+              photos: []))
+          .catchError((e) {
+        print("Failure");
+      }).then((_) {
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -368,26 +457,26 @@ class _NgoAddpostState extends State<NgoAddpost> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Posted Successfully!'),
-                              content: const Text('Your post has been posted.'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: const Text('Post'))
+                    onPressed: () {
+                      _createPost(context);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Posted Successfully!'),
+                            content: const Text('Your post has been posted.'),
+                            actions: [
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {},
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text('Post'),
+                  )
                 ],
               ),
             ),

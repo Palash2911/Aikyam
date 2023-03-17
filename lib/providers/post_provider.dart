@@ -34,32 +34,8 @@ class PostProvider extends ChangeNotifier {
       rethrow;
     }
   }
-
-  // Future<Post?> getUserDetails(String uid) async {
-  //   //instead of map Users user
-
-  //   try {
-  //     CollectionReference ngos = FirebaseFirestore.instance.collection('Post');
-  //     Post? post;
-
-  //     if (uid.isNotEmpty) {
-  //       uid = uid;
-  //     }
-  //     await ngos.doc(uid.toString()).get().then((DocumentSnapshot query) {
-  //       Map<String, dynamic> data = query.data() as Map<String, dynamic>;
-
-  //       posts = Post(
-  //           id: data["UID"],
-  //           date: data["DateofEst"],
-  //           city: data["City"],
-  //           state: data["State"],
-  //           photos: (data["Photos"])) as CollectionReference<Post?>;
-  //     });
-
-  //     print(post!.description);
-  //     return post;
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 }
+//addpost madhe like create proifle createPost
+//remove navigator
+//controller on every feild 
+//onpressed createpost call kar

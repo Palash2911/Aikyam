@@ -68,4 +68,34 @@ class UserProvider extends ChangeNotifier {
       print(e);
     }
   }
+
+  Future updateUser(Users user) async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      var storage = FirebaseStorage.instance;
+      TaskSnapshot taskSnapshot =
+          await storage.ref().child('Profile/${user.id}').putFile(user.profile);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      await users.doc(user.id).update({
+        'Name': user.name,
+        'Bio': user.bio,
+        "PhoneNo": user.phone,
+        "UID": user.id,
+        "Email": user.email,
+        "Gender": user.gender,
+        "Occupation": user.occupation,
+        "Interest": user.interest,
+        "ProfilePic": downloadUrl,
+      });
+
+      prefs.setBool('Profile', true);
+      notifyListeners();
+    } catch (e) {
+      prefs.setBool('Profile', false);
+      notifyListeners();
+      rethrow;
+    }
+  }
 }
