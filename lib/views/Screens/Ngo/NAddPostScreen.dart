@@ -44,7 +44,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           toolbarHeight: 80,
-          flexibleSpace: RoundAppBar(
+          flexibleSpace: const RoundAppBar(
             title: 'Create Post',
           ),
         ),
@@ -58,12 +58,12 @@ class _NgoAddpostState extends State<NgoAddpost> {
                 children: [
                   Row(
                     children: [
-                      _addImage(),
-                      _addImage(),
-                      _addImage(),
+                      const _addImage(),
+                      const _addImage(),
+                      const _addImage(),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     controller: _driveTitleController,
                     validator: (value) {
@@ -84,7 +84,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       labelText: 'Drive Title',
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     minLines: 1,
                     maxLines: 10,
@@ -107,7 +107,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       labelText: 'Drive description',
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,
@@ -117,7 +117,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: DropdownButton<String>(
-                      hint: Text('Select a category'),
+                      hint: const Text('Select a category'),
                       value: selectedCategory,
                       items: categories.map((String category) {
                         return new DropdownMenuItem<String>(
@@ -133,7 +133,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                     ),
                   ),
 
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     controller: _noofVoluntersController,
                     validator: (value) {
@@ -155,7 +155,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       labelText: 'Number of volunteers',
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // SizedBox(
                   //   height: 60.0,
                   //   child: TextFormField(
@@ -322,7 +322,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _addressController,
                     validator: (value) {
@@ -341,7 +341,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       labelText: 'Address',
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   CSCPicker(
                     showCities: true,
                     countryFilter: [
@@ -366,8 +366,28 @@ class _NgoAddpostState extends State<NgoAddpost> {
                       _cityController.text = city.toString();
                     },
                   ),
-                  SizedBox(height: 16),
-                  ElevatedButton(onPressed: () {}, child: Text('Post'))
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Posted Successfully!'),
+                              content: const Text('Your post has been posted.'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Text('Post'))
                 ],
               ),
             ),
