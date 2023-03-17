@@ -16,6 +16,7 @@ class NgoAddpost extends StatefulWidget {
 class _NgoAddpostState extends State<NgoAddpost> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _noofVoluntersController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -33,7 +34,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
           elevation: 0.0,
           toolbarHeight: 80,
           flexibleSpace: RoundAppBar(
-            title: '\t\t\t\t\t Create Post',
+            title: 'Create Post',
           ),
         ),
         body: SingleChildScrollView(
@@ -47,6 +48,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
                   Row(
                     children: [
                       Card(
+                        elevation: 0.0,
+                        color: Colors.grey[300],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -73,7 +76,23 @@ class _NgoAddpostState extends State<NgoAddpost> {
                     },
                     decoration: InputDecoration(
                       hintText: 'Write what will be in the drive',
-                      labelText: 'Description',
+                      alignLabelWithHint: true,
+                      labelText: 'Drive description',
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _noofVoluntersController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a number';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'How many people you required for drive',
+                      alignLabelWithHint: true,
+                      labelText: 'Number of volunteers',
                     ),
                   ),
                   SizedBox(height: 16),
@@ -84,7 +103,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         controller: _dateController,
                         // onTap: ,
                         decoration: InputDecoration(
-                          hintText: "Date",
+                          hintText: "Date of drive",
                           hintStyle: kTextPopR14,
                           icon: const Icon(
                             Icons.calendar_today_rounded,
@@ -127,7 +146,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                     child: TextFormField(
                       controller: _timeController,
                       decoration: InputDecoration(
-                        hintText: "Time",
+                        hintText: "Time of drive",
                         hintStyle: kTextPopR14,
                         icon: const Icon(
                           Icons.access_time_rounded,
@@ -175,30 +194,32 @@ class _NgoAddpostState extends State<NgoAddpost> {
                   ),
                   SizedBox(height: 16),
                   CSCPicker(
+                    showCities: true,
+                    // showStates: false,
+                    countryFilter: [
+                      CscCountry.India,
+                    ],
                     dropdownDecoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       color: ksecondaryColor,
                       border: Border.all(color: ksecondaryColor, width: 2),
                     ),
                     disabledDropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         color: ksecondaryColor,
                         border: Border.all(color: ksecondaryColor, width: 1)),
                     layout: Layout.vertical,
-                    onCountryChanged: (country) {
-                      _countryController.text = country.toString();
-                    },
-                    onStateChanged: (s) {
-                      setState(() {
-                        _stateController.text = s.toString();
-                      });
+                    onCountryChanged: (country) {},
+                    onStateChanged: (state) {
+                      _stateController.text = state.toString();
                     },
                     onCityChanged: (city) {
                       _cityController.text = city.toString();
                     },
                   ),
                   SizedBox(height: 16),
-                  ElevatedButton(onPressed: (){}, child: Text('Post'))
+                  ElevatedButton(onPressed: () {}, child: Text('Post'))
                 ],
               ),
             ),
