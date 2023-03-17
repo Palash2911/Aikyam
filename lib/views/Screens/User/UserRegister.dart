@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:aikyam/providers/user_provider.dart';
+import 'package:aikyam/models/users.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
@@ -64,6 +65,7 @@ class _UserRegisterState extends State<UserRegister> {
 
   Future _createProfile(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
+    var userProvider = Provider.of<UserProvider>(ctx, listen: false);
     final isValid = _form.currentState!.validate();
     setState(() {
       isLoading = true;
@@ -76,9 +78,18 @@ class _UserRegisterState extends State<UserRegister> {
           isLoading = false;
         });
       } else {
-        await authProvider
-            .registerUser(bio, name, phone, email, gender, occupation, interest,
-                imageFile!)
+        print("hi");
+        await userProvider
+            .registerUser(Users(
+                id: authProvider.token,
+                bio: bio,
+                name: name,
+                email: email,
+                phone: phone,
+                gender: gender,
+                occupation: occupation,
+                interest: interest,
+                profile: imageFile!))
             .catchError((e) {
           print("Failure");
         }).then((_) {

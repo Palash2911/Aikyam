@@ -1,11 +1,25 @@
+import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/home_screen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<UserProvider>(context)
+        .getUserDetails("j2Bygr472mY7y2BJ5hAOHgd2q2o1");
+  }
 
   @override
   Widget build(BuildContext context) {

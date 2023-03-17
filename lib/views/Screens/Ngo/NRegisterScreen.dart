@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:aikyam/models/ngo.dart';
+import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
@@ -77,6 +78,7 @@ class _NgoRegisterState extends State<NgoRegister> {
 
   Future _createProfile(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
+    var ngoProvider = Provider.of<NgoProvider>(ctx, listen: false);
     final isValid = _form.currentState!.validate();
     setState(() {
       isLoading = true;
@@ -86,9 +88,21 @@ class _NgoRegisterState extends State<NgoRegister> {
       if (imageFile == null) {
         print("Please Select Profile Pic");
       } else {
-        await authProvider
-            .registerNgo(bio, name, phone, email, ngoType, date, ngoRegisterd,
-                city, zipcode, state, category, imageFile!)
+        await ngoProvider
+            .registerNgo(Ngo(
+                id: authProvider.token,
+                bio: bio,
+                name: name,
+                email: email,
+                phone: phone,
+                type: ngoType,
+                date: date,
+                registered: ngoRegisterd,
+                city: city,
+                state: state,
+                zipcode: zipcode,
+                category: category,
+                profile: imageFile!))
             .catchError((e) {
           print("Failure");
         }).then((_) {
