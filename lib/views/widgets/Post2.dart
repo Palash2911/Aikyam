@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/Ngo/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,13 @@ class _PostState extends State<PostItem> {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: OutlinedButton(
-                      onPressed: () {}, child: const Text("view")),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewDetails()));
+                      },
+                      child: const Text("view")),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
