@@ -126,15 +126,13 @@ class _PostState extends State<PostItem> {
             ),
             const Divider(),
             const SizedBox(height: 16),
-            Row(
-              children: [
-                Icon(Icons.person),
-                SizedBox(width: 5),
-                Text('No of required volunteers: ', style: kTextPopB14),
-                Text('20', style: kTextPopR14)
-              ],
+            Text(
+              'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+              style: kTextPopM16,
             ),
-            SizedBox(height: 5),
+            SizedBox(
+              height: 5,
+            ),
             Row(
               children: [
                 Icon(Icons.location_city),
@@ -147,17 +145,26 @@ class _PostState extends State<PostItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.location_on),
+                Icon(Icons.access_time_rounded),
                 SizedBox(width: 5),
-                Text('Location: ', style: kTextPopB14),
+                Text('Date and Time: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
-                    'D Y patil college of Engineering',
+                    '19 Mar ',
                     style: kTextPopR14,
                   ),
                 ),
               ],
             ),
+            Row(
+              children: [
+                Icon(Icons.person),
+                SizedBox(width: 5),
+                Text('Category: ', style: kTextPopB14),
+                Text('Education', style: kTextPopR14)
+              ],
+            ),
+            SizedBox(height: 5),
             const SizedBox(height: 16),
             Row(
               children: [

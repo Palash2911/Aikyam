@@ -12,218 +12,317 @@ class EditUser extends StatefulWidget {
 
 class _EditUserState extends State<EditUser> {
   var _selectedIntrest;
+  List<Gender> genders = [];
+  final _bioController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _occupationController = TextEditingController();
+  final _interestController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var selectedGender;
     var selectedIndex = -1;
     int _choiceIndex;
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        child: Icon(
-          Icons.save,
-          color: kprimaryColor,
-          size: 30,
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          child: Icon(
+            Icons.save,
+            color: kprimaryColor,
+            size: 30,
+          ),
+          elevation: 0,
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          },
         ),
-        elevation: 0,
-        foregroundColor: Color.fromARGB(255, 255, 255, 255),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        },
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-        flexibleSpace: RoundAppBar(
-          title: 'Edit Profile',
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          toolbarHeight: 80,
+          flexibleSpace: RoundAppBar(
+            title: '      Edit Profile',
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 22.0, vertical: 0.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 30.0,
-              ),
-              //profile picture
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/group.png"),
-                      radius: 60,
+        body: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 22.0, vertical: 0.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30.0,
+                ),
+                //profile picture
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage("assets/images/group.png"),
+                        radius: 60,
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 1,
-                    right: 1,
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
+                    Positioned(
+                      bottom: 1,
+                      right: 1,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                width: 180,
-                //height: 10.0,
-                child: const TextField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    hintText: "Edit Bio",
-                    prefixIcon: Icon(
-                      Icons.edit,
-                      color: Color.fromARGB(255, 86, 86, 86),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40.0,
-              ),
-              // name
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                child: const TextField(
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.green,
-                    ),
-                    hintText: "Enter name",
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              //contact
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                child: const TextField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.phone,
-                      color: Colors.green,
-                    ),
-                    hintText: "Enter contact no",
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              //email
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                child: const TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Colors.green,
-                    ),
-                    hintText: "Enter Email-ID",
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              //gender
-
-              Container(
-                decoration: BoxDecoration(
-                  // border: Border.all(color: kprimaryColor, width: 2),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'Gender',
-                      style: kTextPopR12,
-                    ),
-                    Chip(
-                      label: Text('Male',
-                          style: TextStyle(fontSize: 12, color: Colors.green)),
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    Chip(
-                      label: Text('Female',
-                          style: TextStyle(fontSize: 12, color: Colors.green)),
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    Chip(
-                      label: Text('Other',
-                          style: TextStyle(fontSize: 12, color: Colors.green)),
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                child: const TextField(
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
+                  // controller: _bioController,
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.edit),
+                    filled: true,
+                    fillColor: Colors.grey.shade300,
+                    hintText: 'Bio',
+                    hintStyle: kTextPopR14,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter bio!';
+                    }
+                    return null;
+                  },
+                  textInputAction: TextInputAction.next,
+                ),
+
+                const SizedBox(height: 20.0),
+                // name
+                TextFormField(
+                  // controller: _nameController,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.work,
-                      color: Colors.green,
+                    hintText: "Name",
+                    hintStyle: kTextPopR14,
+                    icon: const Icon(Icons.person),
+                    filled: true,
+                    fillColor: Colors.green.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
                     ),
-                    hintText: "Enter Occupation",
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter name!';
+                    }
+                    return null;
+                  },
+                  textInputAction: TextInputAction.next,
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                child: const TextField(
-                  keyboardType: TextInputType.name,
+
+                const SizedBox(height: 10.0),
+                //contact
+                TextFormField(
+                  maxLength: 10,
+                  // controller: _phoneController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.work,
-                      color: Colors.green,
+                    counterText: '',
+                    hintText: "Contact number",
+                    hintStyle: kTextPopR14,
+                    icon: const Icon(Icons.phone),
+                    filled: true,
+                    fillColor: Colors.green.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
                     ),
-                    hintText: "Enter Interest",
                   ),
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    final phoneRegex = RegExp(r'^\+?\d{9,15}$');
+                    if (!phoneRegex.hasMatch(value)) {
+                      return 'Please enter a valid phone number';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-            ],
+
+                const SizedBox(height: 10.0),
+                //email
+                TextFormField(
+                  // controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: "Email-Id",
+                    hintStyle: kTextPopR14,
+                    icon: const Icon(Icons.email_rounded),
+                    filled: true,
+                    fillColor: Colors.green.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter Email-Id!';
+                    }
+                    return null;
+                  },
+                  textInputAction: TextInputAction.next,
+                ),
+
+                const SizedBox(height: 10.0),
+                //  Gender
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.male_rounded,
+                      size: 32.0,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 12.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade100,
+                        // border: Border.all(color: kprimaryColor, width: 2),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10.0),
+                          Text(
+                            'Gender',
+                            style: kTextPopR14.copyWith(color: Colors.black54),
+                          ),
+                          const SizedBox(width: 9.0),
+                          SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: genders.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        genders.forEach((gender) =>
+                                            gender.isSelected = false);
+                                        genders[index].isSelected = true;
+                                        // gender = genders[index].name;
+                                      });
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 9),
+                                      child: Chip(
+                                        label: Text(
+                                          genders[index].name,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: !genders[index].isSelected
+                                                  ? Colors.green
+                                                  : Colors.white),
+                                        ),
+                                        backgroundColor:
+                                            !genders[index].isSelected
+                                                ? Colors.white
+                                                : Colors.green,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15.0),
+                TextFormField(
+                  // controller: _occupationController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: "Occupation",
+                    hintStyle: kTextPopR14,
+                    icon: const Icon(Icons.work_rounded),
+                    filled: true,
+                    fillColor: Colors.green.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter occupation!';
+                    }
+                    return null;
+                  },
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 10.0),
+
+                TextFormField(
+                  // controller: _interestController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: "Interest",
+                    hintStyle: kTextPopR14,
+                    icon: const Icon(Icons.interests_rounded),
+                    filled: true,
+                    fillColor: Colors.green.shade100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter interest!';
+                    }
+                    return null;
+                  },
+                  textInputAction: TextInputAction.next,
+                ),
+
+                SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+class Gender {
+  String name;
+  IconData icon;
+  bool isSelected;
+
+  Gender(this.name, this.icon, this.isSelected);
 }

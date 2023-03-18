@@ -9,7 +9,16 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool _isSelected = true;
+  bool _isAboutSelected = true;
+  bool _isWorkSelected = true;
+
+  bool _isAboutActive = true;
+
+  void _toggleButton() {
+    setState(() {
+      _isAboutActive = !_isAboutActive;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,43 +131,52 @@ class _NgoProfileState extends State<NgoProfile> {
               children: [
                 Expanded(
                   child: Container(
-                    color: kprimaryColor,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(elevation: 0.0),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.info_outline_rounded,
-                        size: 24.0,
-                      ),
-                      label: _isSelected
-                          ? Text(
-                              'About',
-                              style: kTextPopM16,
-                            )
-                          : Text(
-                              'About',
-                              style: kTextPopM16,
-                            ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
+                    padding: EdgeInsets.all(10.0),
                     color: kprimaryColor,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         elevation: 0.0,
                         backgroundColor:
-                            _isSelected ? kprimaryColor : ksecondaryColor,
+                            _isAboutActive ? kprimaryColor : ksecondaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: _toggleButton,
+                      icon: Icon(
+                        Icons.info_outline_rounded,
+                        size: 24.0,
+                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+                      ),
+                      label: Text(
+                        'About',
+                        style: kTextPopM16.copyWith(
+                          color:
+                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    color: kprimaryColor,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        backgroundColor:
+                            _isAboutActive ? kprimaryColor : ksecondaryColor,
+                      ),
+                      onPressed: _toggleButton,
                       icon: Icon(
                         Icons.work,
                         size: 24.0,
+                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
                       ),
                       label: Text(
                         'Post',
-                        style: kTextPopM16,
+                        style: kTextPopM16.copyWith(
+                          color:
+                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
                       ),
                     ),
                   ),

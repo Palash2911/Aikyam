@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,14 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   bool _isSelected = true;
+
+  bool _isAboutActive = true;
+
+  void _toggleButton() {
+    setState(() {
+      _isAboutActive = !_isAboutActive;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,21 +63,29 @@ class _UserProfileState extends State<UserProfile> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 5.0, horizontal: 15.0),
                                 color: kprimaryColor,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.edit,
-                                      size: 24.0,
-                                      color: ksecondaryColor,
-                                    ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-                                    Text('edit',
-                                        style: kTextPopB14.copyWith(
-                                            color: ksecondaryColor)),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditUser()));
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.edit,
+                                        size: 24.0,
+                                        color: ksecondaryColor,
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Text('edit',
+                                          style: kTextPopB14.copyWith(
+                                              color: ksecondaryColor)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -106,53 +123,105 @@ class _UserProfileState extends State<UserProfile> {
             //   ),
             // ),
 
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: Container(
+            //         color: kprimaryColor,
+            //         child: ElevatedButton.icon(
+            //           style: ElevatedButton.styleFrom(elevation: 0.0),
+            //           onPressed: () {},
+            //           icon: Icon(
+            //             Icons.info_outline_rounded,
+            //             size: 24.0,
+            //           ),
+            //           label: Text(
+            //             'About',
+            //             style: kTextPopM16,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //         color: kprimaryColor,
+            //         child: ElevatedButton.icon(
+            //           style: ElevatedButton.styleFrom(
+            //             elevation: 0.0,
+            //             backgroundColor: kprimaryColor,
+            //           ),
+            //           onPressed: () {},
+            //           icon: Icon(
+            //             Icons.work,
+            //             size: 24.0,
+            //           ),
+            //           label: Text(
+            //             'Post',
+            //             style: kTextPopM16,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
             Row(
               children: [
                 Expanded(
                   child: Container(
-                    color: kprimaryColor,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(elevation: 0.0),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.info_outline_rounded,
-                        size: 24.0,
-                      ),
-                      label: _isSelected
-                          ? Text(
-                              'About',
-                              style: kTextPopM16,
-                            )
-                          : Text(
-                              'About',
-                              style: kTextPopM16,
-                            ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
+                    padding: EdgeInsets.all(10.0),
                     color: kprimaryColor,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         elevation: 0.0,
                         backgroundColor:
-                            _isSelected ? kprimaryColor : ksecondaryColor,
+                            _isAboutActive ? kprimaryColor : ksecondaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: _toggleButton,
+                      icon: Icon(
+                        Icons.info_outline_rounded,
+                        size: 24.0,
+                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+                      ),
+                      label: Text(
+                        'About',
+                        style: kTextPopM16.copyWith(
+                          color:
+                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    color: kprimaryColor,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        backgroundColor:
+                            _isAboutActive ? kprimaryColor : ksecondaryColor,
+                      ),
+                      onPressed: _toggleButton,
                       icon: Icon(
                         Icons.work,
                         size: 24.0,
+                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
                       ),
                       label: Text(
                         'Post',
-                        style: kTextPopM16,
+                        style: kTextPopM16.copyWith(
+                          color:
+                              _isAboutActive ? ksecondaryColor : kprimaryColor,),
+                        
                       ),
                     ),
                   ),
                 ),
               ],
             ),
+
             Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -168,20 +237,12 @@ class _UserProfileState extends State<UserProfile> {
                   Text('Information', style: kTextPopB16),
                   SizedBox(height: 8),
                   ListTile(
-                    title: Text('Type', style: kTextPopM16),
-                    subtitle: Text('Non-Profit', style: kTextPopR14),
+                    title: Text('Occupation', style: kTextPopM16),
+                    subtitle: Text('Student', style: kTextPopR14),
                   ),
                   ListTile(
-                    title: Text('Category', style: kTextPopM16),
-                    subtitle: Text('health,Social work,Education',
-                        style: kTextPopR14),
-                  ),
-                  ListTile(
-                    title: Text('Established in', style: kTextPopM16),
-                    subtitle: Text(
-                      '2002',
-                      style: kTextPopR14,
-                    ),
+                    title: Text('Interest', style: kTextPopM16),
+                    subtitle: Text('Social work', style: kTextPopR14),
                   ),
                   SizedBox(height: 10),
                   Divider(),
