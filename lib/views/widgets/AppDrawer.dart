@@ -92,42 +92,67 @@ class NgoAppdrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Color(0xfff1BB273),
+          UserAccountsDrawerHeader(
+            accountName: Text(
+              "Smile Foundation",
+              style: kTextPopB16,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    height: 70.0,
-                    width: 70.0,
-                    color: const Color(0xffFF0E58),
-                    child: Image.asset('assets/images/dp.jpg'),
-                  ),
+            accountEmail: Text("edit profile"),
+            currentAccountPicture: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NgoProfile(),
+                    ));
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Container(
+                  height: 70.0,
+                  width: 70.0,
+                  color: const Color(0xffFF0E58),
+                  child: Image.asset('assets/images/dp.jpg'),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Smile Foundation',
-                      style: kTextPopM16.copyWith(color: ksecondaryColor),
-                    ),
-                    Flexible(
-                      child: Text(
-                        'What should we write here ',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 10,
-                        style: kTextPopR12.copyWith(color: ksecondaryColor),
-                      ),
-                    )
-                  ],
-                )
-              ],
+              ),
             ),
           ),
+          // DrawerHeader(
+          //   decoration: const BoxDecoration(
+          //     color: Color(0xfff1BB273),
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       ClipRRect(
+          //         borderRadius: BorderRadius.circular(10.0),
+          //         child: Container(
+          //           height: 70.0,
+          //           width: 70.0,
+          //           color: const Color(0xffFF0E58),
+          //           child: Image.asset('assets/images/dp.jpg'),
+          //         ),
+          //       ),
+          //       Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             'Smile Foundation',
+          //             style: kTextPopM16.copyWith(color: ksecondaryColor),
+          //           ),
+          //           Flexible(
+          //             child: Text(
+          //               'What should we write here ',
+          //               overflow: TextOverflow.ellipsis,
+          //               maxLines: 10,
+          //               style: kTextPopR12.copyWith(color: ksecondaryColor),
+          //             ),
+          //           )
+          //         ],
+          //       )
+          //     ],
+          //   ),
+          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text(' My Profile '),
