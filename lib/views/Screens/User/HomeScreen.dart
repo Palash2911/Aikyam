@@ -46,9 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const UserAppdrawer(),
         body: SingleChildScrollView(
           child: Column(
+            //user me home screen widget 20 to 22 line message ref swap with postref; collection i Posts;
+            //column la expanded widget madhe incase// same screen builder//postref in stream,90-97 same,return postitem
+            //return postitem only 1,
+
             children: const [
               PostItem(
-                ngoname: '',
+                ngoname: '', //document[firebase]
                 drivecity: '',
                 driveDate: '',
                 ngocity: '',
