@@ -14,6 +14,8 @@ class PostProvider extends ChangeNotifier {
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       var p = await posts.add({
+        'Name': post.ngoname,
+        'NgoCity': post.ncity,
         'Description': post.description,
         'NoOfVolunteers': post.noofVolunters,
         "Date": post.date,
@@ -47,6 +49,8 @@ class PostProvider extends ChangeNotifier {
           FirebaseFirestore.instance.collection('Posts');
       var p = await post.doc(post.id).update({
         'Description': post.description,
+        'Name': post.ngoname,
+        'NgoCity': post.ncity,
         'NoOfVolunteers': post.noofVolunters,
         "Date": post.date,
         "Time": post.time,

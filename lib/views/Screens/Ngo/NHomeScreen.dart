@@ -2,12 +2,22 @@ import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/Post2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class NHomeScreen extends StatelessWidget {
+class NHomeScreen extends StatefulWidget {
   const NHomeScreen({super.key});
 
   static const routeName = '/ngo_home_screen';
+
+  @override
+  State<NHomeScreen> createState() => _NHomeScreenState();
+}
+
+class _NHomeScreenState extends State<NHomeScreen> {
+  final auth = FirebaseAuth.instance;
+  CollectionReference postRef = FirebaseFirestore.instance.collection('Posts');
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +32,34 @@ class NHomeScreen extends StatelessWidget {
         ),
         drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Post(),
-              PostItem(
-                ngoname: 'smile Foundation',
-                ngocity: 'Pune',
-                drivecity: 'Pune',
-                driveaddress: 'Akurdi D Y Patil',
-                driveDate: 'driveDate',
-                applyStatus: 'apply',
-                pid: 'pid',
-              ),
-              Post(),
-              Post(),
-              Post(),
-            ],
+          child: Expanded(
+            child: Column(
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: postRef.snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return ListView(
+                        children: snapshot.data!.docs.map((document) {
+                          return PostItem(
+                              ngoname: document["Name"],
+                              ngocity: document["NgoCity"],
+                              drivecity: document["City"],
+                              driveaddress: document["Address"],
+                              driveDate: document["Date"],
+                              applyStatus: "",
+                              pid: document.id);
+                        }).toList(),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
