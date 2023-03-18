@@ -1,5 +1,6 @@
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:aikyam/models/users.dart';
@@ -96,6 +97,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
     if (isValid) {
       await postProvider
           .createPost(Post(
+              ncity: "",
+              ngoname: "",
               category: "",
               description: description,
               ngoid: "",

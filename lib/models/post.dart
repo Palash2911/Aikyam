@@ -8,6 +8,8 @@ class Post {
   final String time;
   final String address;
   final String state;
+  final String ncity;
+  final String ngoname;
   final String city;
   final String driveTitle;
   final String country;
@@ -23,9 +25,13 @@ class Post {
     required this.time,
     required this.city,
     required this.driveTitle,
+    required this.ncity,
+    required this.ngoname,
     required this.state,
     required this.address,
     required this.country,
     required this.photos,
   });
+
+  doc(String id) {}
 }

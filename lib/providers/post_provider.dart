@@ -14,6 +14,8 @@ class PostProvider extends ChangeNotifier {
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       var p = await posts.add({
+        'Name': post.ngoname,
+        'NgoCity': post.ncity,
         'Description': post.description,
         'NoOfVolunteers': post.noofVolunters,
         "Date": post.date,
@@ -27,6 +29,40 @@ class PostProvider extends ChangeNotifier {
         "Photos": post.photos,
       });
       post.id = p.id;
+      // prefs.setBool('Profile', true);
+      notifyListeners();
+    } catch (e) {
+      // prefs.setBool('Profile', false);
+      rethrow;
+    }
+  }
+
+  Future updatePost(Post post) async {
+    try {
+      // var storage = FirebaseStorage.instance;
+      // TaskSnapshot taskSnapshot = await storage
+      //     .ref()
+      //     // .child('NProfile/${post.id}') //doubt here
+      //     .putFile(post.photos as File);
+      // final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+      var p = await post.doc(post.id).update({
+        'Description': post.description,
+        'Name': post.ngoname,
+        'NgoCity': post.ncity,
+        'NoOfVolunteers': post.noofVolunters,
+        "Date": post.date,
+        "Time": post.time,
+        "Address": post.address,
+        "City": post.city,
+        "State": post.state,
+        "Ngoid": post.ngoid,
+        // "Uid": post.id,
+        "Country": post.country,
+        "Photos": post.photos,
+      });
+
       // prefs.setBool('Profile', true);
       notifyListeners();
     } catch (e) {
