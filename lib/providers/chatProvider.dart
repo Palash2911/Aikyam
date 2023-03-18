@@ -15,19 +15,39 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future sendMessage(Chats chat) async {
+  Future sendMessageU(Chats chat) async {
     try {
-      CollectionReference messageRef = FirebaseFirestore.instance
+      CollectionReference messageURef = FirebaseFirestore.instance
           .collection('Users')
           .doc(chat.senderId)
           .collection('Chats')
           .doc(chat.receiverId)
           .collection('Messages');
 
-      await messageRef.add({
+      await messageURef.add({
         'Message': chat.message,
         'DateTime': chat.dateTime,
-        'isUser': true,
+        'isUser': chat.isUser,
+      });
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future sendMessageN(Chats chat) async {
+    try {
+      CollectionReference messageNRef = FirebaseFirestore.instance
+          .collection('Ngo')
+          .doc(chat.senderId)
+          .collection('Chats')
+          .doc(chat.receiverId)
+          .collection('Messages');
+
+      await messageNRef.add({
+        'Message': chat.message,
+        'DateTime': chat.dateTime,
+        'isUser': chat.isUser,
       });
       notifyListeners();
     } catch (e) {

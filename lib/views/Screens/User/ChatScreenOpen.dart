@@ -19,25 +19,41 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
   final auth = FirebaseAuth.instance;
   CollectionReference messageRef =
-      FirebaseFirestore.instance.collection('Users');
+      FirebaseFirestore.instance.collection('Ngo');
+  var isInit = true;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    messageRef = messageRef
-        .doc('CvKdycC9GTkkI1q6aKjV')
-        .collection('Chats')
-        .doc(widget.receiverId)
-        .collection('Messages');
+    if(isInit){
+      messageRef = messageRef
+          .doc('XoNt5kGfQcWJsXheKYHCiLbheAt1')
+          .collection('Chats')
+          .doc(widget.receiverId)
+          .collection('Messages');
+      print(auth.currentUser!.uid);
+    }
+    isInit = false;
     // Provider.of<ChatProvider>(context, listen: false).createChatRoom("ChatRoom", "Chatting");
   }
 
-  void sendMessage(BuildContext ctx) {
-    Provider.of<ChatProvider>(context, listen: false).sendMessage(
+  void sendMessage(BuildContext ctx) async {
+    await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
       Chats(
         receiverId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
         senderId: 'CvKdycC9GTkkI1q6aKjV',
         message: _textController.text,
         dateTime: DateTime.now().toString(),
+        isUser: true,
+      ),
+    );
+    await Provider.of<ChatProvider>(context, listen: false).sendMessageN(
+      Chats(
+        receiverId: 'CvKdycC9GTkkI1q6aKjV',
+        senderId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
+        message: _textController.text,
+        dateTime: DateTime.now().toString(),
+        isUser: false,
       ),
     );
     _textController.clear();

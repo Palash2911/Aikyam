@@ -61,8 +61,6 @@ class UserProvider extends ChangeNotifier {
             interest: data["Interest"],
             profile: File(data["ProfilePic"]));
       });
-
-      print(user!.bio);
       notifyListeners();
       return user;
     } catch (e) {

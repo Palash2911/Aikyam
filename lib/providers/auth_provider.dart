@@ -88,6 +88,8 @@ class Auth extends ChangeNotifier {
             },
           );
       if (!user) {
+        print(user);
+        user = true;
         CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
         await ngo.doc(_auth.currentUser?.uid).get().then(
               (datasnapshot) => {
@@ -97,6 +99,9 @@ class Auth extends ChangeNotifier {
         if (user) {
           _isUser = 'NGO';
           _profileCreated = true;
+        }
+        else{
+          print("Error");
         }
       } else {
         _isUser = 'Individual';
@@ -133,6 +138,7 @@ class Auth extends ChangeNotifier {
       _isUser = prefs.getString('UserType')!;
     }
     _profileCreated = prefs.getBool('Profile')!;
+    print(_isUser);
     notifyListeners();
   }
 }

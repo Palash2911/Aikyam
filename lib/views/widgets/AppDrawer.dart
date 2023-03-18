@@ -74,8 +74,8 @@ class UserAppdrawer extends StatelessWidget {
             title: const Text('LogOut'),
             onTap: () {
               Provider.of<Auth>(context, listen: false).signOut();
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => new LogIn()));
+              Navigator.of(context, rootNavigator: true)
+                  .push(MaterialPageRoute(builder: (context) => LogIn()));
             },
           ),
         ],
