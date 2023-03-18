@@ -18,11 +18,8 @@ import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
   //Inital Route
-  // '/': (context) => SplashScreen(),
-  // '/': (context) => NgoAddpost(),
-  '/': (context) => NgoBottomBar(),
-  // '/': (context) => IntroductionAnimationScreen(),
-  // '/': (context) => LogIn(),
+  '/': (context) => SplashScreen(),
+
 
   //Login Routes
   LogIn.routeName: (context) => LogIn(),
