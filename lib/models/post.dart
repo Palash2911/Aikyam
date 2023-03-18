@@ -28,4 +28,6 @@ class Post {
     required this.country,
     required this.photos,
   });
+
+  doc(String id) {}
 }

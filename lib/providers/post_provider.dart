@@ -34,6 +34,38 @@ class PostProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future updatePost(Post post) async {
+    try {
+      // var storage = FirebaseStorage.instance;
+      // TaskSnapshot taskSnapshot = await storage
+      //     .ref()
+      //     // .child('NProfile/${post.id}') //doubt here
+      //     .putFile(post.photos as File);
+      // final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+      var p = await post.doc(post.id).update({
+        'Description': post.description,
+        'NoOfVolunteers': post.noofVolunters,
+        "Date": post.date,
+        "Time": post.time,
+        "Address": post.address,
+        "City": post.city,
+        "State": post.state,
+        "Ngoid": post.ngoid,
+        // "Uid": post.id,
+        "Country": post.country,
+        "Photos": post.photos,
+      });
+
+      // prefs.setBool('Profile', true);
+      notifyListeners();
+    } catch (e) {
+      // prefs.setBool('Profile', false);
+      rethrow;
+    }
+  }
 }
 //addpost madhe like create proifle createPost
 //remove navigator
