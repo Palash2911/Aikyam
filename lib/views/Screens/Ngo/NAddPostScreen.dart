@@ -1,16 +1,13 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:aikyam/models/users.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-
-import '../../../models/post.dart';
 
 class NgoAddpost extends StatefulWidget {
   const NgoAddpost({super.key});
@@ -96,22 +93,25 @@ class _NgoAddpostState extends State<NgoAddpost> {
     _formKey.currentState!.save();
     if (isValid) {
       await postProvider
-          .createPost(Post(
-              ncity: "",
-              ngoname: "",
-              category: "",
-              description: description,
-              ngoid: authProvider.token,
-              id: "",
-              noofVolunters: noofVolunteers,
-              date: date,
-              time: time,
-              city: city,
-              driveTitle: driveTitle,
-              state: state,
-              address: address,
-              country: country,
-              photos: []))
+          .createPost(
+        Post(
+          ncity: "",
+          ngoname: "",
+          category: "",
+          description: description,
+          ngoid: authProvider.token,
+          id: "",
+          noofVolunters: noofVolunteers,
+          date: date,
+          time: time,
+          city: city,
+          driveTitle: driveTitle,
+          state: state,
+          address: address,
+          country: country,
+          photos: [],
+        ),
+      )
           .catchError((e) {
         print("Failure");
       }).then((_) {
