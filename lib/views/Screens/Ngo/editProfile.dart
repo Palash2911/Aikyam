@@ -75,36 +75,36 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
     super.dispose();
   }
 
-  Future _createProfile(BuildContext ctx) async {
-    var authProvider = Provider.of<Auth>(ctx, listen: false);
-    final isValid = _form.currentState!.validate();
-    setState(() {
-      isLoading = true;
-    });
-    _form.currentState!.save();
-    if (isValid) {
-      if (imageFile == null) {
-        print("Please Select Profile Pic");
-      } else {
-        await authProvider
-            .registerNgo(bio, name, phone, email, ngoType, date, ngoRegisterd,
-                city, zipcode, state, category, imageFile!)
-            .catchError((e) {
-          print("Failure");
-        }).then((_) {
-          setState(() {
-            isLoading = false;
-          });
-          Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
-        });
-      }
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      return;
-    }
-  }
+  // Future _createProfile(BuildContext ctx) async {
+  //   var authProvider = Provider.of<Auth>(ctx, listen: false);
+  //   final isValid = _form.currentState!.validate();
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   _form.currentState!.save();
+  //   if (isValid) {
+  //     if (imageFile == null) {
+  //       print("Please Select Profile Pic");
+  //     } else {
+  //       await authProvider
+  //           .registerNgo(bio, name, phone, email, ngoType, date, ngoRegisterd,
+  //               city, zipcode, state, category, imageFile!)
+  //           .catchError((e) {
+  //         print("Failure");
+  //       }).then((_) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
+  //       });
+  //     }
+  //   } else {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     return;
+  //   }
+  // }
 
   Future _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
@@ -743,7 +743,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  _createProfile(context);
+                                  // _createProfile(context);
                                 },
                                 child: const Text(
                                   "Register",

@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
-  const ChatScreenOpen({required this.receiverId});
+  const ChatScreenOpen({
+    required this.receiverId,
+    required this.senderType,
+  });
   final String receiverId;
+  final String senderType;
 
   @override
   _ChatScreenOpenState createState() => _ChatScreenOpenState();
@@ -18,45 +22,74 @@ class ChatScreenOpen extends StatefulWidget {
 class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final TextEditingController _textController = TextEditingController();
   final auth = FirebaseAuth.instance;
-  CollectionReference messageRef =
-      FirebaseFirestore.instance.collection('Ngo');
+  CollectionReference? messageRef;
   var isInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(isInit){
-      messageRef = messageRef
-          .doc('XoNt5kGfQcWJsXheKYHCiLbheAt1')
+    if (isInit) {
+      messageRef = FirebaseFirestore.instance
+          .collection(widget.senderType)
+          .doc(auth.currentUser!.uid)
           .collection('Chats')
           .doc(widget.receiverId)
           .collection('Messages');
-      print(auth.currentUser!.uid);
     }
     isInit = false;
     // Provider.of<ChatProvider>(context, listen: false).createChatRoom("ChatRoom", "Chatting");
   }
 
   void sendMessage(BuildContext ctx) async {
-    await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
-      Chats(
-        receiverId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
-        senderId: 'CvKdycC9GTkkI1q6aKjV',
-        message: _textController.text,
-        dateTime: DateTime.now().toString(),
-        isUser: true,
-      ),
-    );
-    await Provider.of<ChatProvider>(context, listen: false).sendMessageN(
-      Chats(
-        receiverId: 'CvKdycC9GTkkI1q6aKjV',
-        senderId: 'XoNt5kGfQcWJsXheKYHCiLbheAt1',
-        message: _textController.text,
-        dateTime: DateTime.now().toString(),
-        isUser: false,
-      ),
-    );
-    _textController.clear();
+    if (widget.senderType == 'Users') {
+      await Provider.of<ChatProvider>(context, listen: false)
+          .sendMessageU(
+        Chats(
+          receiverId: widget.receiverId,
+          senderId: auth.currentUser!.uid,
+          message: _textController.text,
+          dateTime: DateTime.now().toString(),
+          isUser: true,
+          senderName: "Palash",
+        ),
+      )
+          .then((value) async {
+        await Provider.of<ChatProvider>(context, listen: false).sendMessageN(
+          Chats(
+            receiverId: auth.currentUser!.uid,
+            senderId: widget.receiverId,
+            message: _textController.text,
+            dateTime: DateTime.now().toString(),
+            isUser: false,
+            senderName: "Palash",
+          ),
+        );
+      });
+    } else {
+      await Provider.of<ChatProvider>(context, listen: false)
+          .sendMessageN(
+        Chats(
+          receiverId: widget.receiverId,
+          senderId: auth.currentUser!.uid,
+          message: _textController.text,
+          dateTime: DateTime.now().toString(),
+          isUser: true,
+          senderName: "Palash",
+        ),
+      )
+          .then((value) async {
+        await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
+          Chats(
+            receiverId: auth.currentUser!.uid,
+            senderId: widget.receiverId,
+            message: _textController.text,
+            dateTime: DateTime.now().toString(),
+            isUser: false,
+            senderName: "Palash",
+          ),
+        );
+      });
+    }
   }
 
   @override
@@ -102,23 +135,29 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: messageRef.snapshots(),
+                stream: messageRef!.snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                    return ListView(
-                      children: snapshot.data!.docs.map((document) {
-                        return MessageBubble(
-                          sender: "Palash",
-                          text: document['Message'],
-                          isUser: document['isUser'],
-                          dateTime: document['DateTime'],
-                        );
-                      }).toList(),
-                    );
+                    if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: Text("Start Chatting !"),
+                      );
+                    } else {
+                      return ListView(
+                        children: snapshot.data!.docs.map((document) {
+                          return MessageBubble(
+                            sender: "Palash",
+                            text: document['Message'],
+                            isUser: document['isUser'],
+                            dateTime: document['DateTime'],
+                          );
+                        }).toList(),
+                      );
+                    }
                   }
                 },
               ),
@@ -135,6 +174,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                           icon: Icon(Icons.send),
                           onPressed: () {
                             sendMessage(context);
+                            _textController.clear();
                           },
                         ),
                         hintText: 'Message',
