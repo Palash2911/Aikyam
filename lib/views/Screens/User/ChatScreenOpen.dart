@@ -5,6 +5,7 @@ import 'package:aikyam/views/widgets/chatMessageBubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
           message: mssg,
-          dateTime: DateTime.now().toString(),
+          dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
           isUser: true,
           senderName: "Palash",
         ),
@@ -136,7 +137,8 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: messageRef!.snapshots(),
+                stream:
+                    messageRef!.orderBy('DateTime', descending: false).snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -174,14 +176,13 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            if(_textController.text.isNotEmpty)
-                              {
-                                setState(() {
-                                  mssg = _textController.text;
-                                });
-                                  sendMessage(context);
-                                  _textController.clear();
-                              }
+                            if (_textController.text.isNotEmpty) {
+                              setState(() {
+                                mssg = _textController.text;
+                              });
+                              sendMessage(context);
+                              _textController.clear();
+                            }
                           },
                         ),
                         hintText: 'Message',
