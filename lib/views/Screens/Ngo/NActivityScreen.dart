@@ -30,3 +30,8 @@ class NgoActivityScreen extends StatelessWidget {
     );
   }
 }
+//activity screen madhe screen builder like in home screen;
+//post provider made delete post karun ek functoin of type future(input parameter string);
+//create instance and collection name posts doc is string id;
+//createpost cha aat after 32 line ek collection reference like line 14 and 
+//

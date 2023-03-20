@@ -33,32 +33,37 @@ class _NHomeScreenState extends State<NHomeScreen> {
         drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
           child: Expanded(
-            child: Column(
-              children: [
-                StreamBuilder<QuerySnapshot>(
-                  stream: postRef.snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return ListView(
-                        children: snapshot.data!.docs.map((document) {
-                          return PostItem(
-                              ngoname: document["Name"],
-                              ngocity: document["NgoCity"],
-                              drivecity: document["City"],
-                              driveaddress: document["Address"],
-                              driveDate: document["Date"],
-                              applyStatus: "",
-                              pid: document.id);
-                        }).toList(),
-                      );
-                    }
-                  },
-                ),
-              ],
+            child: StreamBuilder<QuerySnapshot>(
+              stream: postRef.snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  print(snapshot.data!.docs.length);
+                  if (snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text("No Post Yet !"),
+                    );
+                  } else {
+                    return ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: snapshot.data!.docs.map((document) {
+                        return PostItem(
+                            ngoname: document["Name"],
+                            ngocity: document["NgoCity"],
+                            drivecity: document["City"],
+                            driveaddress: document["Address"],
+                            driveDate: document["Date"],
+                            applyStatus: "",
+                            pid: "");
+                      }).toList(),
+                    );
+                  }
+                }
+              },
             ),
           ),
         ),

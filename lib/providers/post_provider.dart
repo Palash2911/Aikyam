@@ -11,6 +11,7 @@ class PostProvider extends ChangeNotifier {
       //     // .child('NProfile/${post.id}') //doubt here
       //     .putFile(post.photos as File);
       // final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       var p = await posts.add({
@@ -28,11 +29,19 @@ class PostProvider extends ChangeNotifier {
         "Country": post.country,
         "Photos": post.photos,
       });
+
       post.id = p.id;
-      // prefs.setBool('Profile', true);
+      List<dynamic> postId = [];
+      await ngos.doc(post.ngoid).get().then((snapshot) {
+        postId = snapshot['PostId'];
+      });
+      postId.add(post.ngoid);
+      await ngos.doc(post.ngoid).update({
+        'PostId': postId,
+      });
+
       notifyListeners();
     } catch (e) {
-      // prefs.setBool('Profile', false);
       rethrow;
     }
   }
@@ -71,7 +80,14 @@ class PostProvider extends ChangeNotifier {
     }
   }
 }
-//addpost madhe like create proifle createPost
-//remove navigator
-//controller on every feild 
-//onpressed createpost call kar
+
+Future deletePost(String id) async {
+  final db = FirebaseFirestore.instance;
+  await db.collection("Posts").doc(id).delete();
+}
+//NGO MODEL:create new feild List of dynamic  named postId, put in constuctor too;
+//NGO PROVIDER: post id add in .set in register user  named PostsId
+//after 31 in POST PROVIDER: fetch ngo first:specie ke jagah postid;
+//in fetch add await ngos.doc().get and follow stackoverflow;
+//post id add in doc()
+//finally update

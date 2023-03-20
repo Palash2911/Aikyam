@@ -14,6 +14,7 @@ class Ngo {
   final String zipcode;
   final String category;
   final File profile;
+  List<dynamic> postId;
 
   Ngo({
     required this.id,
@@ -29,5 +30,6 @@ class Ngo {
     required this.zipcode,
     required this.category,
     required this.profile,
+    required this.postId,
   });
 }

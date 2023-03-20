@@ -59,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else {
                       return ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
                         children: snapshot.data!.docs.map((document) {
                           return PostItem(
                               ngoname: document["Name"],
@@ -81,6 +83,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-//user me home screen widget 20 to 22 line message ref swap with postref; collection i Posts;
-//column la expanded widget madhe incase// same screen builder//postref in stream,90-97 same,return postitem
-//return postitem only 1,

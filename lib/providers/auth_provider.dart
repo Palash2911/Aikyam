@@ -99,8 +99,7 @@ class Auth extends ChangeNotifier {
         if (user) {
           _isUser = 'NGO';
           _profileCreated = true;
-        }
-        else{
+        } else {
           print("Error");
         }
       } else {
@@ -138,7 +137,7 @@ class Auth extends ChangeNotifier {
       _isUser = prefs.getString('UserType')!;
     }
     _profileCreated = prefs.getBool('Profile')!;
-    print(_isUser);
+    print(_token);
     notifyListeners();
   }
 }
