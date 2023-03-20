@@ -1,3 +1,4 @@
+import 'package:aikyam/views/Screens/Ngo/editProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +10,9 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
+  bool isNgoPov = false;
   bool _isAboutSelected = true;
   bool _isWorkSelected = true;
-
   bool _isAboutActive = true;
 
   void _toggleButton() {
@@ -57,37 +58,72 @@ class _NgoProfileState extends State<NgoProfile> {
                               'Smile Foundation',
                               style: kTextPopB24,
                             ),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: kprimaryColor,
-                                  foregroundColor: ksecondaryColor,
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.location_on_rounded)),
-                                ),
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                CircleAvatar(
-                                  backgroundColor: kprimaryColor,
-                                  foregroundColor: ksecondaryColor,
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.link_rounded)),
-                                ),
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                CircleAvatar(
-                                  backgroundColor: kprimaryColor,
-                                  foregroundColor: ksecondaryColor,
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.message_rounded)),
-                                ),
-                              ],
-                            )
+                            isNgoPov
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 15.0),
+                                      color: kprimaryColor,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NgoEditProfile()));
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text('edit',
+                                                style: kTextPopB14.copyWith(
+                                                    color: ksecondaryColor)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                                Icons.location_on_rounded)),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.link_rounded)),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.message_rounded)),
+                                      ),
+                                    ],
+                                  )
                           ],
                         ),
                         SizedBox(
