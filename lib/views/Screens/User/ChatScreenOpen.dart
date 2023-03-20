@@ -24,6 +24,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   final auth = FirebaseAuth.instance;
   CollectionReference? messageRef;
   var isInit = true;
+  var mssg = "";
 
   @override
   void didChangeDependencies() {
@@ -47,7 +48,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         Chats(
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
-          message: _textController.text,
+          message: mssg,
           dateTime: DateTime.now().toString(),
           isUser: true,
           senderName: "Palash",
@@ -58,7 +59,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           Chats(
             receiverId: auth.currentUser!.uid,
             senderId: widget.receiverId,
-            message: _textController.text,
+            message: mssg,
             dateTime: DateTime.now().toString(),
             isUser: false,
             senderName: "Palash",
@@ -71,7 +72,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         Chats(
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
-          message: _textController.text,
+          message: mssg,
           dateTime: DateTime.now().toString(),
           isUser: true,
           senderName: "Palash",
@@ -82,7 +83,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           Chats(
             receiverId: auth.currentUser!.uid,
             senderId: widget.receiverId,
-            message: _textController.text,
+            message: mssg,
             dateTime: DateTime.now().toString(),
             isUser: false,
             senderName: "Palash",
@@ -173,8 +174,14 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            sendMessage(context);
-                            _textController.clear();
+                            if(_textController.text.isNotEmpty)
+                              {
+                                setState(() {
+                                  mssg = _textController.text;
+                                });
+                                  sendMessage(context);
+                                  _textController.clear();
+                              }
                           },
                         ),
                         hintText: 'Message',
