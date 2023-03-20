@@ -101,7 +101,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
               ngoname: "",
               category: "",
               description: description,
-              ngoid: "",
+              ngoid: authProvider.token,
               id: "",
               noofVolunters: noofVolunteers,
               date: date,

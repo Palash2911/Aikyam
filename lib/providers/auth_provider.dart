@@ -99,8 +99,7 @@ class Auth extends ChangeNotifier {
         if (user) {
           _isUser = 'NGO';
           _profileCreated = true;
-        }
-        else{
+        } else {
           print("Error");
         }
       } else {

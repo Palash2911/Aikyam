@@ -16,6 +16,7 @@ class NgoProvider extends ChangeNotifier {
       final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       await ngos.doc(ngo.id).set({
+        'PostId': ngo.postId,
         'Name': ngo.name,
         'Bio': ngo.bio,
         "PhoneNo": ngo.phone,
@@ -98,6 +99,7 @@ class NgoProvider extends ChangeNotifier {
             state: data["State"],
             zipcode: data["Zipcode"],
             category: data["Category"],
+            postId: data["PostId"],
             profile: File(data["ProfilePic"])) as CollectionReference<Ngo?>;
       });
       print(ngo!.bio);

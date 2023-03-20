@@ -104,6 +104,7 @@ class _NgoRegisterState extends State<NgoRegister> {
             zipcode: zipcode,
             category: category,
             profile: imageFile!,
+            postId: [],
           ),
         )
             .catchError((e) {
