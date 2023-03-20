@@ -37,8 +37,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<Users?> getUserDetails(String uid) async {
-    //instead of map Users user
-
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
