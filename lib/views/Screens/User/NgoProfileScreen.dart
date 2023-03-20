@@ -10,14 +10,21 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool isNgoPov = false;
-  bool _isAboutSelected = true;
-  bool _isWorkSelected = true;
+  bool isNgoPov = true;
   bool _isAboutActive = true;
+  bool _isWorkSelected = false;
 
-  void _toggleButton() {
+  void _aboutPressed() {
     setState(() {
-      _isAboutActive = !_isAboutActive;
+      // _isAboutActive = !_isAboutActive;
+      _isWorkSelected = !_isWorkSelected;
+    });
+  }
+
+  void _workPressed() {
+    setState(() {
+      // _isWorkSelected = !_isWorkSelected;
+      // _isAboutActive = !_isAboutActive;
     });
   }
 
@@ -168,14 +175,14 @@ class _NgoProfileState extends State<NgoProfile> {
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(10.0),
-                    color: kprimaryColor,
+                    color: Colors.white,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         elevation: 0.0,
                         backgroundColor:
                             _isAboutActive ? kprimaryColor : ksecondaryColor,
                       ),
-                      onPressed: _toggleButton,
+                      onPressed: _aboutPressed,
                       icon: Icon(
                         Icons.info_outline_rounded,
                         size: 24.0,
@@ -194,14 +201,14 @@ class _NgoProfileState extends State<NgoProfile> {
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(10.0),
-                    color: kprimaryColor,
+                    color: Colors.white,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         elevation: 0.0,
                         backgroundColor:
                             _isAboutActive ? kprimaryColor : ksecondaryColor,
                       ),
-                      onPressed: _toggleButton,
+                      onPressed: _workPressed,
                       icon: Icon(
                         Icons.work,
                         size: 24.0,
