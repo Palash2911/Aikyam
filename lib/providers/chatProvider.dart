@@ -24,9 +24,11 @@ class ChatProvider extends ChangeNotifier {
           .doc(chat.senderId)
           .collection('Chats');
 
-      await recentRef.doc(chat.receiverId).update({
-        'RecentMessage': chat.message,
-      });
+      if (chat.isUser) {
+        await recentRef.doc(chat.receiverId).update({
+          'RecentMessage': chat.message,
+        });
+      }
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -52,10 +54,13 @@ class ChatProvider extends ChangeNotifier {
           .collection('Ngo')
           .doc(chat.senderId)
           .collection('Chats');
-
-      await recentRef.doc(chat.receiverId).update({
-        'RecentMessage': chat.message,
-      });
+      
+      if(chat.isUser)
+        {
+          await recentRef.doc(chat.receiverId).update({
+            'RecentMessage': chat.message,
+          });
+        }
 
       notifyListeners();
     } catch (e) {

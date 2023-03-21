@@ -137,7 +137,6 @@ class Auth extends ChangeNotifier {
       _isUser = prefs.getString('UserType')!;
     }
     _profileCreated = prefs.getBool('Profile')!;
-    print(_token);
     notifyListeners();
   }
 }
