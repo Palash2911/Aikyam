@@ -85,9 +85,3 @@ Future deletePost(String id) async {
   final db = FirebaseFirestore.instance;
   await db.collection("Posts").doc(id).delete();
 }
-//NGO MODEL:create new feild List of dynamic  named postId, put in constuctor too;
-//NGO PROVIDER: post id add in .set in register user  named PostsId
-//after 31 in POST PROVIDER: fetch ngo first:specie ke jagah postid;
-//in fetch add await ngos.doc().get and follow stackoverflow;
-//post id add in doc()
-//finally update

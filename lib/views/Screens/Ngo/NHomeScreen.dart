@@ -1,6 +1,5 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,7 +44,6 @@ class _NHomeScreenState extends State<NHomeScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        print(snapshot.data!.docs.length);
                         if (snapshot.data!.docs.isEmpty) {
                           return const Center(
                             child: Text("No Post Yet !"),
