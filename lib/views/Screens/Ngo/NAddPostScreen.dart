@@ -7,7 +7,6 @@ import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
