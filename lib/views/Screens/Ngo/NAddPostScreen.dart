@@ -166,8 +166,11 @@ class _NgoAddpostState extends State<NgoAddpost> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ? Container(
+                    margin: const EdgeInsets.only(top: 27),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   )
                 : Form(
                     key: _formKey,
