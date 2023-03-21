@@ -24,6 +24,7 @@ class NgoAddpost extends StatefulWidget {
 
 class _NgoAddpostState extends State<NgoAddpost> {
   List<String> categories = [
+    "Select Category",
     "Health",
     "Education",
     "Environment",
@@ -83,6 +84,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
     _timeController.text = "";
     _stateController.text = "";
     _cityController.text = "";
+    selectedCategory = categories.first;
+    postImages.clear();
   }
 
   Future _createPost(BuildContext ctx) async {
