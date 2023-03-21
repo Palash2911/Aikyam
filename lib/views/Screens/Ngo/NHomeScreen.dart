@@ -45,7 +45,6 @@ class _NHomeScreenState extends State<NHomeScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        print(snapshot.data!.docs.length);
                         if (snapshot.data!.docs.isEmpty) {
                           return const Center(
                             child: Text("No Post Yet !"),
@@ -56,7 +55,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               return PostItem(
-                                  ngoname: document["Name"],
+                                  ngoname: document["NgoName"],
                                   ngocity: document["NgoCity"],
                                   drivecity: document["City"],
                                   driveaddress: document["Address"],

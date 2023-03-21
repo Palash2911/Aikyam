@@ -75,7 +75,6 @@ class NgoProvider extends ChangeNotifier {
 
   Future<Ngo?> getNgoDetails(String uid) async {
     //instead of map Users user
-
     try {
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       Ngo? ngo;
@@ -86,7 +85,7 @@ class NgoProvider extends ChangeNotifier {
       await ngos.doc(uid.toString()).get().then((DocumentSnapshot query) {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
 
-        ngos = Ngo(
+        ngo = Ngo(
             id: data["UID"],
             bio: data["Bio"],
             name: data["Name"],
@@ -100,13 +99,13 @@ class NgoProvider extends ChangeNotifier {
             zipcode: data["Zipcode"],
             category: data["Category"],
             postId: data["PostId"],
-            profile: File(data["ProfilePic"])) as CollectionReference<Ngo?>;
+            profile: File(data["ProfilePic"]));
       });
-      print(ngo!.bio);
       notifyListeners();
       return ngo;
     } catch (e) {
       print(e);
     }
+    return null;
   }
 }
