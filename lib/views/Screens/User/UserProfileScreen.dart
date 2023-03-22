@@ -91,9 +91,7 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
+                        const SizedBox(height: 5.0),
                         Text(
                           'Short info what this foundation do also the category and foundation type written by foundation',
                           style: kTextPopR14,
@@ -213,8 +211,8 @@ class _UserProfileState extends State<UserProfile> {
                         'Post',
                         style: kTextPopM16.copyWith(
                           color:
-                              _isAboutActive ? ksecondaryColor : kprimaryColor,),
-                        
+                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
                       ),
                     ),
                   ),

@@ -151,339 +151,334 @@ class _NgoAddpostState extends State<NgoAddpost> {
     }
   }
 
-    Future _getFromGallery() async {
-      PickedFile? pickedFile = await ImagePicker().getImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        setState(() {
-          postImages.add(File(pickedFile.path));
-        });
-      }
+  Future _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        postImages.add(File(pickedFile.path));
+      });
     }
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            toolbarHeight: 80,
-            flexibleSpace: const RoundAppBar(
-              title: 'Create Post',
-            ),
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          toolbarHeight: 80,
+          flexibleSpace: const RoundAppBar(
+            title: 'Create Post',
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: isLoading
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 27),
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              _addImage(
-                                imageFile: postImages.isNotEmpty
-                                    ? postImages[0]
-                                    : null,
-                                onTap: _getFromGallery,
-                              ),
-                              _addImage(
-                                imageFile: postImages.isNotEmpty
-                                    ? postImages.length >= 2
-                                        ? postImages[1]
-                                        : null
-                                    : null,
-                                onTap: _getFromGallery,
-                              ),
-                              _addImage(
-                                imageFile: postImages.isNotEmpty
-                                    ? postImages.length == 3
-                                        ? postImages[2]
-                                        : null
-                                    : null,
-                                onTap: _getFromGallery,
-                              ),
-                            ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: isLoading
+                ? Container(
+                    margin: const EdgeInsets.only(top: 27),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            _addImage(
+                              imageFile:
+                                  postImages.isNotEmpty ? postImages[0] : null,
+                              onTap: _getFromGallery,
+                            ),
+                            _addImage(
+                              imageFile: postImages.isNotEmpty
+                                  ? postImages.length >= 2
+                                      ? postImages[1]
+                                      : null
+                                  : null,
+                              onTap: _getFromGallery,
+                            ),
+                            _addImage(
+                              imageFile: postImages.isNotEmpty
+                                  ? postImages.length == 3
+                                      ? postImages[2]
+                                      : null
+                                  : null,
+                              onTap: _getFromGallery,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _driveTitleController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a Title';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.green.shade100,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: 'Write the title of the drive',
+                            alignLabelWithHint: true,
+                            labelText: 'Drive Title',
                           ),
-                          const SizedBox(height: 10.0),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            controller: _driveTitleController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a Title';
-                              }
-                              return null;
+                        ),
+                        const SizedBox(height: 10.0),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          minLines: 1,
+                          maxLines: 10,
+                          controller: _descriptionController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a description';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.green.shade100,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: 'Write what will be in the drive',
+                            alignLabelWithHint: true,
+                            labelText: 'Drive description',
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          width: double.infinity,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            color: kinputColor,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: const Text('Select a category'),
+                            value: selectedCategory,
+                            items: categories.map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedCategory = newValue!;
+                              });
                             },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.green.shade100,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText: 'Write the title of the drive',
-                              alignLabelWithHint: true,
-                              labelText: 'Drive Title',
-                            ),
                           ),
-                          const SizedBox(height: 10.0),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            minLines: 1,
-                            maxLines: 10,
-                            controller: _descriptionController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a description';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.green.shade100,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText: 'Write what will be in the drive',
-                              alignLabelWithHint: true,
-                              labelText: 'Drive description',
+                        ),
+                        const SizedBox(height: 10.0),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _noVoluntersController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a number';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.green.shade100,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
                             ),
+                            hintText: 'How many people you required for drive',
+                            alignLabelWithHint: true,
+                            labelText: 'Number of volunteers',
                           ),
-                          const SizedBox(height: 10.0),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: double.infinity,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              color: kinputColor,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: DropdownButton<String>(
-                              hint: const Text('Select a category'),
-                              value: selectedCategory,
-                              items: categories.map((category) {
-                                return DropdownMenuItem<String>(
-                                  value: category,
-                                  child: Text(category),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedCategory = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 10.0),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            controller: _noVoluntersController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a number';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.green.shade100,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText:
-                                  'How many people you required for drive',
-                              alignLabelWithHint: true,
-                              labelText: 'Number of volunteers',
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: TextFormField(
-                                    textInputAction: TextInputAction.next,
-                                    controller: _dateController,
-                                    decoration: InputDecoration(
-                                      hintText: "Date of drive",
-                                      hintStyle: kTextPopR14,
-                                      icon: const Icon(
-                                          Icons.calendar_today_rounded),
-                                      filled: true,
-                                      fillColor: Colors.green.shade100,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide.none,
-                                      ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  controller: _dateController,
+                                  decoration: InputDecoration(
+                                    hintText: "Date of drive",
+                                    hintStyle: kTextPopR14,
+                                    icon: const Icon(
+                                        Icons.calendar_today_rounded),
+                                    filled: true,
+                                    fillColor: Colors.green.shade100,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none,
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Date Not Set !';
-                                      }
-                                      return null;
-                                    },
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(1950),
-                                              lastDate: DateTime(2024));
-                                      if (pickedDate != null) {
-                                        String formattedDate =
-                                            DateFormat.yMMMMd('en_US')
-                                                .format(pickedDate);
-                                        setState(() {
-                                          _dateController.text = formattedDate;
-                                        });
-                                      } else {}
-                                    },
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10.0),
-                                  child: TextFormField(
-                                    textInputAction: TextInputAction.next,
-                                    controller: _timeController,
-                                    decoration: InputDecoration(
-                                      hintText: "Time of drive",
-                                      hintStyle: kTextPopR14,
-                                      icon:
-                                          const Icon(Icons.access_time_rounded),
-                                      filled: true,
-                                      fillColor: Colors.green.shade100,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Time Not Set !';
-                                      }
-                                      return null;
-                                    },
-                                    readOnly: true,
-                                    onTap: () async {
-                                      TimeOfDay? pickedTime =
-                                          await showTimePicker(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Date Not Set !';
+                                    }
+                                    return null;
+                                  },
+                                  readOnly: true,
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
                                         context: context,
-                                        initialTime: TimeOfDay.now(),
-                                      );
-                                      if (pickedTime != null) {
-                                        String formattedTime =
-                                            pickedTime.format(context);
-                                        setState(() {
-                                          _timeController.text = formattedTime;
-                                        });
-                                      } else {}
-                                    },
-                                  ),
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1950),
+                                        lastDate: DateTime(2024));
+                                    if (pickedDate != null) {
+                                      String formattedDate =
+                                          DateFormat.yMMMMd('en_US')
+                                              .format(pickedDate);
+                                      setState(() {
+                                        _dateController.text = formattedDate;
+                                      });
+                                    } else {}
+                                  },
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            controller: _addressController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter an address';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.green.shade100,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              labelText: 'Address',
                             ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  controller: _timeController,
+                                  decoration: InputDecoration(
+                                    hintText: "Time of drive",
+                                    hintStyle: kTextPopR14,
+                                    icon: const Icon(Icons.access_time_rounded),
+                                    filled: true,
+                                    fillColor: Colors.green.shade100,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Time Not Set !';
+                                    }
+                                    return null;
+                                  },
+                                  readOnly: true,
+                                  onTap: () async {
+                                    TimeOfDay? pickedTime =
+                                        await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    );
+                                    if (pickedTime != null) {
+                                      String formattedTime =
+                                          pickedTime.format(context);
+                                      setState(() {
+                                        _timeController.text = formattedTime;
+                                      });
+                                    } else {}
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _addressController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter an address';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.green.shade100,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            labelText: 'Address',
                           ),
-                          const SizedBox(height: 16),
-                          CSCPicker(
-                            showCities: true,
-                            countryFilter: const [
-                              CscCountry.India,
-                            ],
-                            dropdownDecoration: BoxDecoration(
+                        ),
+                        const SizedBox(height: 16),
+                        CSCPicker(
+                          showCities: true,
+                          countryFilter: const [
+                            CscCountry.India,
+                          ],
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            color: kinputColor,
+                            border: Border.all(color: kinputColor, width: 2),
+                          ),
+                          disabledDropdownDecoration: BoxDecoration(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
                               color: kinputColor,
-                              border: Border.all(color: kinputColor, width: 2),
-                            ),
-                            disabledDropdownDecoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                color: kinputColor,
-                                border:
-                                    Border.all(color: kinputColor, width: 1)),
-                            layout: Layout.vertical,
-                            onCountryChanged: (country) {},
-                            onStateChanged: (state) {
-                              _stateController.text = state.toString();
-                            },
-                            onCityChanged: (city) {
-                              _cityController.text = city.toString();
-                            },
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              _createPost(context);
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Posted Successfully!'),
-                                    content: const Text(
-                                        'Your post has been posted.'),
-                                    actions: [
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: const Text('Post'),
-                          )
-                        ],
-                      ),
+                              border: Border.all(color: kinputColor, width: 1)),
+                          layout: Layout.vertical,
+                          onCountryChanged: (country) {},
+                          onStateChanged: (state) {
+                            _stateController.text = state.toString();
+                          },
+                          onCityChanged: (city) {
+                            _cityController.text = city.toString();
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            _createPost(context);
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Posted Successfully!'),
+                                  content:
+                                      const Text('Your post has been posted.'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('Post'),
+                        )
+                      ],
                     ),
-            ),
+                  ),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}
 
 class _addImage extends StatelessWidget {
   _addImage({

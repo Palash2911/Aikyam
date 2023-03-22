@@ -101,36 +101,108 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future applyPost(String pid, String userType) async {
-    try{
-      var aName="";
-      if(userType=="User")
-        {
-          CollectionReference users = FirebaseFirestore.instance.collection('Users');
-          await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-            aName = snapshot['Name'];
-          });
-        }
-      else
-        {
-          CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
-          await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-            aName = snapshot['Name'];
-          });
-        }
-      CollectionReference posts = FirebaseFirestore.instance.collection('Posts');
-      await posts.doc(pid).collection("Applications").doc(auth.currentUser!.uid).set({
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+
+      var aName = "";
+      var profilePic = "";
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
+        });
+      }
+      await posts
+          .doc(pid)
+          .collection("Applications")
+          .doc(auth.currentUser!.uid)
+          .set({
         "PhoneNo": auth.currentUser!.phoneNumber,
         "ApplicantName": aName,
+        "ProfilePic": profilePic,
+        "ApplicationStatus": "InProcess",
       });
-      print(aName);
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      }
       notifyListeners();
-    }catch(e){
+    } catch (e) {
       rethrow;
+    }
+  }
+
+  Future acceptdeleteUser(String ar, String pid, String uid) async {
+    print(uid);
+    CollectionReference posts = FirebaseFirestore.instance
+        .collection('Posts')
+        .doc(pid)
+        .collection("Applications");
+    if (ar == "Accept") {
+      await posts.doc(uid).update({
+        "ApplicationStatus": "Accepted",
+      });
+    } else {
+      await posts.doc(uid).update({
+        "ApplicationStatus": "Rejected",
+      });
     }
   }
 
   Future deletePost(String id) async {
     final db = FirebaseFirestore.instance;
     await db.collection("Posts").doc(id).delete();
+  }
+
+  Future<Post?> getPostDetails(String id) async {
+    try {
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+      Post? post;
+
+      if (id.isNotEmpty) {
+        id = id;
+      }
+      await post!.doc(id.toString()).get().then((DocumentSnapshot query) {
+        Map<String, dynamic> data = query.data() as Map<String, dynamic>;
+
+        post = Post(
+          category: data["Category"],
+          description: data["Description"],
+          ngoid: data["Ngoid"],
+          id: id,
+          noofVolunters: data["NoOfVolunteers"],
+          date: data["Date"],
+          time: data["Time"],
+          city: data["City"],
+          driveTitle: data["DriveTitle"],
+          ncity: data["NgoCity"],
+          ngoname: data["NgoName"],
+          state: data["State"],
+          address: data["Address"],
+          country: data["Country"],
+          photos: data["Photos"],
+        );
+      });
+      notifyListeners();
+      return post;
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }
