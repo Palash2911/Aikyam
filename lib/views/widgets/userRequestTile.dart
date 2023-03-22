@@ -32,7 +32,7 @@ class _ProfileTileState extends State<ProfileTile> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    accepted = widget.applicationStatus == "Accepted" ? true : false;
+    accepted = widget.applicationStatus == "InProcess" ? false : true;
   }
   void applyReject(String ar) async {
     if (ar == "Accept") {
@@ -65,6 +65,7 @@ class _ProfileTileState extends State<ProfileTile> {
           fontSize: 16.0,
         );
         setState(() {
+          accepted = true;
           isLoading = false;
         });
       });
