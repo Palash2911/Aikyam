@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
+          toolbarHeight: 85,
           flexibleSpace: const RoundAppBar(
             title: 'Chat',
           ),
