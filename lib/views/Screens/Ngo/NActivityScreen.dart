@@ -56,7 +56,15 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               if (auth.currentUser!.uid == document['NgoId']) {
-                                return Text("No Post Found");
+                                return ActivityPost(
+                                  ngoname: document['NgoName'],
+                                  ngocity: document['NgoCity'],
+                                  drivecity: document['City'],
+                                  driveaddress: document['Address'],
+                                  driveDate: document['Date'],
+                                  applyStatus: "document['']",
+                                  pid: document.id,
+                                );
                               }
                               return const Center(
                                 child: Text("No Post Found"),
@@ -70,17 +78,6 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                 ),
               ],
             ),
-            //   child: Column(
-            // children: [
-            //   ActivityPost(
-            //       ngoname: 'ngoname',
-            //       ngocity: 'ngocity',
-            //       drivecity: 'drivecity',
-            //       driveaddress: 'driveaddress',
-            //       driveDate: 'driveDate',
-            //       applyStatus: 'applyStatus',
-            //       pid: 'pid'),
-            // ],
           ),
         ),
       ),

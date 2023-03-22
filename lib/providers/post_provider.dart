@@ -101,30 +101,42 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future applyPost(String pid, String userType) async {
-    try{
-      var aName="";
-      if(userType=="User")
-        {
-          CollectionReference users = FirebaseFirestore.instance.collection('Users');
-          await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-            aName = snapshot['Name'];
-          });
-        }
-      else
-        {
-          CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
-          await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-            aName = snapshot['Name'];
-          });
-        }
-      CollectionReference posts = FirebaseFirestore.instance.collection('Posts');
-      await posts.doc(pid).collection("Applications").doc(auth.currentUser!.uid).set({
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+
+      var aName = "";
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+        });
+      }
+      await posts
+          .doc(pid)
+          .collection("Applications")
+          .doc(auth.currentUser!.uid)
+          .set({
         "PhoneNo": auth.currentUser!.phoneNumber,
         "ApplicantName": aName,
       });
-      print(aName);
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      }
       notifyListeners();
-    }catch(e){
+    } catch (e) {
       rethrow;
     }
   }
