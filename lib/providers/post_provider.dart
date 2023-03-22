@@ -149,4 +149,45 @@ class PostProvider extends ChangeNotifier {
     final db = FirebaseFirestore.instance;
     await db.collection("Posts").doc(id).delete();
   }
+
+  Future<Post?> getPostDetails(String id) async {
+    try {
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+      Post? post;
+
+      if (id.isNotEmpty) {
+        id = id;
+      }
+      await post!.doc(id.toString()).get().then((DocumentSnapshot query) {
+        Map<String, dynamic> data = query.data() as Map<String, dynamic>;
+
+        post = Post(
+          category: data["Category"],
+          description: data["Description"],
+          ngoid: data["Ngoid"],
+          id: id,
+          noofVolunters: data["NoOfVolunteers"],
+          date: data["Date"],
+          time: data["Time"],
+          city: data["City"],
+          driveTitle: data["DriveTitle"],
+          ncity: data["NgoCity"],
+          ngoname: data["NgoName"],
+          state: data["State"],
+          address: data["Address"],
+          country: data["Country"],
+          photos: data["Photos"],
+        );
+      });
+      notifyListeners();
+      return post;
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 }
+
+//getpost by id ek function  ngo provider madhe similar to get details.
+//
