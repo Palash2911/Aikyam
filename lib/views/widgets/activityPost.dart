@@ -11,7 +11,6 @@ class ActivityPost extends StatefulWidget {
   final String drivecity;
   final String driveaddress;
   final String driveDate;
-  final String applyStatus;
   final String pid;
 
   const ActivityPost({
@@ -21,7 +20,6 @@ class ActivityPost extends StatefulWidget {
     required this.drivecity,
     required this.driveaddress,
     required this.driveDate,
-    required this.applyStatus,
     required this.pid,
   });
 
