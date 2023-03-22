@@ -1,4 +1,3 @@
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/UactivityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';

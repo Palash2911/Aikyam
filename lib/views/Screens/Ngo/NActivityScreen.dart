@@ -1,11 +1,11 @@
-import 'package:aikyam/views/widgets/Post2.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/Post2.dart';
+import '../../widgets/Post.dart';
 
 class NgoActivityScreen extends StatefulWidget {
   const NgoActivityScreen({super.key});
