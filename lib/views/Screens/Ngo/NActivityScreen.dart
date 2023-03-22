@@ -22,7 +22,14 @@ class NgoActivityScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ActivityPost(),
+              ActivityPost(
+                  ngoname: 'ngoname',
+                  ngocity: 'ngocity',
+                  drivecity: 'drivecity',
+                  driveaddress: 'driveaddress',
+                  driveDate: 'driveDate',
+                  applyStatus: 'applyStatus',
+                  pid: 'pid')
             ],
           ),
         ),

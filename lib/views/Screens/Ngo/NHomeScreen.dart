@@ -30,7 +30,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
           toolbarHeight: 85,
           flexibleSpace: HomeAppBar(),
         ),
-        drawer: NgoAppdrawer(),
+        drawer: const NgoAppdrawer(),
         body: SingleChildScrollView(
           child: Expanded(
             child: Column(
