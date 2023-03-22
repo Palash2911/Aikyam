@@ -5,6 +5,7 @@ import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +108,14 @@ class _NgoRegisterState extends State<NgoRegister> {
           ),
         )
             .catchError((e) {
-          print("Failure");
+          Fluttertoast.showToast(
+            msg: "Something went wrong!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }).then((_) {
           setState(() {
             isLoading = false;

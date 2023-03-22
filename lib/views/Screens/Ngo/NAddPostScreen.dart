@@ -7,6 +7,7 @@ import 'package:aikyam/models/users.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -113,7 +114,14 @@ class _NgoAddpostState extends State<NgoAddpost> {
               country: country,
               photos: []))
           .catchError((e) {
-        print("Failure");
+        Fluttertoast.showToast(
+          msg: "Something went wrong!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }).then((_) {
         setState(() {
           isLoading = false;
