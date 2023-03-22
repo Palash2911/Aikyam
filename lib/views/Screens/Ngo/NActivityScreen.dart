@@ -31,14 +31,6 @@ class NgoActivityScreen extends StatelessWidget {
                   driveDate: 'driveDate',
                   applyStatus: 'applyStatus',
                   pid: 'pid'),
-              PostItem(
-                  ngoname: 'ngoname',
-                  ngocity: 'ngocity',
-                  drivecity: 'drivecity',
-                  driveaddress: 'driveaddress',
-                  driveDate: 'driveDate',
-                  applyStatus: 'applyStatus',
-                  pid: 'pid')
             ],
           ),
         ),

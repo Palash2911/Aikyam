@@ -26,7 +26,7 @@ class _ViewDetailsState extends State<ViewDetails> {
         child: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
             child: Column(
               children: [
                 ListTile(
