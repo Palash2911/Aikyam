@@ -68,9 +68,12 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                               shrinkWrap: true,
                               children: snapshot.data!.docs.map((document) {
                                 return ProfileTile(
+                                  pid: widget.pid,
                                   name: document['ApplicantName'],
                                   city: document['PhoneNo'],
                                   imageUrl: document['ProfilePic'],
+                                  uid: document.id,
+                                  applicationStatus: document["ApplicationStatus"],
                                 );
                               }).toList(),
                             );

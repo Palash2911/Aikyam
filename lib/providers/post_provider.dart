@@ -129,6 +129,7 @@ class PostProvider extends ChangeNotifier {
         "PhoneNo": auth.currentUser!.phoneNumber,
         "ApplicantName": aName,
         "ProfilePic": profilePic,
+        "ApplicationStatus": "InProcess",
       });
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).update({
@@ -142,6 +143,23 @@ class PostProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future acceptdeleteUser(String ar, String pid, String uid) async {
+    print(uid);
+    CollectionReference posts = FirebaseFirestore.instance
+        .collection('Posts')
+        .doc(pid)
+        .collection("Applications");
+    if (ar == "Accept") {
+      await posts.doc(uid).update({
+        "ApplicationStatus": "Accepted",
+      });
+    } else {
+      await posts.doc(uid).update({
+        "ApplicationStatus": "Rejected",
+      });
     }
   }
 
