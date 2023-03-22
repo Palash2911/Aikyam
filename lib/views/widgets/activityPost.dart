@@ -161,7 +161,6 @@ class _ActivityPostState extends State<ActivityPost> {
                     );
                   },
                 ),
-
               ],
             ),
           ],

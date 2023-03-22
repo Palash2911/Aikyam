@@ -1,3 +1,4 @@
+import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:aikyam/views/widgets/activityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,14 @@ class NgoActivityScreen extends StatelessWidget {
           child: Column(
             children: [
               ActivityPost(
+                  ngoname: 'ngoname',
+                  ngocity: 'ngocity',
+                  drivecity: 'drivecity',
+                  driveaddress: 'driveaddress',
+                  driveDate: 'driveDate',
+                  applyStatus: 'applyStatus',
+                  pid: 'pid'),
+              PostItem(
                   ngoname: 'ngoname',
                   ngocity: 'ngocity',
                   drivecity: 'drivecity',
