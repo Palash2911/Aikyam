@@ -5,7 +5,7 @@ import 'package:aikyam/views/widgets/PopUpMenu.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
 
-class ActivityPost extends StatefulWidget {
+class NActivityPost extends StatefulWidget {
   final String ngoname;
   final String ngocity;
   final String drivecity;
@@ -13,7 +13,7 @@ class ActivityPost extends StatefulWidget {
   final String driveDate;
   final String pid;
 
-  const ActivityPost({
+  const NActivityPost({
     super.key,
     required this.ngoname,
     required this.ngocity,
@@ -24,10 +24,10 @@ class ActivityPost extends StatefulWidget {
   });
 
   @override
-  State<ActivityPost> createState() => _ActivityPostState();
+  State<NActivityPost> createState() => _NActivityPostState();
 }
 
-class _ActivityPostState extends State<ActivityPost> {
+class _NActivityPostState extends State<NActivityPost> {
   @override
   Widget build(BuildContext context) {
     final PageController _pageController = PageController(initialPage: 0);
@@ -146,7 +146,7 @@ class _ActivityPostState extends State<ActivityPost> {
                   onPressed: () {},
                 ),
                 SizedBox(
-                  width: 25.0,
+                  width: 20.0,
                 ),
                 AppButton(
                   text: 'View Applicants',

@@ -1,5 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/views/Screens/Ngo/Choose.dart';
+import 'package:aikyam/views/Screens/Login/Choose.dart';
 import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';

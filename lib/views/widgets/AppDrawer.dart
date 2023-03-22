@@ -1,5 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/views/Screens/Ngo/Login.dart';
+import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/User/FavoritesScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';

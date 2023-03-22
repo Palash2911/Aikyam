@@ -1,5 +1,6 @@
 import 'package:aikyam/views/widgets/Post.dart';
-import 'package:aikyam/views/widgets/activityPost.dart';
+import 'package:aikyam/views/widgets/NactivityPost.dart';
+import 'package:aikyam/views/widgets/UactivityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class ActivityScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ActivityPost(
+              UActivityPost(
                   ngoname: 'ngoname',
                   ngocity: 'ngocity',
                   drivecity: 'drivecity',
