@@ -1,3 +1,4 @@
+import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:aikyam/views/widgets/activityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,7 +56,7 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               if (auth.currentUser!.uid == document['NgoId']) {
-                                return const ActivityPost();
+                                return Text("No Post Found");
                               }
                               return const Center(
                                 child: Text("No Post Found"),
@@ -69,6 +70,17 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                 ),
               ],
             ),
+            //   child: Column(
+            // children: [
+            //   ActivityPost(
+            //       ngoname: 'ngoname',
+            //       ngocity: 'ngocity',
+            //       drivecity: 'drivecity',
+            //       driveaddress: 'driveaddress',
+            //       driveDate: 'driveDate',
+            //       applyStatus: 'applyStatus',
+            //       pid: 'pid'),
+            // ],
           ),
         ),
       ),

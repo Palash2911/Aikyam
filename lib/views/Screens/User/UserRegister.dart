@@ -9,6 +9,7 @@ import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -97,7 +98,14 @@ class _UserRegisterState extends State<UserRegister> {
           ),
         )
             .catchError((e) {
-          print("Failure");
+          Fluttertoast.showToast(
+            msg: "Something went wrong!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }).then((_) {
           setState(() {
             isLoading = false;

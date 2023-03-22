@@ -6,49 +6,39 @@ import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
 
 class ActivityPost extends StatefulWidget {
-  const ActivityPost({super.key});
+  final String ngoname;
+  final String ngocity;
+  final String drivecity;
+  final String driveaddress;
+  final String driveDate;
+  final String applyStatus;
+  final String pid;
+
+  const ActivityPost({
+    super.key,
+    required this.ngoname,
+    required this.ngocity,
+    required this.drivecity,
+    required this.driveaddress,
+    required this.driveDate,
+    required this.applyStatus,
+    required this.pid,
+  });
 
   @override
   State<ActivityPost> createState() => _ActivityPostState();
 }
 
 class _ActivityPostState extends State<ActivityPost> {
-  final List<String> _imgPost = [
-    'assets/images/post.png',
-    'assets/images/post2.png',
-    'assets/images/post3.png',
-  ];
-
-  bool _isExpanded = true;
-  bool _isLike = true;
-  bool _isApply = true;
-
-  void toggleExpand() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-    });
-  }
-
-  void toggleLike() {
-    setState(() {
-      _isLike = !_isLike;
-    });
-  }
-
-  void toggleApply() {
-    setState(() {
-      _isApply = !_isApply;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final PageController _pageController = PageController(initialPage: 0);
+    bool _isApply = true;
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: kpostColor,
           borderRadius: BorderRadius.circular(16),
@@ -57,7 +47,7 @@ class _ActivityPostState extends State<ActivityPost> {
               color: Colors.black.withOpacity(0.1),
               blurRadius: 8,
               spreadRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -67,14 +57,7 @@ class _ActivityPostState extends State<ActivityPost> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NgoProfile(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Container(
@@ -85,7 +68,7 @@ class _ActivityPostState extends State<ActivityPost> {
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,104 +76,70 @@ class _ActivityPostState extends State<ActivityPost> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'smile foundation',
+                          widget.ngoname,
                           style: kTextPopM16,
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        Icon(Icons.calendar_today),
-                        SizedBox(width: 4),
-                        Text(
-                          'Feb 17,2023',
-                          style: kTextPopR14,
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.location_on),
-                        Text(
-                          'Pune',
-                          style: kTextPopR14,
-                        ),
+                        Text(widget.ngocity, style: kTextPopR14),
                       ],
                     ),
                   ],
                 ),
-                Spacer(),
-                dotmenu(),
-                // GestureDetector(
-                //   onTap: () {},
-                //   child: Icon(
-                //     Icons.share,
-                //     size: 32.0,
-                //   ),
-                // ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.share,
+                    size: 32.0,
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 16),
-            Container(
-              child: Column(
-                children: [
-                  Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed leo id risus volutpat suscipit. Sed consequat magna in enim faucibus, vel volutpat risus sagittis. Donec interdum ipsum non mauris malesuada, sit amet iaculis felis auctor.',
-                    style: kTextPopR14,
-                    maxLines: _isExpanded ? null : 100,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      SizedBox(width: 5),
-                      Text('No of required volunteers: ', style: kTextPopB14),
-                      Text('20', style: kTextPopR14)
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(Icons.location_city),
-                      SizedBox(width: 5),
-                      Text('City: ', style: kTextPopB14),
-                      Text('Pune', style: kTextPopR14)
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.location_on),
-                      SizedBox(width: 5),
-                      Text('Location: ', style: kTextPopB14),
-                      Expanded(
-                        child: Text(
-                          'D Y patil college of Engineering',
-                          style: kTextPopR14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            const Divider(),
+            const SizedBox(height: 16),
+            Text(
+              'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+              style: kTextPopM16,
             ),
-            SizedBox(height: 8),
-            InkWell(
-              onTap: toggleExpand,
-              child: Text(
-                _isExpanded ? 'See more' : 'see less',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-            SizedBox(height: 16),
             SizedBox(
-              height: 250,
-              child: PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _imgPost.length,
-                  itemBuilder: ((context, index) {
-                    return Image.asset(_imgPost[index]);
-                  })),
+              height: 5,
             ),
-            SizedBox(height: 16),
+            Row(
+              children: [
+                Icon(Icons.location_city),
+                SizedBox(width: 5),
+                Text('City: ', style: kTextPopB14),
+                Text('Pune', style: kTextPopR14)
+              ],
+            ),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.access_time_rounded),
+                SizedBox(width: 5),
+                Text('Date and Time: ', style: kTextPopB14),
+                Expanded(
+                  child: Text(
+                    '19 Mar ',
+                    style: kTextPopR14,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.person),
+                SizedBox(width: 5),
+                Text('Category: ', style: kTextPopB14),
+                Text('Education', style: kTextPopR14)
+              ],
+            ),
+            SizedBox(height: 5),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -205,70 +154,13 @@ class _ActivityPostState extends State<ActivityPost> {
                   text: 'View Applicants',
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ApplicantsScreen(),),);
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ApplicantsScreen(),
+                      ),
+                    );
                   },
                 ),
-
-                // GestureDetector(
-                //   onTap: toggleLike,
-                //   child: Card(
-                //     shape: RoundedRectangleBorder(
-                //       side: BorderSide(color: kprimaryColor),
-                //       borderRadius: BorderRadius.circular(10.0),
-                //     ),
-                //     color: kpostColor,
-                //     child: Container(
-                //       padding: EdgeInsets.all(8.0),
-                //       child: Text(
-                //         'Delete Post',
-                //         style: kTextPopR14.copyWith(color: kprimaryColor),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Expanded(
-                //   child: GestureDetector(
-                //     onTap: toggleLike,
-                //     child: Card(
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(10.0),
-                //       ),
-                //       color: kprimaryColor,
-                //       child: Container(
-                //         padding: EdgeInsets.all(8.0),
-                //         child: Center(
-                //           child: Text(
-                //             'Delete Post',
-                //             style: kTextPopR14.copyWith(color: ksecondaryColor),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-
-                // Expanded(
-                //   child: GestureDetector(
-                //     onTap: toggleLike,
-                //     child: Card(
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(10.0),
-                //       ),
-                //       color: kprimaryColor,
-                //       child: Container(
-                //         padding: EdgeInsets.all(8.0),
-                //         child: Center(
-                //           child: Text(
-                //             'View Applicants',
-                //             style: kTextPopR14.copyWith(color: ksecondaryColor),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/OTP.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -31,10 +32,24 @@ class _LogInState extends State<LogIn> {
       await Provider.of<Auth>(ctx, listen: false)
           .authenticate(phoneNo)
           .catchError((e) {
-        print("Failure");
+        Fluttertoast.showToast(
+          msg: "Otp sent Successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }).then((value) => Navigator.of(context).pushNamed(OtpScreen.routeName));
     } else {
-      print("Failure");
+      Fluttertoast.showToast(
+        msg: "Something went wrong!",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
