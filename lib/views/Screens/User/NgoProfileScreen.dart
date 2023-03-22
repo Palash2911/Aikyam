@@ -1,6 +1,6 @@
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/Post2.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
 
 class NgoProfile extends StatefulWidget {

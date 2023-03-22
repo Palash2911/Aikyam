@@ -1,6 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
-import 'package:aikyam/views/Screens/User/FavoritesScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
@@ -47,16 +46,7 @@ class UserAppdrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.book),
-            title: const Text('My Favorites'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyFavoritesScreen()),
-              );
-            },
-          ),
+         
           ListTile(
             leading: const Icon(Icons.category),
             title: const Text(' Categories'),

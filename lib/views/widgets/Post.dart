@@ -1,23 +1,41 @@
+import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
+class PostItem extends StatefulWidget {
+  final String ngoname;
+  final String ngocity;
+  final String drivecity;
+  final String driveaddress;
+  final String driveDate;
+  final String applyStatus;
+  final String pid;
+  final String userType;
 
-class Post extends StatefulWidget {
+  const PostItem({
+    required this.ngoname,
+    required this.ngocity,
+    required this.drivecity,
+    required this.driveaddress,
+    required this.driveDate,
+    required this.applyStatus,
+    required this.pid,
+    required this.userType,
+  });
+
   @override
-  State<Post> createState() => _PostState();
+  State<PostItem> createState() => _PostState();
 }
 
-class _PostState extends State<Post> {
-  final List<String> _imgPost = [
-    'assets/images/post.png',
-    'assets/images/post2.png',
-    'assets/images/post3.png',
-  ];
-
+class _PostState extends State<PostItem> {
   bool _isExpanded = true;
   bool _isLike = true;
   bool _isApply = true;
+  bool _isLoading = false;
 
   void toggleExpand() {
     setState(() {
@@ -31,10 +49,15 @@ class _PostState extends State<Post> {
     });
   }
 
-  void toggleApply() {
-    setState(() {
-      _isApply = !_isApply;
-    });
+  Future applyPost() async {
+    if (_isApply && widget.applyStatus == "Apply") {
+      var postProvider = Provider.of<PostProvider>(context, listen: false);
+      await postProvider.applyPost(widget.pid, widget.userType).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
   }
 
   @override
@@ -44,7 +67,7 @@ class _PostState extends State<Post> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: kpostColor,
           borderRadius: BorderRadius.circular(16),
@@ -53,7 +76,7 @@ class _PostState extends State<Post> {
               color: Colors.black.withOpacity(0.1),
               blurRadius: 8,
               spreadRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -63,14 +86,7 @@ class _PostState extends State<Post> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NgoProfile(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Container(
@@ -81,7 +97,7 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -89,178 +105,101 @@ class _PostState extends State<Post> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'smile foundation',
+                          widget.ngoname,
                           style: kTextPopM16,
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        Icon(Icons.calendar_today),
-                        SizedBox(width: 4),
-                        Text(
-                          'Feb 17,2023',
-                          style: kTextPopR14,
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.location_on),
-                        Text(
-                          'Pune',
-                          style: kTextPopR14,
-                        ),
+                        Text(widget.ngocity, style: kTextPopR14),
                       ],
                     ),
                   ],
                 ),
-                
-                
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.share,
+                    size: 32.0,
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 16),
-            Container(
-              child: Column(
-                children: [
-                  Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed leo id risus volutpat suscipit. Sed consequat magna in enim faucibus, vel volutpat risus sagittis. Donec interdum ipsum non mauris malesuada, sit amet iaculis felis auctor.',
-                    style: kTextPopR14,
-                    maxLines: _isExpanded ? null : 100,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      SizedBox(width: 5),
-                      Text('No of required volunteers: ', style: kTextPopB14),
-                      Text('20', style: kTextPopR14)
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(Icons.location_city),
-                      SizedBox(width: 5),
-                      Text('City: ', style: kTextPopB14),
-                      Text('Pune', style: kTextPopR14)
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.location_on),
-                      SizedBox(width: 5),
-                      Text('Location: ', style: kTextPopB14),
-                      Expanded(
-                        child: Text(
-                          'D Y patil college of Engineering',
-                          style: kTextPopR14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            const Divider(),
+            const SizedBox(height: 16),
+            Text(
+              'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+              style: kTextPopM16,
             ),
-            SizedBox(height: 8),
-            InkWell(
-              onTap: toggleExpand,
-              child: Text(
-                _isExpanded ? 'See more' : 'see less',
-                style: TextStyle(color: Colors.blue),
-              ),
+            const SizedBox(
+              height: 5
             ),
-            SizedBox(height: 16),
-            SizedBox(
-              height: 250,
-              child: PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _imgPost.length,
-                  itemBuilder: ((context, index) {
-                    return Image.asset(_imgPost[index]);
-                  })),
-            ),
-            SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: toggleLike,
-                  child: Card(
-                    color: kprimaryColor,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          _isLike
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  color: ksecondaryColor,
-                                ),
-                          SizedBox(width: 8),
-                          Text(
-                            '123',
-                           style: kTextPopR14.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
-                      ),
-                    ),
+                const Icon(Icons.location_city),
+                const SizedBox(width: 5),
+                Text('City: ', style: kTextPopB14),
+                Text('Pune', style: kTextPopR14)
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(Icons.access_time_rounded),
+                const SizedBox(width: 5),
+                Text('Date and Time: ', style: kTextPopB14),
+                Expanded(
+                  child: Text(
+                    '19 Mar ',
+                    style: kTextPopR14,
                   ),
                 ),
-                GestureDetector(
-                  onTap: toggleApply,
-                  child: Card(
-                    color: kprimaryColor,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          _isApply
-                              ? Icon(
-                                  Icons.add_box_outlined,
-                                  color: ksecondaryColor,
-                                )
-                              : Icon(
-                                  Icons.add_box_rounded,
-                                  color: ksecondaryColor,
-                                ),
-                          SizedBox(width: 8),
-                          Text(
-                            _isApply ? 'Apply' : 'Withdrow',
-                           style: kTextPopR14.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.person),
+                SizedBox(width: 5),
+                Text('Category: ', style: kTextPopB14),
+                Text('Education', style: kTextPopR14)
+              ],
+            ),
+            SizedBox(height: 5),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.favorite),
+                      label: Text('123')),
                 ),
-                GestureDetector(
-                  onTap: toggleApply,
-                  child: Card(
-                    color: kprimaryColor,
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          _isApply
-                              ? Icon(
-                                  Icons.share,
-                                  color: ksecondaryColor,
-                                )
-                              : Icon(
-                                  Icons.share,
-                                  color: ksecondaryColor,
-                                ),
-                          SizedBox(width: 8),
-                          Text(
-                            _isApply ? 'Share' : 'Share',
-                            style: kTextPopR14.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
-                      ),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ViewDetails()));
+                      },
+                      child: const Text("view")),
+                ),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
+                    onPressed: () {
+                      applyPost();
+                      setState(() {
+                        _isApply = false;
+                        _isLoading = true;
+                      });
+                    },
+                    child: Text(
+                      _isApply ? widget.applyStatus : 'Applied',
                     ),
                   ),
                 ),

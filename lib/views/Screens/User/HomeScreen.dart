@@ -1,6 +1,6 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
-import 'package:aikyam/views/widgets/Post2.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
