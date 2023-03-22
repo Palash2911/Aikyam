@@ -7,6 +7,7 @@ import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:aikyam/views/widgets/otpField.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,14 @@ class _OtpScreenState extends State<OtpScreen> {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
     if (otp.length == 6) {
       var isValid = await authProvider.verifyOtp(otp).catchError((e) {
-        print("Failure");
+        Fluttertoast.showToast(
+          msg: "Invalid OTP. Please try again",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       });
       if (isValid) {
         var user = await authProvider.checkUser();
@@ -57,13 +65,27 @@ class _OtpScreenState extends State<OtpScreen> {
         setState(() {
           isLoading = false;
         });
-        print("Failure");
+        Fluttertoast.showToast(
+          msg: "Invalid OTP. Please try again",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } else {
       setState(() {
         isLoading = false;
       });
-      print("Failure");
+      Fluttertoast.showToast(
+        msg: "Invalid OTP. Please try again",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 

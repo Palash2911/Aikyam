@@ -52,6 +52,7 @@ dependencies:
   firebase_database: ^10.0.16
   csc_picker: ^0.2.7
   animations: ^2.0.7
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:

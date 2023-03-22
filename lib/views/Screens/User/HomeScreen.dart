@@ -1,12 +1,9 @@
-import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -60,24 +57,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        if(snapshot.data!.docs.isEmpty){
+                        if (snapshot.data!.docs.isEmpty) {
                           return const Center(
                             child: Text("No Post Yet !"),
                           );
-                        }
-                        else{
+                        } else {
                           return ListView(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               return PostItem(
-                                  ngoname: document["Name"],
-                                  ngocity: document["NgoCity"],
-                                  drivecity: document["City"],
-                                  driveaddress: document["Address"],
-                                  driveDate: document["Date"],
-                                  applyStatus: "",
-                                  pid: document.id);
+                                ngoname: document["NgoName"],
+                                ngocity: document["NgoCity"],
+                                drivecity: document["City"],
+                                driveaddress: document["Address"],
+                                driveDate: document["Date"],
+                                applyStatus: "",
+                                pid: document.id,
+                                userType: "User",
+                              );
                             }).toList(),
                           );
                         }

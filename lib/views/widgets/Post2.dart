@@ -1,8 +1,10 @@
+import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
   final String ngoname;
@@ -12,6 +14,7 @@ class PostItem extends StatefulWidget {
   final String driveDate;
   final String applyStatus;
   final String pid;
+  final String userType;
 
   const PostItem({
     required this.ngoname,
@@ -21,6 +24,7 @@ class PostItem extends StatefulWidget {
     required this.driveDate,
     required this.applyStatus,
     required this.pid,
+    required this.userType,
   });
 
   @override
@@ -31,6 +35,7 @@ class _PostState extends State<PostItem> {
   bool _isExpanded = true;
   bool _isLike = true;
   bool _isApply = true;
+  bool _isLoading = false;
 
   void toggleExpand() {
     setState(() {
@@ -44,17 +49,15 @@ class _PostState extends State<PostItem> {
     });
   }
 
-  Future toggleApply() async {
-    // if (_isApply && widget.applyStatus == "Apply") {
-    //   await Provider.of<PostProvider>(context, listen: false)
-    //       .applyPost(widget.pid)
-    //       .catchError((e) {
-    //     print(e);
-    //   });
-    //   setState(() {
-    //     _isApply = !_isApply;
-    //   });
-    // }
+  Future applyPost() async {
+    if (_isApply && widget.applyStatus == "Apply") {
+      var postProvider = Provider.of<PostProvider>(context, listen: false);
+      await postProvider.applyPost(widget.pid, widget.userType).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
   }
 
   @override
@@ -130,23 +133,23 @@ class _PostState extends State<PostItem> {
               'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
               style: kTextPopM16,
             ),
-            SizedBox(
-              height: 5,
+            const SizedBox(
+              height: 5
             ),
             Row(
               children: [
-                Icon(Icons.location_city),
-                SizedBox(width: 5),
+                const Icon(Icons.location_city),
+                const SizedBox(width: 5),
                 Text('City: ', style: kTextPopB14),
                 Text('Pune', style: kTextPopR14)
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.access_time_rounded),
-                SizedBox(width: 5),
+                const Icon(Icons.access_time_rounded),
+                const SizedBox(width: 5),
                 Text('Date and Time: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
@@ -181,16 +184,18 @@ class _PostState extends State<PostItem> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ViewDetails()));
+                                builder: (context) => const ViewDetails()));
                       },
                       child: const Text("view")),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
-                  child: ElevatedButton(
+                  child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
                     onPressed: () {
+                      applyPost();
                       setState(() {
-                        toggleApply();
+                        _isApply = false;
+                        _isLoading = true;
                       });
                     },
                     child: Text(

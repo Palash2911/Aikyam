@@ -1,21 +1,53 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:aikyam/models/post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class PostProvider extends ChangeNotifier {
+  final auth = FirebaseAuth.instance;
+
   Future createPost(Post post) async {
     try {
-      // var storage = FirebaseStorage.instance;
-      // TaskSnapshot taskSnapshot = await storage
-      //     .ref()
-      //     // .child('NProfile/${post.id}') //doubt here
-      //     .putFile(post.photos as File);
-      // final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      List<dynamic> postImages = [];
+      if (post.photos.isNotEmpty) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+                'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
+            .putFile(post.photos[0]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
+      if (post.photos.length >= 2) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+                'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
+            .putFile(post.photos[1]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
+      if (post.photos.length == 3) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+                'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
+            .putFile(post.photos[2]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       var p = await posts.add({
-        'Name': post.ngoname,
+        'NgoName': post.ngoname,
         'NgoCity': post.ncity,
         'Description': post.description,
         'NoOfVolunteers': post.noofVolunters,
@@ -24,10 +56,9 @@ class PostProvider extends ChangeNotifier {
         "Address": post.address,
         "City": post.city,
         "State": post.state,
-        "Ngoid": post.ngoid,
-        // "Uid": post.id,
+        "NgoId": post.ngoid,
         "Country": post.country,
-        "Photos": post.photos,
+        "Photos": postImages,
       });
 
       post.id = p.id;
@@ -35,11 +66,10 @@ class PostProvider extends ChangeNotifier {
       await ngos.doc(post.ngoid).get().then((snapshot) {
         postId = snapshot['PostId'];
       });
-      postId.add(post.ngoid);
+      postId.add(post.id);
       await ngos.doc(post.ngoid).update({
         'PostId': postId,
       });
-
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -48,17 +78,11 @@ class PostProvider extends ChangeNotifier {
 
   Future updatePost(Post post) async {
     try {
-      // var storage = FirebaseStorage.instance;
-      // TaskSnapshot taskSnapshot = await storage
-      //     .ref()
-      //     // .child('NProfile/${post.id}') //doubt here
-      //     .putFile(post.photos as File);
-      // final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       var p = await post.doc(post.id).update({
         'Description': post.description,
-        'Name': post.ngoname,
+        'NgoName': post.ngoname,
         'NgoCity': post.ncity,
         'NoOfVolunteers': post.noofVolunters,
         "Date": post.date,
@@ -67,21 +91,62 @@ class PostProvider extends ChangeNotifier {
         "City": post.city,
         "State": post.state,
         "Ngoid": post.ngoid,
-        // "Uid": post.id,
         "Country": post.country,
         "Photos": post.photos,
       });
-
-      // prefs.setBool('Profile', true);
       notifyListeners();
     } catch (e) {
-      // prefs.setBool('Profile', false);
       rethrow;
     }
   }
-}
 
-Future deletePost(String id) async {
-  final db = FirebaseFirestore.instance;
-  await db.collection("Posts").doc(id).delete();
+  Future applyPost(String pid, String userType) async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
+      CollectionReference posts =
+          FirebaseFirestore.instance.collection('Posts');
+
+      var aName = "";
+      var profilePic = "";
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+          aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
+        });
+      }
+      await posts
+          .doc(pid)
+          .collection("Applications")
+          .doc(auth.currentUser!.uid)
+          .set({
+        "PhoneNo": auth.currentUser!.phoneNumber,
+        "ApplicantName": aName,
+        "ProfilePic": profilePic,
+      });
+      if (userType == "User") {
+        await users.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      } else {
+        await ngo.doc(auth.currentUser!.uid).update({
+          "AppliedPostId": pid,
+        });
+      }
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future deletePost(String id) async {
+    final db = FirebaseFirestore.instance;
+    await db.collection("Posts").doc(id).delete();
+  }
 }

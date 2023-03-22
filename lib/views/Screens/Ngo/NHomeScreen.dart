@@ -29,10 +29,10 @@ class _NHomeScreenState extends State<NHomeScreen> {
           toolbarHeight: 85,
           flexibleSpace: HomeAppBar(),
         ),
-        drawer: NgoAppdrawer(),
+        drawer: const NgoAppdrawer(),
         body: SingleChildScrollView(
           child: SizedBox(
-            height: 300,
+            height: 500,
             child: Column(
               children: [
                 Expanded(
@@ -54,13 +54,15 @@ class _NHomeScreenState extends State<NHomeScreen> {
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               return PostItem(
-                                  ngoname: document["Name"],
-                                  ngocity: document["NgoCity"],
-                                  drivecity: document["City"],
-                                  driveaddress: document["Address"],
-                                  driveDate: document["Date"],
-                                  applyStatus: "",
-                                  pid: "");
+                                ngoname: document["NgoName"],
+                                ngocity: document["NgoCity"],
+                                drivecity: document["City"],
+                                driveaddress: document["Address"],
+                                driveDate: document["Date"],
+                                applyStatus: "Apply",
+                                pid: document.id,
+                                userType: "Ngo",
+                              );
                             }).toList(),
                           );
                         }

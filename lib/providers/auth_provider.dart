@@ -88,7 +88,6 @@ class Auth extends ChangeNotifier {
             },
           );
       if (!user) {
-        print(user);
         user = true;
         CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
         await ngo.doc(_auth.currentUser?.uid).get().then(

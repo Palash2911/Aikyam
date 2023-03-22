@@ -122,6 +122,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(),
         body: SingleChildScrollView(
           child: isLoading
               ? Container(
