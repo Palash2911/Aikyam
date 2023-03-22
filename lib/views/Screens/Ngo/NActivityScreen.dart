@@ -49,24 +49,27 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                         );
                       } else {
                         return ListView(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          children: snapshot.data!.docs.map((document) {
-                            if (auth.currentuser!.uid == document['NgoId'])
-                            {
-                              return ActivityPost();
-                            }
-                            else{
-                              print("No post created")
-                            }
-                          }).toList(),
-                        );
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            children: [
+                              ActivityPost(),
+                            ]
+                            // snapshot.data!.docs.map((document) {
+                            //   //   if (auth.currentuser!.uid == document['NgoId'])
+                            //   //   {
+                            //   //     return ActivityPost();
+                            //   //   }
+                            //   //   else{
+                            //   //     print("No post created")
+                            //   //   }
+                            //   // }
+                            // }).toList(),
+                            );
                       }
                     }
                   },
                 ),
               ),
-              ActivityPost(),
             ],
           ),
         ),
@@ -74,11 +77,3 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
     );
   }
 }
-//home screen pe jo stream builder waise hi here,  same as home screen
-//53 me return listview
-// 57 la activity post instead of postitem
-// 18,19 as it is,
-// //after else ie line 52
-// if(auth.currentuser!.uid == document['NgoId']) { 
-//   else:no post found or created.
-  //return activity post;
