@@ -1,5 +1,6 @@
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 
@@ -27,20 +28,7 @@ class _EditUserState extends State<EditUser> {
     int _choiceIndex;
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          child: Icon(
-            Icons.save,
-            color: kprimaryColor,
-            size: 30,
-          ),
-          elevation: 0,
-          foregroundColor: Color.fromARGB(255, 255, 255, 255),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
-        ),
+        
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
@@ -309,6 +297,25 @@ class _EditUserState extends State<EditUser> {
 
                 SizedBox(
                   height: 10.0,
+                ),
+                SizedBox(
+                  height: 60, //height of button
+                  width: 250, //width of button
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: kprimaryColor, //background color of button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.all(
+                            20) //content padding inside button
+                        ),
+                    onPressed: () {},
+                    child:  Text(
+                      "Save",
+                      style: kTextPopM16,
+                    ),
+                  ),
                 ),
               ],
             ),

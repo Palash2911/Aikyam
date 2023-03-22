@@ -440,8 +440,7 @@ class _UserRegisterState extends State<UserRegister> {
                               width: 250, //width of button
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors
-                                        .green, //background color of button
+                                    primary: kprimaryColor, //background color of button
                                     shape: RoundedRectangleBorder(
                                         //to set border radius to button
                                         borderRadius:

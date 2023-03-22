@@ -729,8 +729,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                               width: 250, //width of button
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors
-                                        .green, //background color of button
+                                    primary: kprimaryColor, //background color of button
                                     shape: RoundedRectangleBorder(
                                         //to set border radius to button
                                         borderRadius:
@@ -746,33 +745,15 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                   // _createProfile(context);
                                 },
                                 child: const Text(
-                                  "Register",
+                                  "Save",
                                 ),
                               ),
                             ),
-                            // FloatingActionButton.extended(
-                            //   elevation: 0,
-                            //   backgroundColor: Colors.green,
-                            //   foregroundColor: Colors.green,
-                            //   shape: const StadiumBorder(
-                            //       side: BorderSide(
-                            //           color: Colors.green, width: 1)),
-                            //   label: const Text(
-                            //     "        Done        ",
-                            //     style: TextStyle(color: Colors.white),
-                            //   ),
-                            //   onPressed: () {
-                            //     // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
-                            //     setState(() {
-                            //       isLoading = true;
-                            //     });
-                            //     _createProfile(context);
-                            //   },
-                            // ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 10),
+                      
                     ],
                   ),
                 ),
