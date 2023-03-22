@@ -44,12 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: const UserAppdrawer(),
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height >=
-                    MediaQuery.of(context).size.height -
-                        kBottomNavigationBarHeight
-                ? 500
-                : 300,
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            margin: EdgeInsets.only(top: 20, bottom: 120),
             child: Column(
               children: [
                 Expanded(
@@ -76,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 drivecity: document["City"],
                                 driveaddress: document["Address"],
                                 driveDate: document["Date"],
-                                applyStatus: "",
+                                applyStatus: "Apply",
                                 pid: document.id,
                                 userType: "User",
                               );

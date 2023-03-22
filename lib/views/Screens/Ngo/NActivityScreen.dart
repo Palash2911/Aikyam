@@ -62,7 +62,6 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                   drivecity: document['City'],
                                   driveaddress: document['Address'],
                                   driveDate: document['Date'],
-                                  applyStatus: "document['']",
                                   pid: document.id,
                                 );
                               }
