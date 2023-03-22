@@ -407,7 +407,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         const SizedBox(height: 16),
                         CSCPicker(
                           showCities: true,
-                          countryFilter: [
+                          countryFilter: const [
                             CscCountry.India,
                           ],
                           dropdownDecoration: BoxDecoration(

@@ -57,24 +57,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        if(snapshot.data!.docs.isEmpty){
+                        if (snapshot.data!.docs.isEmpty) {
                           return const Center(
                             child: Text("No Post Yet !"),
                           );
-                        }
-                        else{
+                        } else {
                           return ListView(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               return PostItem(
-                                  ngoname: document["NgoName"],
-                                  ngocity: document["NgoCity"],
-                                  drivecity: document["City"],
-                                  driveaddress: document["Address"],
-                                  driveDate: document["Date"],
-                                  applyStatus: "",
-                                  pid: document.id);
+                                ngoname: document["NgoName"],
+                                ngocity: document["NgoCity"],
+                                drivecity: document["City"],
+                                driveaddress: document["Address"],
+                                driveDate: document["Date"],
+                                applyStatus: "",
+                                pid: document.id,
+                                userType: "User",
+                              );
                             }).toList(),
                           );
                         }

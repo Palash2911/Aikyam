@@ -1,6 +1,5 @@
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/Post2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,7 +32,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
         drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
           child: SizedBox(
-            height: 300,
+            height: 500,
             child: Column(
               children: [
                 Expanded(
@@ -55,13 +54,15 @@ class _NHomeScreenState extends State<NHomeScreen> {
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
                               return PostItem(
-                                  ngoname: document["NgoName"],
-                                  ngocity: document["NgoCity"],
-                                  drivecity: document["City"],
-                                  driveaddress: document["Address"],
-                                  driveDate: document["Date"],
-                                  applyStatus: "",
-                                  pid: "");
+                                ngoname: document["NgoName"],
+                                ngocity: document["NgoCity"],
+                                drivecity: document["City"],
+                                driveaddress: document["Address"],
+                                driveDate: document["Date"],
+                                applyStatus: "Apply",
+                                pid: document.id,
+                                userType: "Ngo",
+                              );
                             }).toList(),
                           );
                         }
