@@ -109,13 +109,16 @@ class PostProvider extends ChangeNotifier {
           FirebaseFirestore.instance.collection('Posts');
 
       var aName = "";
+      var profilePic = "";
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
         });
       } else {
         await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
+          profilePic = snapshot['ProfilePic'];
         });
       }
       await posts
@@ -125,6 +128,7 @@ class PostProvider extends ChangeNotifier {
           .set({
         "PhoneNo": auth.currentUser!.phoneNumber,
         "ApplicantName": aName,
+        "ProfilePic": profilePic,
       });
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).update({

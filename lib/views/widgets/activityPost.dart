@@ -173,7 +173,7 @@ class _ActivityPostState extends State<ActivityPost> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => new ApplicantsScreen(),
+                        builder: (context) => ApplicantsScreen(pid: widget.pid),
                       ),
                     );
                   },
