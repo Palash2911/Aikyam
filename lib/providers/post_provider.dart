@@ -188,6 +188,3 @@ class PostProvider extends ChangeNotifier {
     return null;
   }
 }
-
-//getpost by id ek function  ngo provider madhe similar to get details.
-//
