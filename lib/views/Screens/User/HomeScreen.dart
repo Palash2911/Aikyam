@@ -45,7 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const UserAppdrawer(),
         body: SingleChildScrollView(
           child: SizedBox(
-            height: 300,
+            height: MediaQuery.of(context).size.height >=
+                    MediaQuery.of(context).size.height -
+                        kBottomNavigationBarHeight
+                ? 500
+                : 300,
             child: Column(
               children: [
                 Expanded(
