@@ -1,68 +1,37 @@
-import 'package:aikyam/providers/post_provider.dart';
-import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/PopUpMenu.dart';
+import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 
-class PostItem extends StatefulWidget {
+class UActivityPost extends StatefulWidget {
   final String ngoname;
   final String ngocity;
   final String drivecity;
   final String driveaddress;
   final String driveDate;
-  final String applyStatus;
   final String pid;
-  final String userType;
 
-  const PostItem({
+  const UActivityPost({
+    super.key,
     required this.ngoname,
     required this.ngocity,
     required this.drivecity,
     required this.driveaddress,
     required this.driveDate,
-    required this.applyStatus,
     required this.pid,
-    required this.userType,
   });
 
   @override
-  State<PostItem> createState() => _PostState();
+  State<UActivityPost> createState() => _UActivityPostState();
 }
 
-class _PostState extends State<PostItem> {
-  bool _isExpanded = true;
-  bool _isLike = true;
-  bool _isApply = true;
-  bool _isLoading = false;
-
-  void toggleExpand() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-    });
-  }
-
-  void toggleLike() {
-    setState(() {
-      _isLike = !_isLike;
-    });
-  }
-
-  Future applyPost() async {
-    if (_isApply && widget.applyStatus == "Apply") {
-      var postProvider = Provider.of<PostProvider>(context, listen: false);
-      await postProvider.applyPost(widget.pid, widget.userType).then((value) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-  }
-
+class _UActivityPostState extends State<UActivityPost> {
   @override
   Widget build(BuildContext context) {
     final PageController _pageController = PageController(initialPage: 0);
+    bool _isApply = true;
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -133,23 +102,23 @@ class _PostState extends State<PostItem> {
               'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
               style: kTextPopM16,
             ),
-            const SizedBox(
-              height: 5
+            SizedBox(
+              height: 5,
             ),
             Row(
               children: [
-                const Icon(Icons.location_city),
-                const SizedBox(width: 5),
+                Icon(Icons.location_city),
+                SizedBox(width: 5),
                 Text('City: ', style: kTextPopB14),
                 Text('Pune', style: kTextPopR14)
               ],
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.access_time_rounded),
-                const SizedBox(width: 5),
+                Icon(Icons.access_time_rounded),
+                SizedBox(width: 5),
                 Text('Date and Time: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
@@ -170,38 +139,11 @@ class _PostState extends State<PostItem> {
             SizedBox(height: 5),
             const SizedBox(height: 16),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.favorite),
-                      label: Text('123')),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ViewDetails()));
-                      },
-                      child: const Text("view")),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
-                    onPressed: () {
-                      applyPost();
-                      setState(() {
-                        _isApply = false;
-                        _isLoading = true;
-                      });
-                    },
-                    child: Text(
-                      _isApply ? widget.applyStatus : 'Applied',
-                    ),
-                  ),
+                AppButton(
+                  text: 'cancel',
+                  onPressed: () {},
                 ),
               ],
             ),
