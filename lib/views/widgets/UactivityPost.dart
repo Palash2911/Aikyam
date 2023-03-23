@@ -55,13 +55,16 @@ class _UActivityPostState extends State<UActivityPost> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NgoProfile()));
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Container(
                       height: 50.0,
                       width: 50.0,
-                      color: const Color(0xffFF0E58),
+                      color: Colors.grey,
                       child: Image.asset('assets/images/dp.jpg'),
                     ),
                   ),

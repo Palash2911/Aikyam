@@ -86,13 +86,16 @@ class _PostState extends State<PostItem> {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => NgoProfile()));
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Container(
                       height: 50.0,
                       width: 50.0,
-                      color: const Color(0xffFF0E58),
+                      color: Colors.grey,
                       child: Image.asset('assets/images/dp.jpg'),
                     ),
                   ),
@@ -133,9 +136,7 @@ class _PostState extends State<PostItem> {
               'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
               style: kTextPopM16,
             ),
-            const SizedBox(
-              height: 5
-            ),
+            const SizedBox(height: 5),
             Row(
               children: [
                 const Icon(Icons.location_city),
@@ -190,18 +191,20 @@ class _PostState extends State<PostItem> {
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
-                  child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
-                    onPressed: () {
-                      applyPost();
-                      setState(() {
-                        _isApply = false;
-                        _isLoading = true;
-                      });
-                    },
-                    child: Text(
-                      _isApply ? widget.applyStatus : 'Applied',
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: () {
+                            applyPost();
+                            setState(() {
+                              _isApply = false;
+                              _isLoading = true;
+                            });
+                          },
+                          child: Text(
+                            _isApply ? widget.applyStatus : 'Applied',
+                          ),
+                        ),
                 ),
               ],
             ),
