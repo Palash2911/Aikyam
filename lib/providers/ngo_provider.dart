@@ -11,9 +11,11 @@ class NgoProvider extends ChangeNotifier {
 
     try {
       var storage = FirebaseStorage.instance;
-      TaskSnapshot taskSnapshot =
-          await storage.ref().child('NProfile/${ngo.id}').putFile(ngo.profile);
-      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      TaskSnapshot taskSnapshot = await storage
+          .ref()
+          .child('NProfile/${ngo.id}')
+          .putFile(ngo.localUrl!);
+      ngo.firebaseUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       await ngos.doc(ngo.id).set({
         'PostId': ngo.postId,
@@ -29,40 +31,7 @@ class NgoProvider extends ChangeNotifier {
         "IsRegistered": ngo.registered,
         "Type": ngo.type,
         "Category": ngo.category,
-        "ProfilePic": downloadUrl,
-      });
-
-      prefs.setBool('Profile', true);
-      notifyListeners();
-    } catch (e) {
-      prefs.setBool('Profile', false);
-      rethrow;
-    }
-  }
-
-  Future updateNgo(Ngo ngo) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    try {
-      var storage = FirebaseStorage.instance;
-      TaskSnapshot taskSnapshot =
-          await storage.ref().child('NProfile/${ngo.id}').putFile(ngo.profile);
-      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
-      await ngos.doc(ngo.id).update({
-        'Name': ngo.name,
-        'Bio': ngo.bio,
-        "PhoneNo": ngo.phone,
-        "UID": ngo.id,
-        "Email": ngo.email,
-        "DateofEst": ngo.date,
-        "City": ngo.city,
-        "Zipcode": ngo.zipcode,
-        "State": ngo.state,
-        "IsRegistered": ngo.registered,
-        "Type": ngo.type,
-        "Category": ngo.category,
-        "ProfilePic": downloadUrl,
+        "ProfilePic": ngo.firebaseUrl,
       });
 
       prefs.setBool('Profile', true);
@@ -86,20 +55,22 @@ class NgoProvider extends ChangeNotifier {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
 
         ngo = Ngo(
-            id: data["UID"],
-            bio: data["Bio"],
-            name: data["Name"],
-            email: data["Email"],
-            phone: data["PhoneNo"],
-            type: data["Type"],
-            date: data["DateofEst"],
-            registered: data["IsRegistered"],
-            city: data["City"],
-            state: data["State"],
-            zipcode: data["Zipcode"],
-            category: data["Category"],
-            postId: data["PostId"],
-            profile: File(data["ProfilePic"]));
+          id: data["UID"],
+          bio: data["Bio"],
+          name: data["Name"],
+          email: data["Email"],
+          phone: data["PhoneNo"],
+          type: data["Type"],
+          date: data["DateofEst"],
+          registered: data["IsRegistered"],
+          city: data["City"],
+          state: data["State"],
+          zipcode: data["Zipcode"],
+          category: data["Category"],
+          postId: data["PostId"],
+          localUrl: null,
+          firebaseUrl: data['ProfilePic'],
+        );
       });
       notifyListeners();
       return ngo;
@@ -107,5 +78,37 @@ class NgoProvider extends ChangeNotifier {
       print(e);
     }
     return null;
+  }
+
+  Future updateNgo(Ngo ngo) async {
+    try {
+      if (ngo.localUrl != null) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child('Profile/${ngo.id}')
+            .putFile(ngo.localUrl!);
+        ngo.firebaseUrl = await taskSnapshot.ref.getDownloadURL();
+      }
+      CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
+      await ngos.doc(ngo.id).update({
+        'Name': ngo.name,
+        'Bio': ngo.bio,
+        "PhoneNo": ngo.phone,
+        "UID": ngo.id,
+        "Email": ngo.email,
+        "DateofEst": ngo.date,
+        "City": ngo.city,
+        "Zipcode": ngo.zipcode,
+        "State": ngo.state,
+        "IsRegistered": ngo.registered,
+        "Type": ngo.type,
+        "Category": ngo.category,
+        "ProfilePic": ngo.firebaseUrl,
+      });
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

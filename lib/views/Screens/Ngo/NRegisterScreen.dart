@@ -104,7 +104,8 @@ class _NgoRegisterState extends State<NgoRegister> {
             state: state,
             zipcode: zipcode,
             category: category,
-            profile: imageFile!,
+            localUrl: imageFile,
+            firebaseUrl: "",
             postId: [],
           ),
         )

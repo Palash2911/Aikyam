@@ -3,16 +3,17 @@ import 'package:aikyam/models/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
 
 class UserProvider extends ChangeNotifier {
   Future registerUser(Users user) async {
     final prefs = await SharedPreferences.getInstance();
     try {
       var storage = FirebaseStorage.instance;
-      TaskSnapshot taskSnapshot =
-          await storage.ref().child('Profile/${user.id}').putFile(user.profile);
-      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      TaskSnapshot taskSnapshot = await storage
+          .ref()
+          .child('Profile/${user.id}')
+          .putFile(user.localUrl!);
+      user.firebaseUrl = await taskSnapshot.ref.getDownloadURL();
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       await users.doc(user.id).set({
@@ -24,7 +25,7 @@ class UserProvider extends ChangeNotifier {
         "Gender": user.gender,
         "Occupation": user.occupation,
         "Interest": user.interest,
-        "ProfilePic": downloadUrl,
+        "ProfilePic": user.firebaseUrl,
       });
 
       prefs.setBool('Profile', true);
@@ -47,17 +48,18 @@ class UserProvider extends ChangeNotifier {
       }
       await users.doc(uid.toString()).get().then((DocumentSnapshot query) {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
-
         user = Users(
-            id: data["UID"],
-            bio: data["Bio"],
-            name: data["Name"],
-            email: data["Email"],
-            phone: data["PhoneNo"],
-            gender: data["Gender"],
-            occupation: data["Occupation"],
-            interest: data["Interest"],
-            profile: File(data["ProfilePic"]));
+          id: data["UID"],
+          bio: data["Bio"],
+          name: data["Name"],
+          email: data["Email"],
+          phone: data["PhoneNo"],
+          gender: data["Gender"],
+          occupation: data["Occupation"],
+          interest: data["Interest"],
+          localUrl: null,
+          firebaseUrl: data['ProfilePic'],
+        );
       });
       notifyListeners();
       return user;
@@ -67,12 +69,15 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future updateUser(Users user) async {
-    final prefs = await SharedPreferences.getInstance();
     try {
-      var storage = FirebaseStorage.instance;
-      TaskSnapshot taskSnapshot =
-          await storage.ref().child('Profile/${user.id}').putFile(user.profile);
-      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      if (user.localUrl != null) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child('Profile/${user.id}')
+            .putFile(user.localUrl!);
+        user.firebaseUrl = await taskSnapshot.ref.getDownloadURL();
+      }
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
       await users.doc(user.id).update({
@@ -84,14 +89,10 @@ class UserProvider extends ChangeNotifier {
         "Gender": user.gender,
         "Occupation": user.occupation,
         "Interest": user.interest,
-        "ProfilePic": downloadUrl,
+        "ProfilePic": user.firebaseUrl,
       });
-
-      prefs.setBool('Profile', true);
       notifyListeners();
     } catch (e) {
-      prefs.setBool('Profile', false);
-      notifyListeners();
       rethrow;
     }
   }

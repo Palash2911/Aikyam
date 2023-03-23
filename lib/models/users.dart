@@ -9,7 +9,8 @@ class Users {
   final String gender;
   final String occupation;
   final String interest;
-  final File profile;
+  final File? localUrl;
+  String firebaseUrl;
 
   Users({
     required this.id,
@@ -20,6 +21,7 @@ class Users {
     required this.gender,
     required this.occupation,
     required this.interest,
-    required this.profile,
+    required this.localUrl,
+    required this.firebaseUrl,
   });
 }

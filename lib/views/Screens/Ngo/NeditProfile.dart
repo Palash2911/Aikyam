@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:aikyam/models/ngo.dart';
 import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/ngo_provider.dart';
+import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +27,8 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   String ngoType = "";
   String ngoRegisterd = "";
   final _form = GlobalKey<FormState>();
+  String authToken = "";
+  List<dynamic> postId = [];
 
   final _dateController = TextEditingController();
   final _bioController = TextEditingController();
@@ -32,6 +38,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   final _cityController = TextEditingController();
   final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
+
   String get date => _dateController.text;
   String get name => _nameController.text;
   String get phone => _phoneController.text;
@@ -40,25 +47,91 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   String get zipcode => _zipcodeController.text;
   String get city => _cityController.text;
   String get state => _stateController.text;
+
   String category = "";
-  File? imageFile;
+  File? localUrl;
+  String firebaseUrl = "";
   var isLoading = false;
 
   @override
-  void initState() {
-    _nameController.text = "";
-    _phoneController.text = "";
-    _emailController.text = "";
-    _bioController.text = "";
-    _cityController.text = "";
-    _stateController.text = "";
-    _zipcodeController.text = "";
-    _dateController.text = "";
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     type.add(Type("Profit", false));
     type.add(Type("Non-Profit", false));
     ngoReg.add(Registered("Yes", false));
     ngoReg.add(Registered("No", false));
-    super.initState();
+    _fetchNgo();
+  }
+
+  void _fetchNgo() async {
+    authToken = Provider.of<Auth>(context, listen: false).token;
+    await Provider.of<NgoProvider>(context, listen: false)
+        .getNgoDetails(authToken)
+        .then((value) {
+      _bioController.text = value!.bio;
+      _nameController.text = value.name;
+      _phoneController.text = value.phone;
+      _emailController.text = value.email;
+      _cityController.text = value.city;
+      _zipcodeController.text = value.zipcode;
+      _dateController.text = value.date;
+      _stateController.text = value.state;
+      ngoType = value.type;
+      ngoRegisterd = value.registered;
+      if (ngoType == "Profit") {
+        type.first.isSelected = true;
+      } else {
+        type.last.isSelected = true;
+      }
+      if (ngoRegisterd == "Yes") {
+        ngoReg.first.isSelected = true;
+      } else {
+        ngoReg.last.isSelected = true;
+      }
+      setState(() {
+        isLoading = false;
+        firebaseUrl = value.firebaseUrl;
+        localUrl = value.localUrl;
+        postId = value.postId;
+      });
+    });
+  }
+
+  void _updateDetails() async {
+    await Provider.of<NgoProvider>(context, listen: false)
+        .updateNgo(
+      Ngo(
+        id: authToken,
+        bio: bio,
+        name: name,
+        email: email,
+        phone: phone,
+        localUrl: localUrl,
+        firebaseUrl: firebaseUrl,
+        type: ngoType,
+        date: date,
+        registered: ngoRegisterd,
+        city: city,
+        state: state,
+        zipcode: zipcode,
+        category: category,
+        postId: postId,
+      ),
+    )
+        .then((value) {
+      if (isLoading) {
+        Fluttertoast.showToast(
+          msg: "Profile Updated Successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const NgoProfile()));
+      }
+    });
   }
 
   @override
@@ -74,37 +147,6 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
     super.dispose();
   }
 
-  // Future _createProfile(BuildContext ctx) async {
-  //   var authProvider = Provider.of<Auth>(ctx, listen: false);
-  //   final isValid = _form.currentState!.validate();
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   _form.currentState!.save();
-  //   if (isValid) {
-  //     if (imageFile == null) {
-  //       print("Please Select Profile Pic");
-  //     } else {
-  //       await authProvider
-  //           .registerNgo(bio, name, phone, email, ngoType, date, ngoRegisterd,
-  //               city, zipcode, state, category, imageFile!)
-  //           .catchError((e) {
-  //         print("Failure");
-  //       }).then((_) {
-  //         setState(() {
-  //           isLoading = false;
-  //         });
-  //         Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
-  //       });
-  //     }
-  //   } else {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //     return;
-  //   }
-  // }
-
   Future _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -113,7 +155,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
     );
     if (pickedFile != null) {
       setState(() {
-        imageFile = File(pickedFile.path);
+        localUrl = File(pickedFile.path);
       });
     }
   }
@@ -140,25 +182,21 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                       //profile picture
                       Stack(
                         children: [
-                          imageFile != null
-                              ? CircleAvatar(
-                                  radius: 50,
-                                  child: CircleAvatar(
-                                    backgroundImage: Image.file(
-                                      imageFile!,
+                          CircleAvatar(
+                            radius: 50,
+                            child: CircleAvatar(
+                              backgroundImage: localUrl != null
+                                  ? Image.file(
+                                      localUrl!,
+                                      fit: BoxFit.cover,
+                                    ).image
+                                  : Image.network(
+                                      firebaseUrl,
                                       fit: BoxFit.cover,
                                     ).image,
-                                    radius: 60,
-                                  ),
-                                )
-                              : const CircleAvatar(
-                                  radius: 50,
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("assets/images/group.png"),
-                                    radius: 60,
-                                  ),
-                                ),
+                              radius: 60,
+                            ),
+                          ),
                           Positioned(
                             bottom: 1,
                             right: 1,
@@ -170,17 +208,12 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                 decoration: const BoxDecoration(
                                   color: Colors.grey,
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: imageFile != null
-                                      ? const Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                        )
-                                      : const Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(2.0),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -219,20 +252,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                 textInputAction: TextInputAction.next,
                               ),
                             ),
-
                             const SizedBox(height: 20.0),
-                            // Row(
-                            //   children: [
-                            //     const SizedBox(width: 10),
-                            //     Text(
-                            //       "Ngo Details",
-                            //       textAlign: TextAlign.left,
-                            //       style: kTextPopB14,
-                            //     ),
-                            //   ],
-                            // ),
-                            // const SizedBox(width: 20),
-
                             // name
                             TextFormField(
                               controller: _nameController,
@@ -385,48 +405,6 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                             ),
 
                             const SizedBox(width: 20.0),
-                            // Row(
-                            //   children: [
-                            //     Icon(
-                            //       Icons.location_on_rounded,
-                            //       size: 32.0,
-                            //       color: Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: 12.0,
-                            //     ),
-                            //     Container(
-                            //       decoration: BoxDecoration(
-                            //         color: Colors.green.shade100,
-                            //         // border: Border.all(color: kprimaryColor, width: 2),
-                            //         borderRadius: BorderRadius.circular(10.0),
-                            //       ),
-                            //       child: Row(
-                            //         children: [
-                            //           SizedBox(width: 10.0),
-                            //           Text(
-                            //             'Address',
-                            //             style: kTextPopR14.copyWith(
-                            //                 color: Colors.black54),
-                            //           ),
-                            //           SizedBox(width: 10.0),
-                            //           SizedBox(width: 10.0),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-
-                            // Row(
-                            //   children: [
-                            //     const SizedBox(width: 10),
-                            //     Text(
-                            //       "Location Details",
-                            //       textAlign: TextAlign.left,
-                            //       style: kTextPopB14,
-                            //     ),
-                            //   ],
-                            // ),
                             const SizedBox(height: 10.0),
                             TextFormField(
                               // controller: _nameController,
@@ -729,7 +707,8 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                               width: 250, //width of button
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: kprimaryColor, //background color of button
+                                    primary:
+                                        kprimaryColor, //background color of button
                                     shape: RoundedRectangleBorder(
                                         //to set border radius to button
                                         borderRadius:
@@ -738,11 +717,10 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                         20) //content padding inside button
                                     ),
                                 onPressed: () {
-                                  // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
+                                  _updateDetails();
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  // _createProfile(context);
                                 },
                                 child: const Text(
                                   "Save",
@@ -753,7 +731,6 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      
                     ],
                   ),
                 ),

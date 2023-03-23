@@ -13,7 +13,8 @@ class Ngo {
   final String state;
   final String zipcode;
   final String category;
-  final File profile;
+  final File? localUrl;
+  String firebaseUrl;
   List<dynamic> postId;
 
   Ngo({
@@ -29,7 +30,8 @@ class Ngo {
     required this.state,
     required this.zipcode,
     required this.category,
-    required this.profile,
+    required this.localUrl,
+    required this.firebaseUrl,
     required this.postId,
   });
 }
