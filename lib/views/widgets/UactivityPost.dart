@@ -28,6 +28,7 @@ class UActivityPost extends StatefulWidget {
 }
 
 class _UActivityPostState extends State<UActivityPost> {
+  bool _status = true;
   @override
   Widget build(BuildContext context) {
     final PageController _pageController = PageController(initialPage: 0);
@@ -141,15 +142,12 @@ class _UActivityPostState extends State<UActivityPost> {
             ),
             SizedBox(height: 5),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppButton(
-                  text: 'cancel',
-                  onPressed: () {},
-                ),
-              ],
-            ),
+            Center(
+                child: _status
+                    ? Text('In-progress',
+                        style: kTextPopM16.copyWith(color: kprimaryColor))
+                    : Text('Rejected',
+                        style: kTextPopM16.copyWith(color: kprimaryColor))),
           ],
         ),
       ),

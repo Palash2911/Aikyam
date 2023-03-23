@@ -188,11 +188,7 @@ class _UserProfileState extends State<UserProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('About', style: kTextPopB16),
-                  SizedBox(height: 8),
-                  Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis volutpat nunc, in dignissim sapien tincidunt vel. Sed eget mauris ut sem consequat venenatis. Nunc id semper magna. Nam varius quam vel lorem luctus, vel ornare nisi ultrices.',
-                      style: kTextPopR14),
+                  
                   SizedBox(height: 10),
                   Divider(),
                   Text('Information', style: kTextPopB16),
