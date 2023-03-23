@@ -11,7 +11,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   bool _isSelected = true;
-
+  bool _isUserPov = true;
   bool _isAboutActive = true;
 
   void _toggleButton() {
@@ -70,22 +70,39 @@ class _UserProfileState extends State<UserProfile> {
                                         MaterialPageRoute(
                                             builder: (context) => EditUser()));
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        size: 24.0,
-                                        color: ksecondaryColor,
-                                      ),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Text('edit',
-                                          style: kTextPopB14.copyWith(
-                                              color: ksecondaryColor)),
-                                    ],
-                                  ),
+                                  child: _isUserPov
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text('edit',
+                                                style: kTextPopB14.copyWith(
+                                                    color: ksecondaryColor)),
+                                          ],
+                                        )
+                                      : Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.chat_bubble,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text('Chat',
+                                                style: kTextPopB14.copyWith(
+                                                    color: ksecondaryColor)),
+                                          ],
+                                        )
                                 ),
                               ),
                             ),
@@ -110,59 +127,6 @@ class _UserProfileState extends State<UserProfile> {
                 ],
               ),
             ),
-
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   child: Container(
-            //     height: 100.0,
-            //     width: 100.0,
-            //     color: const Color(0xffFF0E58),
-            //     child: Image.asset('assets/images/dp.jpg'),
-            //   ),
-            // ),
-
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         color: kprimaryColor,
-            //         child: ElevatedButton.icon(
-            //           style: ElevatedButton.styleFrom(elevation: 0.0),
-            //           onPressed: () {},
-            //           icon: Icon(
-            //             Icons.info_outline_rounded,
-            //             size: 24.0,
-            //           ),
-            //           label: Text(
-            //             'About',
-            //             style: kTextPopM16,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: Container(
-            //         color: kprimaryColor,
-            //         child: ElevatedButton.icon(
-            //           style: ElevatedButton.styleFrom(
-            //             elevation: 0.0,
-            //             backgroundColor: kprimaryColor,
-            //           ),
-            //           onPressed: () {},
-            //           icon: Icon(
-            //             Icons.work,
-            //             size: 24.0,
-            //           ),
-            //           label: Text(
-            //             'Post',
-            //             style: kTextPopM16,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
             Row(
               children: [
                 Expanded(
@@ -219,17 +183,12 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ],
             ),
-
             Padding(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('About', style: kTextPopB16),
-                  SizedBox(height: 8),
-                  Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis volutpat nunc, in dignissim sapien tincidunt vel. Sed eget mauris ut sem consequat venenatis. Nunc id semper magna. Nam varius quam vel lorem luctus, vel ornare nisi ultrices.',
-                      style: kTextPopR14),
+                  
                   SizedBox(height: 10),
                   Divider(),
                   Text('Information', style: kTextPopB16),
