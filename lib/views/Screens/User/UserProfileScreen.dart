@@ -2,8 +2,10 @@ import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -154,97 +156,146 @@ class _UserProfileState extends State<UserProfile> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.blue,
+              width: double.maxFinite,
+              height: double.maxFinite,
+              child: ContainedTabBarView(
+                tabs: [
+                  Container(
                     padding: EdgeInsets.all(10.0),
                     color: kprimaryColor,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        backgroundColor:
-                            _isAboutActive ? kprimaryColor : ksecondaryColor,
-                      ),
-                      onPressed: _toggleButton,
-                      icon: Icon(
-                        Icons.info_outline_rounded,
-                        size: 24.0,
-                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-                      ),
-                      label: Text(
-                        'About',
-                        style: kTextPopM16.copyWith(
-                          color:
-                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.info_outline_rounded,
+                          size: 24.0,
+                          color: ksecondaryColor,
                         ),
-                      ),
+                        SizedBox(width: 5.0),
+                        Text(
+                          'About',
+                          style: kTextPopM16.copyWith(color: ksecondaryColor),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
+                  Container(
                     padding: EdgeInsets.all(10.0),
                     color: kprimaryColor,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        backgroundColor:
-                            _isAboutActive ? kprimaryColor : ksecondaryColor,
-                      ),
-                      onPressed: _toggleButton,
-                      icon: Icon(
-                        Icons.work,
-                        size: 24.0,
-                        color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-                      ),
-                      label: Text(
-                        'Post',
-                        style: kTextPopM16.copyWith(
-                          color:
-                              _isAboutActive ? ksecondaryColor : kprimaryColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.work,
+                          size: 24.0,
+                          color: ksecondaryColor,
                         ),
-                      ),
+                        SizedBox(width: 5.0),
+                        Text(
+                          'Post',
+                          style: kTextPopM16.copyWith(color: ksecondaryColor),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  Divider(),
-                  Text('Information', style: kTextPopB16),
-                  SizedBox(height: 8),
-                  ListTile(
-                    title: Text('Occupation', style: kTextPopM16),
-                    subtitle: Text(occupation, style: kTextPopR14),
-                  ),
-                  ListTile(
-                    title: Text('Interest', style: kTextPopM16),
-                    subtitle: Text(interest, style: kTextPopR14),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(),
-                  Text('Contact', style: kTextPopB16),
-                  SizedBox(height: 8),
-                  ListTile(
-                    title: Text('Email id', style: kTextPopM16),
-                    subtitle: Text(email, style: kTextPopR14),
-                  ),
-                  ListTile(
-                    title: Text('Mobile Number', style: kTextPopM16),
-                    subtitle: Text("+91 $phone", style: kTextPopR14),
                   ),
                 ],
+                views: [
+                  _About(
+                      occupation: occupation,
+                      interest: interest,
+                      email: email,
+                      phone: phone),
+                  _Post()
+                ],
+                onChange: (index) => print(index),
               ),
             ),
+            _About(
+                occupation: occupation,
+                interest: interest,
+                email: email,
+                phone: phone),
+                _Post()
           ],
         ),
       ),
+    );
+  }
+}
+
+class _About extends StatelessWidget {
+  const _About({
+    super.key,
+    required this.occupation,
+    required this.interest,
+    required this.email,
+    required this.phone,
+  });
+
+  final String occupation;
+  final String interest;
+  final String email;
+  final String phone;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10),
+          Divider(),
+          Text('Information', style: kTextPopB16),
+          SizedBox(height: 8),
+          ListTile(
+            title: Text('Occupation', style: kTextPopM16),
+            subtitle: Text(occupation, style: kTextPopR14),
+          ),
+          ListTile(
+            title: Text('Interest', style: kTextPopM16),
+            subtitle: Text(interest, style: kTextPopR14),
+          ),
+          SizedBox(height: 10),
+          Divider(),
+          Text('Contact', style: kTextPopB16),
+          SizedBox(height: 8),
+          ListTile(
+            title: Text('Email id', style: kTextPopM16),
+            subtitle: Text(email, style: kTextPopR14),
+          ),
+          ListTile(
+            title: Text('Mobile Number', style: kTextPopM16),
+            subtitle: Text("+91 $phone", style: kTextPopR14),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Post extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      // add post here which ever wanted
+      children: const [
+        PostItem(
+          ngoname: 'ngoname',
+          ngocity: 'ngocity',
+          drivecity: 'drivecity',
+          driveaddress: 'driveaddress',
+          driveDate: 'driveDate',
+          applyStatus: 'applyStatus',
+          pid: 'pid',
+          userType: "Ngo",
+          driveTime: "Time",
+          category: "",
+        ),
+      ],
     );
   }
 }

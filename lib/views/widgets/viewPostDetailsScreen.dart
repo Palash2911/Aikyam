@@ -84,8 +84,10 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 child: Image.asset('assets/images/dp.jpg'),
                               ),
                             ),
-                            title: Text(widget.ngoname,style: kTextPopM16,),
-                            
+                            title: Text(
+                              widget.ngoname,
+                              style: kTextPopM16,
+                            ),
                             subtitle: Text('more info'),
                           ),
                           const Divider(),
@@ -187,7 +189,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   children: [
                                     Icon(Icons.location_on),
                                     SizedBox(width: 5),
-                                    Text('Drive Location: ', style: kTextPopB14),
+                                    Text('Drive Location: ',
+                                        style: kTextPopB14),
                                     Expanded(
                                       child: Text(
                                         loc.toString(),
@@ -202,7 +205,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   children: [
                                     Icon(Icons.category),
                                     SizedBox(width: 5),
-                                    Text('Drive category: ', style: kTextPopB14),
+                                    Text('Drive category: ',
+                                        style: kTextPopB14),
                                     Expanded(
                                       child: Text(
                                         widget.category,

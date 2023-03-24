@@ -53,6 +53,7 @@ dependencies:
   csc_picker: ^0.2.7
   animations: ^2.0.7
   fluttertoast: ^8.2.1
+  contained_tab_bar_view: ^0.8.0
 
 dev_dependencies:
   flutter_test:
