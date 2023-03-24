@@ -1,4 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
@@ -115,8 +116,8 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
   void setProfilePic() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
-    await Provider.of<UserProvider>(context, listen: false)
-        .getUserDetails(authProvider.token)
+    await Provider.of<NgoProvider>(context, listen: false)
+        .getNgoDetails(authProvider.token)
         .then((value) => {name = value!.name});
     setState(() {});
   }
@@ -139,18 +140,16 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                       builder: (context) => const NgoProfile(),
                     ));
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Container(
-                    height: 70.0,
-                    width: 70.0,
-                    color: const Color(0xffFF0E58),
-                    child: CircleAvatar(
-                      radius: 30.0,
-                      backgroundImage: pp.isNotEmpty
-                          ? Image.network(pp).image
-                          : const AssetImage('assets/images/dp.jpg'),
-                    )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: pp.isNotEmpty
+                        ? Image.network(pp).image
+                        : const AssetImage('assets/images/dp.jpg'),
+                  ),
+                ],
               ),
             ),
             accountEmail: null,

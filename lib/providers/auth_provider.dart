@@ -91,7 +91,10 @@ class Auth extends ChangeNotifier {
           FirebaseFirestore.instance.collection('Users');
       await users.doc(_auth.currentUser?.uid).get().then(
             (datasnapshot) => {
-              if (!datasnapshot.exists) {user = false}
+              if (!datasnapshot.exists)
+                {user = false}
+              else
+                {_profilePic = datasnapshot['ProfilePic']}
             },
           );
       if (!user) {
@@ -99,7 +102,10 @@ class Auth extends ChangeNotifier {
         CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
         await ngo.doc(_auth.currentUser?.uid).get().then(
               (datasnapshot) => {
-                if (!datasnapshot.exists) {user = false} else {user = true}
+                if (!datasnapshot.exists)
+                  {user = false}
+                else
+                  {user = true, _profilePic = datasnapshot['ProfilePic']}
               },
             );
         if (user) {

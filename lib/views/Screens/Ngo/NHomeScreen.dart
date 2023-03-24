@@ -41,6 +41,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           brightness: Brightness.dark,
           backgroundColor: Colors.transparent,
