@@ -32,6 +32,7 @@ class NgoProvider extends ChangeNotifier {
         "Type": ngo.type,
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
+        "AppliedPostId": [],
       });
 
       prefs.setBool('Profile', true);

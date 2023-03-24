@@ -121,6 +121,7 @@ class PostProvider extends ChangeNotifier {
           profilePic = snapshot['ProfilePic'];
         });
       }
+
       await posts
           .doc(pid)
           .collection("Applications")
@@ -132,12 +133,22 @@ class PostProvider extends ChangeNotifier {
         "ApplicationStatus": "InProcess",
       });
       if (userType == "User") {
+        List<dynamic> postId = [];
+        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+          postId = snapshot['AppliedPostId'];
+        });
+        postId.add(pid);
         await users.doc(auth.currentUser!.uid).update({
-          "AppliedPostId": pid,
+          'AppliedPostId': postId,
         });
       } else {
+        List<dynamic> postId = [];
+        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+          postId = snapshot['AppliedPostId'];
+        });
+        postId.add(pid);
         await ngo.doc(auth.currentUser!.uid).update({
-          "AppliedPostId": pid,
+          'AppliedPostId': postId,
         });
       }
       notifyListeners();
@@ -167,6 +178,7 @@ class PostProvider extends ChangeNotifier {
     final db = FirebaseFirestore.instance;
     await db.collection("Posts").doc(id).delete();
   }
+
 
   Future<Post?> getPostDetails(String id) async {
     try {
@@ -204,5 +216,29 @@ class PostProvider extends ChangeNotifier {
       print(e);
     }
     return null;
+  }
+
+  Future<List<dynamic>> getAppliedID(String userType) async {
+    try{
+      List<dynamic> postId = [];
+      if(userType == "Ngo")
+        {
+          CollectionReference ngo =  FirebaseFirestore.instance.collection("Ngo");
+          await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+            postId = snapshot['AppliedPostId'];
+          });
+        }
+      else
+        {
+          CollectionReference users =  FirebaseFirestore.instance.collection("Users");
+          await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+            postId = snapshot['AppliedPostId'];
+          });
+        }
+      notifyListeners();
+      return postId;
+    }catch(e){
+      rethrow;
+    }
   }
 }
