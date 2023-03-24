@@ -89,7 +89,14 @@ class _NgoRegisterState extends State<NgoRegister> {
     _form.currentState!.save();
     if (isValid) {
       if (imageFile == null) {
-        print("Please Select Profile Pic");
+        Fluttertoast.showToast(
+          msg: "Please select Profile pic!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else {
         await ngoProvider
             .registerNgo(
