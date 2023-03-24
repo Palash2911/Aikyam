@@ -1,4 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
@@ -15,6 +16,7 @@ class UserAppdrawer extends StatefulWidget {
 
 class _UserAppdrawerState extends State<UserAppdrawer> {
   var pp = "";
+  var name = "";
 
   @override
   void didChangeDependencies() {
@@ -22,9 +24,13 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
     setProfilePic();
   }
 
-  void setProfilePic() {
-    pp = Provider.of<Auth>(context, listen: false).profilePic;
-    print(pp);
+  void setProfilePic() async {
+    var authProvider = Provider.of<Auth>(context, listen: false);
+    pp = authProvider.profilePic;
+    await Provider.of<UserProvider>(context, listen: false)
+        .getUserDetails(authProvider.token)
+        .then((value) => {name = value!.name});
+    setState(() {});
   }
 
   @override
@@ -46,7 +52,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
                       : const AssetImage('assets/images/dp.jpg'),
                 ),
                 Text(
-                  'Dip Hire',
+                  name,
                   style: kTextPopM16.copyWith(color: ksecondaryColor),
                 ),
               ],
@@ -98,6 +104,8 @@ class NgoAppdrawer extends StatefulWidget {
 
 class _NgoAppdrawerState extends State<NgoAppdrawer> {
   var pp = "";
+  var name = "";
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -105,7 +113,12 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
   }
 
   void setProfilePic() async {
-    pp = Provider.of<Auth>(context, listen: false).profilePic;
+    var authProvider = Provider.of<Auth>(context, listen: false);
+    pp = authProvider.profilePic;
+    await Provider.of<UserProvider>(context, listen: false)
+        .getUserDetails(authProvider.token)
+        .then((value) => {name = value!.name});
+    setState(() {});
   }
 
   @override
@@ -115,7 +128,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              "Smile Foundation",
+              name,
               style: kTextPopB16,
             ),
             currentAccountPicture: GestureDetector(
