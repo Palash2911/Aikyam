@@ -1,5 +1,5 @@
 import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
-import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/PopUpMenu.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';

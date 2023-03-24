@@ -1,6 +1,9 @@
+import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -13,6 +16,13 @@ class _UserProfileState extends State<UserProfile> {
   bool _isSelected = true;
   bool _isUserPov = true;
   bool _isAboutActive = true;
+  var name = "";
+  var profileUrl = "";
+  var bio = "";
+  var occupation = "";
+  var interest = "";
+  var email = "";
+  var phone = "";
 
   void _toggleButton() {
     setState(() {
@@ -21,10 +31,31 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _fetchDetails();
+  }
+
+  void _fetchDetails() async {
+    var authToken = Provider.of<Auth>(context).token;
+    await Provider.of<UserProvider>(context)
+        .getUserDetails(authToken)
+        .then((value) {
+      name = value!.name;
+      email = value.email;
+      phone = value.phone;
+      occupation = value.occupation;
+      interest = value.interest;
+      profileUrl = value.firebaseUrl;
+      bio = value.bio;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Profile'),
+        title: const Text('My Profile'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,70 +78,64 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 36.0,
-                        ),
+                        const SizedBox(height: 36.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Dip Hire',
+                              name,
                               style: kTextPopB24,
                             ),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(25.0),
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 5.0, horizontal: 15.0),
                                 color: kprimaryColor,
                                 child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => EditUser()));
-                                  },
-                                  child: _isUserPov
-                                      ? Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.edit,
-                                              size: 24.0,
-                                              color: ksecondaryColor,
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Text('edit',
-                                                style: kTextPopB14.copyWith(
-                                                    color: ksecondaryColor)),
-                                          ],
-                                        )
-                                      : Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.chat_bubble,
-                                              size: 24.0,
-                                              color: ksecondaryColor,
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Text('Chat',
-                                                style: kTextPopB14.copyWith(
-                                                    color: ksecondaryColor)),
-                                          ],
-                                        )
-                                ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditUser()));
+                                    },
+                                    child: _isUserPov
+                                        ? Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.edit,
+                                                size: 24.0,
+                                                color: ksecondaryColor,
+                                              ),
+                                              const SizedBox(width: 10.0),
+                                              Text('Edit',
+                                                  style: kTextPopB14.copyWith(
+                                                      color: ksecondaryColor)),
+                                            ],
+                                          )
+                                        : Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.chat_bubble,
+                                                size: 24.0,
+                                                color: ksecondaryColor,
+                                              ),
+                                              const SizedBox(width: 10.0),
+                                              Text('Chat',
+                                                  style: kTextPopB14.copyWith(
+                                                      color: ksecondaryColor)),
+                                            ],
+                                          )),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 5.0),
                         Text(
-                          'Short info what this foundation do also the category and foundation type written by foundation',
+                          bio,
                           style: kTextPopR14,
                         )
                       ],
@@ -121,7 +146,9 @@ class _UserProfileState extends State<UserProfile> {
                     left: MediaQuery.of(context).size.width / 5 - 64,
                     child: CircleAvatar(
                       radius: 50.0,
-                      backgroundImage: AssetImage('assets/images/dp.jpg'),
+                      backgroundImage: profileUrl.isNotEmpty
+                          ? Image.network(profileUrl).image
+                          : const AssetImage('assets/images/dp.jpg'),
                     ),
                   ),
                 ],
@@ -188,18 +215,17 @@ class _UserProfileState extends State<UserProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   SizedBox(height: 10),
                   Divider(),
                   Text('Information', style: kTextPopB16),
                   SizedBox(height: 8),
                   ListTile(
                     title: Text('Occupation', style: kTextPopM16),
-                    subtitle: Text('Student', style: kTextPopR14),
+                    subtitle: Text(occupation, style: kTextPopR14),
                   ),
                   ListTile(
                     title: Text('Interest', style: kTextPopM16),
-                    subtitle: Text('Social work', style: kTextPopR14),
+                    subtitle: Text(interest, style: kTextPopR14),
                   ),
                   SizedBox(height: 10),
                   Divider(),
@@ -207,11 +233,11 @@ class _UserProfileState extends State<UserProfile> {
                   SizedBox(height: 8),
                   ListTile(
                     title: Text('Email id', style: kTextPopM16),
-                    subtitle: Text('thisisngo@gmail.com', style: kTextPopR14),
+                    subtitle: Text(email, style: kTextPopR14),
                   ),
                   ListTile(
                     title: Text('Mobile Number', style: kTextPopM16),
-                    subtitle: Text('9876543210', style: kTextPopR14),
+                    subtitle: Text("+91 $phone", style: kTextPopR14),
                   ),
                 ],
               ),

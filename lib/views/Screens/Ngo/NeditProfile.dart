@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:aikyam/models/ngo.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
-import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

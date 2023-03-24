@@ -1,6 +1,6 @@
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
-import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';

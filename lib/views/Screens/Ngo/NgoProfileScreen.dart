@@ -1,7 +1,10 @@
+import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NgoProfile extends StatefulWidget {
   const NgoProfile({super.key});
@@ -14,18 +17,50 @@ class _NgoProfileState extends State<NgoProfile> {
   bool isNgoPov = true;
   bool _isAboutActive = true;
   bool _isWorkSelected = false;
+  var profileUrl = "";
+  var name = "";
+  var about = "";
+  var bio = "";
+  var email = "";
+  var phone = "";
+  var type = "";
+  var est = "";
+  var category = "";
+
 
   void _aboutPressed() {
     setState(() {
-      // _isAboutActive = !_isAboutActive;
+      _isAboutActive = !_isAboutActive;
       _isWorkSelected = !_isWorkSelected;
     });
   }
 
   void _workPressed() {
     setState(() {
-      // _isWorkSelected = !_isWorkSelected;
-      // _isAboutActive = !_isAboutActive;
+      _isWorkSelected = !_isWorkSelected;
+      _isAboutActive = !_isAboutActive;
+    });
+  }
+
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _fetchDetails();
+  }
+
+  void _fetchDetails() async {
+    var authToken = Provider.of<Auth>(context).token;
+    await Provider.of<NgoProvider>(context)
+        .getNgoDetails(authToken)
+        .then((value) {
+      name = value!.name;
+      email = value.email;
+      phone = value.phone;
+      profileUrl = value.firebaseUrl;
+      est = value.date;
+      type = value.type;
+      category = value.category;
+      about = value.bio;
+      bio = value.bio;
     });
   }
 
@@ -35,7 +70,7 @@ class _NgoProfileState extends State<NgoProfile> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('My Profile'),
+          title: const Text('My Profile'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -94,7 +129,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                               SizedBox(
                                                 width: 10.0,
                                               ),
-                                              Text('edit',
+                                              Text('Edit',
                                                   style: kTextPopB14.copyWith(
                                                       color: ksecondaryColor)),
                                             ],
@@ -190,7 +225,6 @@ class _NgoProfileState extends State<NgoProfile> {
               //     _Post(),
               //   ],
               // ),
-
               // Row(
               //   children: [
               //     Expanded(

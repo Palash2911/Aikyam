@@ -1,7 +1,7 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
-import 'package:aikyam/views/Screens/User/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
