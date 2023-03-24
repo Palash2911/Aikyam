@@ -34,7 +34,7 @@ class PostItem extends StatefulWidget {
 
 class _PostState extends State<PostItem> {
   bool _isExpanded = true;
-  bool _isLike = true;
+  bool _isLike = false;
   bool _isApply = true;
   bool _isLoading = false;
 
@@ -169,9 +169,16 @@ class _PostState extends State<PostItem> {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.favorite),
-                      label: Text(widget.like.toString().replaceAll(RegExp(r'\.(\d)+$'), ''))),
+                      onPressed: toggleLike,
+                      icon: _isLike
+                          ? Icon(Icons.favorite)
+                          : Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
+                      label: Text(widget.like
+                          .toString()
+                          .replaceAll(RegExp(r'\.(\d)+$'), ''))),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
