@@ -305,6 +305,8 @@ class _Post extends StatelessWidget {
           applyStatus: 'applyStatus',
           pid: 'pid',
           userType: "Ngo",
+          driveTime: "Time",
+          category: "",
         ),
       ],
     );

@@ -53,8 +53,8 @@ class _UActivityPostState extends State<UActivityPost> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ViewDetails()));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => ViewDetails()));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
