@@ -112,59 +112,6 @@ class _LogInState extends State<LogIn> {
                             )),
                         child: const Text('Generate OTP'),
                       ),
-                      const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: <Widget>[
-                            const Text(
-                              "OR",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 16),
-                            ),
-                            const SizedBox(height: 20),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  fixedSize: const Size(300, 50),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  textStyle: const TextStyle(
-                                    fontSize: 18,
-                                  )),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 30.0,
-                                    width: 30.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/google.png'),
-                                          fit: BoxFit.cover),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    'Login with Google',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
