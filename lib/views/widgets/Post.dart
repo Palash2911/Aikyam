@@ -14,6 +14,8 @@ class PostItem extends StatefulWidget {
   final String applyStatus;
   final String pid;
   final String userType;
+  final String driveTime;
+  final String category;
 
   const PostItem({
     required this.ngoname,
@@ -24,6 +26,7 @@ class PostItem extends StatefulWidget {
     required this.applyStatus,
     required this.pid,
     required this.userType,
+    required this.driveTime, required this.category,
   });
 
   @override
@@ -33,7 +36,6 @@ class PostItem extends StatefulWidget {
 class _PostState extends State<PostItem> {
   bool _isApply = true;
   bool _isLoading = false;
-
 
   Future applyPost() async {
     if (_isApply && widget.applyStatus == "Apply") {
@@ -48,8 +50,6 @@ class _PostState extends State<PostItem> {
 
   @override
   Widget build(BuildContext context) {
-    final PageController _pageController = PageController(initialPage: 0);
-
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -128,7 +128,7 @@ class _PostState extends State<PostItem> {
                 const Icon(Icons.location_city),
                 const SizedBox(width: 5),
                 Text('City: ', style: kTextPopB14),
-                Text('Pune', style: kTextPopR14)
+                Text(widget.drivecity, style: kTextPopR14)
               ],
             ),
             const SizedBox(height: 5),
@@ -140,7 +140,7 @@ class _PostState extends State<PostItem> {
                 Text('Date and Time: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
-                    '19 Mar ',
+                    "${widget.driveDate}, ${widget.driveTime}",
                     style: kTextPopR14,
                   ),
                 ),
@@ -148,10 +148,10 @@ class _PostState extends State<PostItem> {
             ),
             Row(
               children: [
-                Icon(Icons.person),
-                SizedBox(width: 5),
+                const Icon(Icons.person),
+                const SizedBox(width: 5),
                 Text('Category: ', style: kTextPopB14),
-                Text('Education', style: kTextPopR14)
+                Text(widget.category, style: kTextPopR14)
               ],
             ),
             SizedBox(height: 5),
@@ -163,9 +163,22 @@ class _PostState extends State<PostItem> {
                   child: OutlinedButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ViewDetails()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewDetails(
+                              pid: widget.pid,
+                              ngoname: widget.ngoname,
+                              ngocity: widget.ngocity,
+                              drivecity: widget.drivecity,
+                              driveaddress: widget.driveaddress,
+                              driveDate: widget.driveDate,
+                              applyStatus: widget.applyStatus,
+                              userType: widget.userType,
+                              category: widget.category,
+                              driveTime: widget.driveTime,
+                            ),
+                          ),
+                        );
                       },
                       child: const Text("View")),
                 ),

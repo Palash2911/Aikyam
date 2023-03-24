@@ -96,6 +96,8 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                     applyStatus: "Applied",
                                     pid: document.id,
                                     userType: "Ngo",
+                                    driveTime: document["Time"],
+                                    category: "Category",
                                   );
                                 }
                               }
@@ -108,6 +110,8 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                 applyStatus: "Apply",
                                 pid: document.id,
                                 userType: "Ngo",
+                                driveTime: document["Time"],
+                                category: "Category",
                               );
                             }).toList(),
                           );
