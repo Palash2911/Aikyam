@@ -61,65 +61,60 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const UserAppdrawer(),
         body: SingleChildScrollView(
           child: Container(
-            height:
-                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
-            margin: EdgeInsets.only(top: 20, bottom: 120),
-            child: Column(
-              children: [
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: postRef.snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("No Post Yet !"),
-                          );
-                        } else {
-                          return ListView(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs.map((document) {
-                              if(appliedId.isNotEmpty)
-                              {
-                                if(appliedId.contains(document.id))
-                                {
-                                  return PostItem(
-                                    ngoname: document["NgoName"],
-                                    ngocity: document["NgoCity"],
-                                    drivecity: document["City"],
-                                    driveaddress: document["Address"],
-                                    driveDate: document["Date"],
-                                    applyStatus: "Applied",
-                                    pid: document.id,
-                                    userType: "Ngo",
-                                    like: document["LikeCount"],
-                                  );
-                                }
-                              }
+            height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            padding: const EdgeInsets.only(bottom: 120),
+            child: Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: postRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: Text("No Post Yet !"),
+                      );
+                    } else {
+                      return ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: snapshot.data!.docs.map((document) {
+                          if(appliedId.isNotEmpty)
+                          {
+                            if(appliedId.contains(document.id))
+                            {
                               return PostItem(
                                 ngoname: document["NgoName"],
                                 ngocity: document["NgoCity"],
                                 drivecity: document["City"],
                                 driveaddress: document["Address"],
                                 driveDate: document["Date"],
-                                applyStatus: "Apply",
+                                applyStatus: "Applied",
                                 pid: document.id,
-                                userType: "User",
+                                userType: "Ngo",
                                 like: document["LikeCount"],
                               );
-                            }).toList(),
+                            }
+                          }
+                          return PostItem(
+                            ngoname: document["NgoName"],
+                            ngocity: document["NgoCity"],
+                            drivecity: document["City"],
+                            driveaddress: document["Address"],
+                            driveDate: document["Date"],
+                            applyStatus: "Apply",
+                            pid: document.id,
+                            userType: "User",
+                            like: document["LikeCount"],
                           );
-                        }
-                      }
-                    },
-                  ),
-                ),
-              ],
+                        }).toList(),
+                      );
+                    }
+                  }
+                },
+              ),
             ),
           ),
         ),

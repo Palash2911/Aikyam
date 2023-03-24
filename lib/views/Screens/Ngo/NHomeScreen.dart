@@ -62,12 +62,9 @@ class _NHomeScreenState extends State<NHomeScreen> {
         ),
         drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height >=
-                    MediaQuery.of(context).size.height -
-                        kBottomNavigationBarHeight
-                ? 500
-                : 300,
+          child:  Container(
+            height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            padding: const EdgeInsets.only(bottom: 120),
             child: Column(
               children: [
                 Expanded(
