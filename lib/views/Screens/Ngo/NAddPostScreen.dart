@@ -125,7 +125,6 @@ class _NgoAddpostState extends State<NgoAddpost> {
             address: address,
             country: "India",
             photos: postImages,
-            likeCount: 0,
           ),
         )
             .catchError((e) {

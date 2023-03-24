@@ -59,7 +59,6 @@ class PostProvider extends ChangeNotifier {
         "NgoId": post.ngoid,
         "Country": post.country,
         "Photos": postImages,
-        "LikeCount": post.likeCount,
       });
 
       post.id = p.id;
@@ -210,7 +209,6 @@ class PostProvider extends ChangeNotifier {
           address: data["Address"],
           country: data["Country"],
           photos: data["Photos"],
-          likeCount: data["LikeCount"],
         );
       });
       notifyListeners();

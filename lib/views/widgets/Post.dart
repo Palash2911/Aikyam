@@ -14,7 +14,6 @@ class PostItem extends StatefulWidget {
   final String applyStatus;
   final String pid;
   final String userType;
-  final double like;
 
   const PostItem({
     required this.ngoname,
@@ -25,7 +24,6 @@ class PostItem extends StatefulWidget {
     required this.applyStatus,
     required this.pid,
     required this.userType,
-    required this.like,
   });
 
   @override
@@ -33,16 +31,9 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostState extends State<PostItem> {
-  bool _isExpanded = true;
-  bool _isLike = false;
   bool _isApply = true;
   bool _isLoading = false;
 
-  void toggleLike() {
-    setState(() {
-      _isLike = !_isLike;
-    });
-  }
 
   Future applyPost() async {
     if (_isApply && widget.applyStatus == "Apply") {
@@ -167,19 +158,6 @@ class _PostState extends State<PostItem> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                      onPressed: toggleLike,
-                      icon: _isLike
-                          ? Icon(Icons.favorite)
-                          : Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
-                      label: Text(widget.like
-                          .toString()
-                          .replaceAll(RegExp(r'\.(\d)+$'), ''))),
-                ),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: OutlinedButton(
@@ -189,7 +167,7 @@ class _PostState extends State<PostItem> {
                             MaterialPageRoute(
                                 builder: (context) => const ViewDetails()));
                       },
-                      child: const Text("view")),
+                      child: const Text("View")),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
