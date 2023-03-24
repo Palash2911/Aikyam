@@ -123,65 +123,8 @@ class _WelcomeViewState extends State<WelcomeView> {
                   style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
                 ),
               ),
-              // Padding(
-              //   padding:
-              //       EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
-              //   child: Text(
-              //     "Stay organised and live stress-free with you-do app",
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: <Widget>[
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(300, 50),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        backgroundColor:
-                            const Color.fromARGB(255, 255, 255, 255),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 30.0,
-                            width: 30.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/images/google.png'),
-                                  fit: BoxFit.cover),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            'Login with Google',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "OR",
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
-                  ],
-                ),
+              SizedBox(
+                height: 20.0,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -199,73 +142,6 @@ class _WelcomeViewState extends State<WelcomeView> {
                   keyboardType: TextInputType.phone,
                 ),
               ),
-              // const SizedBox(height: 20),
-              // ElevatedButton(
-              //   onPressed: () => _sendOtp(context),
-              //   style: ElevatedButton.styleFrom(
-              //       fixedSize: const Size(300, 50),
-              //       shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(10)),
-              //       backgroundColor:kprimaryColor,
-              //       padding: const EdgeInsets.symmetric(
-              //           horizontal: 20, vertical: 10),
-              //       textStyle: const TextStyle(
-              //         fontSize: 18,
-              //       )),
-              //   child: const Text('Generate OTP'),
-              // ),
-              // Container(
-              //   padding: const EdgeInsets.all(20),
-              //   child: Column(
-              //     children: <Widget>[
-              //       const Text(
-              //         "OR",
-              //         style: TextStyle(color: Colors.grey, fontSize: 16),
-              //       ),
-              //       const SizedBox(height: 20),
-              //       ElevatedButton(
-              //         onPressed: () {},
-              //         style: ElevatedButton.styleFrom(
-              //             fixedSize: const Size(300, 50),
-              //             shape: RoundedRectangleBorder(
-              //                 borderRadius: BorderRadius.circular(10)),
-              //             backgroundColor:
-              //                 const Color.fromARGB(255, 255, 255, 255),
-              //             padding: const EdgeInsets.symmetric(
-              //                 horizontal: 20, vertical: 10),
-              //             textStyle: const TextStyle(
-              //               fontSize: 18,
-              //             )),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             Container(
-              //               height: 30.0,
-              //               width: 30.0,
-              //               decoration: BoxDecoration(
-              //                 image: DecorationImage(
-              //                     image: AssetImage('assets/images/google.png'),
-              //                     fit: BoxFit.cover),
-              //                 shape: BoxShape.circle,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: 20,
-              //             ),
-              //             Text(
-              //               'Login with Google',
-              //               style: TextStyle(
-              //                   color: Colors.black,
-              //                   fontSize: 16,
-              //                   fontWeight: FontWeight.bold),
-              //             ),
-              //           ],
-              //         ),
-              //         // label: const Text('Plus One'),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),

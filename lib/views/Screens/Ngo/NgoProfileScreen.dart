@@ -3,6 +3,7 @@ import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,6 @@ class _NgoProfileState extends State<NgoProfile> {
   var type = "";
   var est = "";
   var category = "";
-
 
   void _aboutPressed() {
     setState(() {
@@ -225,65 +225,114 @@ class _NgoProfileState extends State<NgoProfile> {
               //     _Post(),
               //   ],
               // ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child:
+              // Container(
+              //         padding: EdgeInsets.all(10.0),
+              //         color: Colors.white,
+              //         child: ElevatedButton.icon(
+              //           style: ElevatedButton.styleFrom(
+              //             elevation: 0.0,
+              //             backgroundColor:
+              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
+              //           ),
+              //           onPressed: _aboutPressed,
+              //           icon: Icon(
+              //             Icons.info_outline_rounded,
+              //             size: 24.0,
+              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+              //           ),
+              //           label: Text(
+              //             'About',
+              //             style: kTextPopM16.copyWith(
+              //               color:
+              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10.0),
+              //         color: Colors.white,
+              //         child: ElevatedButton.icon(
+              //           style: ElevatedButton.styleFrom(
+              //             elevation: 0.0,
+              //             backgroundColor:
+              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
+              //           ),
+              //           onPressed: _workPressed,
+              //           icon: Icon(
+              //             Icons.work,
+              //             size: 24.0,
+              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+              //           ),
+              //           label: Text(
+              //             'Post',
+              //             style: kTextPopM16.copyWith(
+              //               color:
+              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue,
+                width: double.maxFinite,
+                height: double.maxFinite,
+                child: ContainedTabBarView(
+                  tabs: [
+                    Container(
                       padding: EdgeInsets.all(10.0),
-                      color: Colors.white,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                          backgroundColor:
-                              _isAboutActive ? kprimaryColor : ksecondaryColor,
-                        ),
-                        onPressed: _aboutPressed,
-                        icon: Icon(
-                          Icons.info_outline_rounded,
-                          size: 24.0,
-                          color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-                        ),
-                        label: Text(
-                          'About',
-                          style: kTextPopM16.copyWith(
-                            color:
-                                _isAboutActive ? ksecondaryColor : kprimaryColor,
+                      color: kprimaryColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline_rounded,
+                            size: 24.0,
+                            color: ksecondaryColor,
                           ),
-                        ),
+                          SizedBox(width: 5.0),
+                          Text(
+                            'About',
+                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
+                    Container(
                       padding: EdgeInsets.all(10.0),
-                      color: Colors.white,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                          backgroundColor:
-                              _isAboutActive ? kprimaryColor : ksecondaryColor,
-                        ),
-                        onPressed: _workPressed,
-                        icon: Icon(
-                          Icons.work,
-                          size: 24.0,
-                          color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-                        ),
-                        label: Text(
-                          'Post',
-                          style: kTextPopM16.copyWith(
-                            color:
-                                _isAboutActive ? ksecondaryColor : kprimaryColor,
+                      color: kprimaryColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.work,
+                            size: 24.0,
+                            color: ksecondaryColor,
                           ),
-                        ),
+                          SizedBox(width: 5.0),
+                          Text(
+                            'Post',
+                            style: kTextPopM16.copyWith(color: ksecondaryColor),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                  views: [_About(), _Post()],
+                  onChange: (index) => print(index),
+                ),
               ),
-              _About(),
             ],
-            
           ),
         ),
       ),
@@ -295,6 +344,7 @@ class _Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      // add post here which ever wanted
       children: const [
         PostItem(
           ngoname: 'ngoname',
