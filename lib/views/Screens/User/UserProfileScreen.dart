@@ -218,7 +218,7 @@ class _UserProfileState extends State<UserProfile> {
                 interest: interest,
                 email: email,
                 phone: phone),
-                _Post()
+            _Post()
           ],
         ),
       ),
@@ -294,6 +294,7 @@ class _Post extends StatelessWidget {
           userType: "Ngo",
           driveTime: "Time",
           category: "",
+          driveTitle: "",
         ),
       ],
     );

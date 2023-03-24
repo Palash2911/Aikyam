@@ -65,6 +65,9 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                   driveaddress: document['Address'],
                                   driveDate: document['Date'],
                                   pid: document.id,
+                                  title: document["Title"],
+                                  time: document["Time"],
+                                  date: document["Date"],
                                 );
                               }
                               return const Center(

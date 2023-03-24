@@ -95,7 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 pid: document.id,
                                 userType: "Ngo",
                                 driveTime: document["Time"],
-                                category: "Category",
+                                category: document["Category"],
+                                driveTitle: document["Title"],
                               );
                             }
                           }
@@ -109,7 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             pid: document.id,
                             userType: "User",
                             driveTime: document["Time"],
-                            category: "Category",
+                            category: document["Category"],
+                            driveTitle: document["Title"],
                           );
                         }).toList(),
                       );
