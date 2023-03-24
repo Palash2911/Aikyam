@@ -307,6 +307,7 @@ class _Post extends StatelessWidget {
           userType: "Ngo",
           driveTime: "Time",
           category: "",
+          driveTitle: "",
         ),
       ],
     );

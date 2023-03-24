@@ -16,6 +16,7 @@ class PostItem extends StatefulWidget {
   final String userType;
   final String driveTime;
   final String category;
+  final String driveTitle;
 
   const PostItem({
     required this.ngoname,
@@ -26,7 +27,9 @@ class PostItem extends StatefulWidget {
     required this.applyStatus,
     required this.pid,
     required this.userType,
-    required this.driveTime, required this.category,
+    required this.driveTime,
+    required this.category,
+    required this.driveTitle,
   });
 
   @override

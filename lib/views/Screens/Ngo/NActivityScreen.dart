@@ -33,8 +33,10 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: 500,
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            padding: const EdgeInsets.only(bottom: 120),
             child: Column(
               children: [
                 Expanded(
@@ -63,6 +65,9 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                   driveaddress: document['Address'],
                                   driveDate: document['Date'],
                                   pid: document.id,
+                                  title: document["Title"],
+                                  time: document["Time"],
+                                  date: document["Date"],
                                 );
                               }
                               return const Center(

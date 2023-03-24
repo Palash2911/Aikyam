@@ -59,6 +59,8 @@ class PostProvider extends ChangeNotifier {
         "NgoId": post.ngoid,
         "Country": post.country,
         "Photos": postImages,
+        "Title": post.driveTitle,
+        "Category": post.category,
       });
 
       post.id = p.id;
@@ -80,7 +82,7 @@ class PostProvider extends ChangeNotifier {
     try {
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
-      var p = await posts.doc(post.id).update({
+      await posts.doc(post.id).update({
         'Description': post.description,
         'NgoName': post.ngoname,
         'NgoCity': post.ncity,
@@ -93,6 +95,8 @@ class PostProvider extends ChangeNotifier {
         "Ngoid": post.ngoid,
         "Country": post.country,
         "Photos": post.photos,
+        "Title": post.driveTitle,
+        "Category": post.category,
       });
       notifyListeners();
     } catch (e) {
@@ -141,7 +145,7 @@ class PostProvider extends ChangeNotifier {
               .doc(pid)
               .set({
             "ApplicationStatus": "InProcess",
-            "Title": "",
+            "Title": snapshot["Title"],
             "NgoName": snapshot['NgoName'],
             "NgoCity": snapshot["NgoCity"],
             "Date": snapshot['Date'],
@@ -225,7 +229,7 @@ class PostProvider extends ChangeNotifier {
       await posts.doc(id).get().then((DocumentSnapshot query) {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
         post = Post(
-          category: "",
+          category: data["Category"],
           description: data["Description"],
           ngoid: data["NgoId"],
           id: id,
@@ -233,7 +237,7 @@ class PostProvider extends ChangeNotifier {
           date: data["Date"],
           time: data["Time"],
           city: data["City"],
-          driveTitle: "",
+          driveTitle: data["Title"],
           ncity: data["NgoCity"],
           ngoname: data["NgoName"],
           state: data["State"],

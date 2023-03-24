@@ -2,7 +2,6 @@ import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/PopUpMenu.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,6 +14,9 @@ class NActivityPost extends StatefulWidget {
   final String driveaddress;
   final String driveDate;
   final String pid;
+  final String title;
+  final String date;
+  final String time;
 
   const NActivityPost({
     super.key,
@@ -24,6 +26,9 @@ class NActivityPost extends StatefulWidget {
     required this.driveaddress,
     required this.driveDate,
     required this.pid,
+    required this.title,
+    required this.date,
+    required this.time,
   });
 
   @override
@@ -119,7 +124,7 @@ class _NActivityPostState extends State<NActivityPost> {
             const Divider(),
             const SizedBox(height: 16),
             Text(
-              'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+              widget.title,
               style: kTextPopM16,
             ),
             SizedBox(
@@ -146,14 +151,6 @@ class _NActivityPostState extends State<NActivityPost> {
                     style: kTextPopR14,
                   ),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                const Icon(Icons.person),
-                const SizedBox(width: 5),
-                Text('Category: ', style: kTextPopB14),
-                Text('Education', style: kTextPopR14)
               ],
             ),
             const SizedBox(height: 5),
