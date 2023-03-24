@@ -6,8 +6,26 @@ import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserAppdrawer extends StatelessWidget {
+class UserAppdrawer extends StatefulWidget {
   const UserAppdrawer({super.key});
+
+  @override
+  State<UserAppdrawer> createState() => _UserAppdrawerState();
+}
+
+class _UserAppdrawerState extends State<UserAppdrawer> {
+  var pp = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setProfilePic();
+  }
+
+  void setProfilePic() {
+    pp = Provider.of<Auth>(context, listen: false).profilePic;
+    print(pp);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +41,14 @@ class UserAppdrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30.0,
-                  backgroundImage: AssetImage('assets/images/dp.jpg'),
+                  backgroundImage: pp.isNotEmpty
+                      ? Image.network(pp).image
+                      : const AssetImage('assets/images/dp.jpg'),
                 ),
                 Text(
                   'Dip Hire',
                   style: kTextPopM16.copyWith(color: ksecondaryColor),
                 ),
-                Text(
-                  'edit profile',
-                  style: kTextPopR12.copyWith(color: ksecondaryColor),
-                )
               ],
             ),
           ),
@@ -46,7 +62,6 @@ class UserAppdrawer extends StatelessWidget {
               );
             },
           ),
-         
           ListTile(
             leading: const Icon(Icons.category),
             title: const Text(' Categories'),
@@ -74,8 +89,24 @@ class UserAppdrawer extends StatelessWidget {
   }
 }
 
-class NgoAppdrawer extends StatelessWidget {
+class NgoAppdrawer extends StatefulWidget {
   const NgoAppdrawer({super.key});
+
+  @override
+  State<NgoAppdrawer> createState() => _NgoAppdrawerState();
+}
+
+class _NgoAppdrawerState extends State<NgoAppdrawer> {
+  var pp = "";
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setProfilePic();
+  }
+
+  void setProfilePic() async {
+    pp = Provider.of<Auth>(context, listen: false).profilePic;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,25 +118,29 @@ class NgoAppdrawer extends StatelessWidget {
               "Smile Foundation",
               style: kTextPopB16,
             ),
-            accountEmail: Text("edit profile"),
             currentAccountPicture: GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NgoProfile(),
+                      builder: (context) => const NgoProfile(),
                     ));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Container(
-                  height: 70.0,
-                  width: 70.0,
-                  color: const Color(0xffFF0E58),
-                  child: Image.asset('assets/images/dp.jpg'),
-                ),
+                    height: 70.0,
+                    width: 70.0,
+                    color: const Color(0xffFF0E58),
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage: pp.isNotEmpty
+                          ? Image.network(pp).image
+                          : const AssetImage('assets/images/dp.jpg'),
+                    )),
               ),
             ),
+            accountEmail: null,
           ),
           // DrawerHeader(
           //   decoration: const BoxDecoration(

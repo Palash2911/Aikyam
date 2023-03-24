@@ -1,3 +1,4 @@
+import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final auth = FirebaseAuth.instance;
   CollectionReference postRef = FirebaseFirestore.instance.collection('Posts');
   List<dynamic> appliedId = [];
+  var pp = "";
 
   @override
   void didChangeDependencies() {
@@ -29,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _getappliedId() async {
     await Provider.of<PostProvider>(context).getAppliedID("Users").then((value) {
       appliedId = value;
+      pp = Provider.of<Auth>(context, listen: false).profilePic;
     });
   }
 
@@ -47,9 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();
             },
-            icon: const CircleAvatar(
+            icon: CircleAvatar(
               radius: 25.0,
-              backgroundImage: AssetImage('assets/images/dp.jpg'),
+              backgroundImage:  pp.isNotEmpty
+                  ? Image.network(pp).image
+                  : const AssetImage('assets/images/dp.jpg'),
             ),
           ),
         ),

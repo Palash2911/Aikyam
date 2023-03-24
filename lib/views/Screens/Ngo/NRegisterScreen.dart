@@ -89,8 +89,7 @@ class _NgoRegisterState extends State<NgoRegister> {
       if (imageFile == null) {
         print("Please Select Profile Pic");
       } else {
-        await ngoProvider
-            .registerNgo(
+        await ngoProvider.registerNgo(
           Ngo(
             id: authProvider.token,
             bio: bio,

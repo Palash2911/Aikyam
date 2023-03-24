@@ -1,3 +1,4 @@
+import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
@@ -17,9 +18,11 @@ class NHomeScreen extends StatefulWidget {
 }
 
 class _NHomeScreenState extends State<NHomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final auth = FirebaseAuth.instance;
   CollectionReference postRef = FirebaseFirestore.instance.collection('Posts');
   List<dynamic> appliedId = [];
+  var pp = "";
 
   @override
   void didChangeDependencies() {
@@ -30,6 +33,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
   void _getappliedId() async {
     await Provider.of<PostProvider>(context).getAppliedID("Ngo").then((value) {
       appliedId = value;
+      pp = Provider.of<Auth>(context, listen: false).profilePic;
     });
   }
 
@@ -43,6 +47,17 @@ class _NHomeScreenState extends State<NHomeScreen> {
           elevation: 0.0,
           toolbarHeight: 85,
           flexibleSpace: HomeAppBar(),
+          leading: IconButton(
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
+            icon: CircleAvatar(
+              radius: 25.0,
+              backgroundImage: pp.isNotEmpty
+                  ? Image.network(pp).image
+                  : const AssetImage('assets/images/dp.jpg'),
+            ),
+          ),
         ),
         drawer: const NgoAppdrawer(),
         body: SingleChildScrollView(
@@ -72,22 +87,20 @@ class _NHomeScreenState extends State<NHomeScreen> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
-                              if(appliedId.isNotEmpty)
-                                {
-                                  if(appliedId.contains(document.id))
-                                    {
-                                      return PostItem(
-                                        ngoname: document["NgoName"],
-                                        ngocity: document["NgoCity"],
-                                        drivecity: document["City"],
-                                        driveaddress: document["Address"],
-                                        driveDate: document["Date"],
-                                        applyStatus: "Applied",
-                                        pid: document.id,
-                                        userType: "Ngo",
-                                      );
-                                    }
+                              if (appliedId.isNotEmpty) {
+                                if (appliedId.contains(document.id)) {
+                                  return PostItem(
+                                    ngoname: document["NgoName"],
+                                    ngocity: document["NgoCity"],
+                                    drivecity: document["City"],
+                                    driveaddress: document["Address"],
+                                    driveDate: document["Date"],
+                                    applyStatus: "Applied",
+                                    pid: document.id,
+                                    userType: "Ngo",
+                                  );
                                 }
+                              }
                               return PostItem(
                                 ngoname: document["NgoName"],
                                 ngocity: document["NgoCity"],

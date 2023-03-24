@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
   var _isUser = "";
-  var _token;
+  var _token = "";
   final _auth = FirebaseAuth.instance;
   var _profilePic = "";
   var verificationId = '';
@@ -71,9 +71,11 @@ class Auth extends ChangeNotifier {
         ),
       );
       final prefs = await SharedPreferences.getInstance();
+      _token = _auth.currentUser!.uid;
       prefs.setString('UID', _auth.currentUser!.uid);
       prefs.setString('UserType', "");
       prefs.setBool('Profile', false);
+      prefs.setString('ProfilePic', "");
       notifyListeners();
       return cred.user != null ? true : false;
     } catch (e) {
@@ -136,7 +138,7 @@ class Auth extends ChangeNotifier {
     if (!prefs.containsKey('UID')) {
       return;
     }
-    _token = prefs.getString('UID');
+    _token = prefs.getString('UID')!;
     if (prefs.getString('UserType') != null) {
       _isUser = prefs.getString('UserType')!;
     }

@@ -8,7 +8,6 @@ import 'dart:io';
 class NgoProvider extends ChangeNotifier {
   Future registerNgo(Ngo ngo) async {
     final prefs = await SharedPreferences.getInstance();
-
     try {
       var storage = FirebaseStorage.instance;
       TaskSnapshot taskSnapshot = await storage
@@ -90,7 +89,7 @@ class NgoProvider extends ChangeNotifier {
         var storage = FirebaseStorage.instance;
         TaskSnapshot taskSnapshot = await storage
             .ref()
-            .child('Profile/${ngo.id}')
+            .child('NProfile/${ngo.id}')
             .putFile(ngo.localUrl!);
         ngo.firebaseUrl = await taskSnapshot.ref.getDownloadURL();
       }
