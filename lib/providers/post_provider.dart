@@ -131,10 +131,15 @@ class PostProvider extends ChangeNotifier {
         "ApplicantName": aName,
         "ProfilePic": profilePic,
         "ApplicationStatus": "InProcess",
+        "UserType": userType,
       });
       if (userType == "User") {
         await posts.doc(pid).get().then((snapshot) async {
-          await users.doc(auth.currentUser!.uid).collection("AppliedPost").doc(pid).set({
+          await users
+              .doc(auth.currentUser!.uid)
+              .collection("AppliedPost")
+              .doc(pid)
+              .set({
             "ApplicationStatus": "InProcess",
             "Title": "",
             "NgoName": snapshot['NgoName'],
@@ -161,7 +166,8 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future acceptdeleteUser(String ar, String pid, String uid) async {
-    print(uid);
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
     CollectionReference posts = FirebaseFirestore.instance
         .collection('Posts')
         .doc(pid)
@@ -175,6 +181,14 @@ class PostProvider extends ChangeNotifier {
         "ApplicationStatus": "Rejected",
       });
     }
+
+    await posts.doc(uid).get().then((value) {
+      if (value["UserType"] == "User") {
+        users.doc(uid).collection("AppliedPost").doc(pid).update({
+          "ApplicationStatus": value["ApplicationStatus"],
+        });
+      }
+    });
   }
 
   Future deletePost(String id) async {
@@ -182,7 +196,6 @@ class PostProvider extends ChangeNotifier {
     await db.collection("Posts").doc(id).delete();
     // TODO: DELETE ID FROM USERS AND NGO
   }
-
 
   Future<Post?> getPostDetails(String id) async {
     try {
@@ -228,7 +241,7 @@ class PostProvider extends ChangeNotifier {
           country: data["Country"],
           photos: data["Photos"],
         );
-      }).catchError((e){
+      }).catchError((e) {
         print(e);
       });
       notifyListeners();
@@ -239,25 +252,23 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future<List<dynamic>> getAppliedID(String userType) async {
-    try{
+    try {
       List<dynamic> postId = [];
-      if(userType == "Ngo")
-        {
-          CollectionReference ngo =  FirebaseFirestore.instance.collection("Ngo");
-          await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-            postId = snapshot['AppliedPostId'];
-          });
-        }
-      else
-        {
-          CollectionReference users =  FirebaseFirestore.instance.collection("Users");
-          await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-            postId = snapshot['AppliedPostId'];
-          });
-        }
+      if (userType == "Ngo") {
+        CollectionReference ngo = FirebaseFirestore.instance.collection("Ngo");
+        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
+          postId = snapshot['AppliedPostId'];
+        });
+      } else {
+        CollectionReference users =
+            FirebaseFirestore.instance.collection("Users");
+        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
+          postId = snapshot['AppliedPostId'];
+        });
+      }
       notifyListeners();
       return postId;
-    }catch(e){
+    } catch (e) {
       rethrow;
     }
   }
