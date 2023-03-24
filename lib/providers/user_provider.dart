@@ -30,9 +30,11 @@ class UserProvider extends ChangeNotifier {
       });
 
       prefs.setBool('Profile', true);
+      prefs.setString('ProfilePic', user.firebaseUrl);
       notifyListeners();
     } catch (e) {
       prefs.setBool('Profile', false);
+      prefs.setString('ProfilePic', "");
       notifyListeners();
       rethrow;
     }
@@ -70,6 +72,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future updateUser(Users user) async {
+      final prefs = await SharedPreferences.getInstance();
     try {
       if (user.localUrl != null) {
         var storage = FirebaseStorage.instance;
@@ -92,6 +95,7 @@ class UserProvider extends ChangeNotifier {
         "Interest": user.interest,
         "ProfilePic": user.firebaseUrl,
       });
+      prefs.setString('ProfilePic', user.firebaseUrl);
       notifyListeners();
     } catch (e) {
       rethrow;

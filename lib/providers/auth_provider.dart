@@ -10,6 +10,7 @@ class Auth extends ChangeNotifier {
   var _isUser = "";
   var _token;
   final _auth = FirebaseAuth.instance;
+  var _profilePic = "";
   var verificationId = '';
   var _profileCreated = false;
 
@@ -23,6 +24,10 @@ class Auth extends ChangeNotifier {
 
   String get isUser {
     return _isUser;
+  }
+
+  String get profilePic {
+    return _profilePic;
   }
 
   String get token {
@@ -136,6 +141,7 @@ class Auth extends ChangeNotifier {
       _isUser = prefs.getString('UserType')!;
     }
     _profileCreated = prefs.getBool('Profile')!;
+    _profilePic = prefs.getString('ProfilePic')!;
     notifyListeners();
   }
 }

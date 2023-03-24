@@ -36,9 +36,11 @@ class NgoProvider extends ChangeNotifier {
       });
 
       prefs.setBool('Profile', true);
+      prefs.setString('ProfilePic', ngo.firebaseUrl);
       notifyListeners();
     } catch (e) {
       prefs.setBool('Profile', false);
+      prefs.setString('ProfilePic', "");
       rethrow;
     }
   }
@@ -83,6 +85,7 @@ class NgoProvider extends ChangeNotifier {
 
   Future updateNgo(Ngo ngo) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
       if (ngo.localUrl != null) {
         var storage = FirebaseStorage.instance;
         TaskSnapshot taskSnapshot = await storage
@@ -107,6 +110,7 @@ class NgoProvider extends ChangeNotifier {
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
       });
+      prefs.setString('ProfilePic', ngo.firebaseUrl);
       notifyListeners();
     } catch (e) {
       rethrow;

@@ -177,6 +177,7 @@ class PostProvider extends ChangeNotifier {
   Future deletePost(String id) async {
     final db = FirebaseFirestore.instance;
     await db.collection("Posts").doc(id).delete();
+    // TODO: DELETE ID FROM USERS AND NGO
   }
 
 
