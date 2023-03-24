@@ -33,8 +33,10 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: 500,
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            padding: const EdgeInsets.only(bottom: 120),
             child: Column(
               children: [
                 Expanded(

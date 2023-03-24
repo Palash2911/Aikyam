@@ -21,16 +21,21 @@ class ActivityScreen extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              UActivityPost(
-                  ngoname: 'ngoname',
-                  ngocity: 'ngocity',
-                  drivecity: 'drivecity',
-                  driveaddress: 'driveaddress',
-                  driveDate: 'driveDate',
-                  pid: 'pid'),
-            ],
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+            padding: const EdgeInsets.only(bottom: 120),
+            child: Column(
+              children: [
+                UActivityPost(
+                    ngoname: 'ngoname',
+                    ngocity: 'ngocity',
+                    drivecity: 'drivecity',
+                    driveaddress: 'driveaddress',
+                    driveDate: 'driveDate',
+                    pid: 'pid'),
+              ],
+            ),
           ),
         ),
       ),
