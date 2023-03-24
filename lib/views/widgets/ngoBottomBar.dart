@@ -38,29 +38,29 @@ class _NgoBottomBarState extends State<NgoBottomBar> {
 }
 
 List<Widget> _buildScreens() {
-  return [NHomeScreen(), NgoChatScreen(), NgoAddpost(), NgoActivityScreen()];
+  return [const NHomeScreen(), const NgoChatScreen(), const NgoAddpost(), const NgoActivityScreen()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(FeatherIcons.home),
+      icon: const Icon(FeatherIcons.home),
       title: ("Home"),
       activeColorPrimary: kprimaryColor,
       inactiveColorPrimary: kprimaryColor,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(FeatherIcons.messageSquare),
+      icon: const Icon(FeatherIcons.messageSquare),
       title: ("Chat"),
       activeColorPrimary: kprimaryColor,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(Icons.add_box_outlined),
+      icon: const Icon(Icons.add_box_outlined),
       title: ("Add"),
       activeColorPrimary: kprimaryColor,
     ),
     PersistentBottomNavBarItem(
-        icon: Icon(FeatherIcons.activity),
+        icon: const Icon(FeatherIcons.activity),
         title: ("Activity"),
         activeColorPrimary: kprimaryColor,
         inactiveColorPrimary: kprimaryColor),

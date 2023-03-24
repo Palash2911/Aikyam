@@ -209,79 +209,81 @@ class _NgoProfileState extends State<NgoProfile> {
               //   ),
               // ),
 
-              TabBar(tabs: [
-                Tab(
-                  icon: Icon(Icons.info_outline_rounded,
-                      size: 24.0, color: kprimaryColor),
-                ),
-                Tab(
-                  icon: Icon(Icons.work_outlined,
-                      size: 24.0, color: kprimaryColor),
-                ),
-              ]),
+              // TabBar(tabs: [
+              //   Tab(
+              //     icon: Icon(Icons.info_outline_rounded,
+              //         size: 24.0, color: kprimaryColor),
+              //   ),
+              //   Tab(
+              //     icon: Icon(Icons.work_outlined,
+              //         size: 24.0, color: kprimaryColor),
+              //   ),
+              // ]),
               // TabBarView(
               //   children: [
               //     _About(),
               //     _Post(),
               //   ],
               // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _aboutPressed,
-              //           icon: Icon(
-              //             Icons.info_outline_rounded,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'About',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _workPressed,
-              //           icon: Icon(
-              //             Icons.work,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'Post',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(10.0),
+                      color: Colors.white,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0.0,
+                          backgroundColor:
+                              _isAboutActive ? kprimaryColor : ksecondaryColor,
+                        ),
+                        onPressed: _aboutPressed,
+                        icon: Icon(
+                          Icons.info_outline_rounded,
+                          size: 24.0,
+                          color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
+                        label: Text(
+                          'About',
+                          style: kTextPopM16.copyWith(
+                            color:
+                                _isAboutActive ? ksecondaryColor : kprimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(10.0),
+                      color: Colors.white,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0.0,
+                          backgroundColor:
+                              _isAboutActive ? kprimaryColor : ksecondaryColor,
+                        ),
+                        onPressed: _workPressed,
+                        icon: Icon(
+                          Icons.work,
+                          size: 24.0,
+                          color: _isAboutActive ? ksecondaryColor : kprimaryColor,
+                        ),
+                        label: Text(
+                          'Post',
+                          style: kTextPopM16.copyWith(
+                            color:
+                                _isAboutActive ? ksecondaryColor : kprimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              _About(),
             ],
+            
           ),
         ),
       ),

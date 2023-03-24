@@ -60,7 +60,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
             ),
           ),
         ),
-        drawer: const NgoAppdrawer(),
+        drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height >=
