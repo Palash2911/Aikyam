@@ -1,40 +1,34 @@
-import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/PopUpMenu.dart';
-import 'package:aikyam/views/widgets/fillbutton.dart';
-import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:flutter/material.dart';
 
-class UActivityPost extends StatefulWidget {
-  final String ngoname;
-  final String ngocity;
-  final String drivecity;
-  final String driveaddress;
-  final String driveDate;
+class UActivityPostItem extends StatefulWidget {
+  final String ngoName;
+  final String ngoCity;
+  final String driveCity;
+  final String date;
+  final String time;
+  final String applyStatus;
   final String pid;
 
-  const UActivityPost({
+  const UActivityPostItem({
     super.key,
-    required this.ngoname,
-    required this.ngocity,
-    required this.drivecity,
-    required this.driveaddress,
-    required this.driveDate,
+    required this.ngoName,
+    required this.ngoCity,
+    required this.driveCity,
+    required this.date,
+    required this.time,
+    required this.applyStatus,
     required this.pid,
   });
 
   @override
-  State<UActivityPost> createState() => _UActivityPostState();
+  State<UActivityPostItem> createState() => _UActivityPostItemState();
 }
 
-class _UActivityPostState extends State<UActivityPost> {
-  bool _status = true;
+class _UActivityPostItemState extends State<UActivityPostItem> {
   @override
   Widget build(BuildContext context) {
-    final PageController _pageController = PageController(initialPage: 0);
-    bool _isApply = true;
-
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -63,10 +57,8 @@ class _UActivityPostState extends State<UActivityPost> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NgoProfile()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NgoProfile()));
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
@@ -86,32 +78,24 @@ class _UActivityPostState extends State<UActivityPost> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.ngoname,
+                            widget.ngoName,
                             style: kTextPopM16,
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text(widget.ngocity, style: kTextPopR14),
+                          Text(widget.ngoCity, style: kTextPopR14),
                         ],
                       ),
                     ],
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(
-                      Icons.share,
-                      size: 32.0,
-                    ),
                   ),
                 ],
               ),
               const Divider(),
               const SizedBox(height: 16),
               Text(
-                'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+                "Title",
                 style: kTextPopM16,
               ),
               SizedBox(
@@ -122,7 +106,7 @@ class _UActivityPostState extends State<UActivityPost> {
                   Icon(Icons.location_city),
                   SizedBox(width: 5),
                   Text('City: ', style: kTextPopB14),
-                  Text('Pune', style: kTextPopR14)
+                  Text(widget.driveCity, style: kTextPopR14)
                 ],
               ),
               SizedBox(height: 5),
@@ -134,25 +118,16 @@ class _UActivityPostState extends State<UActivityPost> {
                   Text('Date and Time: ', style: kTextPopB14),
                   Expanded(
                     child: Text(
-                      '19 Mar ',
+                      widget.date,
                       style: kTextPopR14,
                     ),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Icon(Icons.person),
-                  SizedBox(width: 5),
-                  Text('Category: ', style: kTextPopB14),
-                  Text('Education', style: kTextPopR14)
-                ],
-              ),
-              SizedBox(height: 5),
               const SizedBox(height: 16),
               Center(
-                  child: _status
-                      ? Text('In-progress',
+                  child: widget.applyStatus == "InProcess" || widget.applyStatus == "Accepted"
+                      ? Text(widget.applyStatus,
                           style: kTextPopM16.copyWith(color: kprimaryColor))
                       : Text('Rejected',
                           style: kTextPopM16.copyWith(color: kprimaryColor))),

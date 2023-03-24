@@ -133,13 +133,16 @@ class PostProvider extends ChangeNotifier {
         "ApplicationStatus": "InProcess",
       });
       if (userType == "User") {
-        List<dynamic> postId = [];
-        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
-        });
-        postId.add(pid);
-        await users.doc(auth.currentUser!.uid).update({
-          'AppliedPostId': postId,
+        await posts.doc(pid).get().then((snapshot) async {
+          await users.doc(auth.currentUser!.uid).collection("AppliedPost").doc(pid).set({
+            "ApplicationStatus": "InProcess",
+            "Title": "",
+            "NgoName": snapshot['NgoName'],
+            "NgoCity": snapshot["NgoCity"],
+            "Date": snapshot['Date'],
+            "Time": snapshot["Time"],
+            "City": snapshot["City"],
+          });
         });
       } else {
         List<dynamic> postId = [];
