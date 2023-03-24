@@ -15,7 +15,7 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool isNgoPov = true;
+  bool isNgoPov = true;  // ithe false kel ka dista chat option 
   bool _isAboutActive = true;
   bool _isWorkSelected = false;
   var profileUrl = "";

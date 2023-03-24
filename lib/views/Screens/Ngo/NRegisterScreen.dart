@@ -32,9 +32,11 @@ class _NgoRegisterState extends State<NgoRegister> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _addressController = TextEditingController();
   final _cityController = TextEditingController();
   final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
+  final _aboutTextController = TextEditingController();
   String get date => _dateController.text;
   String get name => _nameController.text;
   String get phone => _phoneController.text;
@@ -89,7 +91,8 @@ class _NgoRegisterState extends State<NgoRegister> {
       if (imageFile == null) {
         print("Please Select Profile Pic");
       } else {
-        await ngoProvider.registerNgo(
+        await ngoProvider
+            .registerNgo(
           Ngo(
             id: authProvider.token,
             bio: bio,
@@ -453,9 +456,32 @@ class _NgoRegisterState extends State<NgoRegister> {
                             //     ),
                             //   ],
                             // ),
+                            TextFormField(
+                              controller: _aboutTextController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Tell us more about Ngo",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.location_on_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter About Ngo!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+
                             const SizedBox(height: 10.0),
                             TextFormField(
-                              // controller: _nameController,
+                              controller: _addressController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Address",
@@ -476,6 +502,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                               },
                               textInputAction: TextInputAction.next,
                             ),
+
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 40.0),
