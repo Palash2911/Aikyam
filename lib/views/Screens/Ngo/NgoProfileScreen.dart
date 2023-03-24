@@ -303,6 +303,7 @@ class _Post extends StatelessWidget {
           applyStatus: 'applyStatus',
           pid: 'pid',
           userType: "Ngo",
+          like: 0.0,
         ),
       ],
     );

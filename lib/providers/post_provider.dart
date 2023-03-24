@@ -59,6 +59,7 @@ class PostProvider extends ChangeNotifier {
         "NgoId": post.ngoid,
         "Country": post.country,
         "Photos": postImages,
+        "LikeCount": post.likeCount,
       });
 
       post.id = p.id;
@@ -80,7 +81,7 @@ class PostProvider extends ChangeNotifier {
     try {
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
-      var p = await post.doc(post.id).update({
+      var p = await posts.doc(post.id).update({
         'Description': post.description,
         'NgoName': post.ngoname,
         'NgoCity': post.ncity,
@@ -190,7 +191,7 @@ class PostProvider extends ChangeNotifier {
       if (id.isNotEmpty) {
         id = id;
       }
-      await post!.doc(id.toString()).get().then((DocumentSnapshot query) {
+      await posts.doc(id.toString()).get().then((DocumentSnapshot query) {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
 
         post = Post(
@@ -209,6 +210,7 @@ class PostProvider extends ChangeNotifier {
           address: data["Address"],
           country: data["Country"],
           photos: data["Photos"],
+          likeCount: data["LikeCount"],
         );
       });
       notifyListeners();

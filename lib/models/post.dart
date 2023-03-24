@@ -13,6 +13,7 @@ class Post {
   final String city;
   final String driveTitle;
   final String country;
+  final double likeCount;
   final List<dynamic> photos;
 
   Post({
@@ -31,7 +32,6 @@ class Post {
     required this.address,
     required this.country,
     required this.photos,
+    required this.likeCount,
   });
-
-  doc(String id) {}
 }

@@ -3,7 +3,6 @@ import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
@@ -15,6 +14,7 @@ class PostItem extends StatefulWidget {
   final String applyStatus;
   final String pid;
   final String userType;
+  final double like;
 
   const PostItem({
     required this.ngoname,
@@ -25,6 +25,7 @@ class PostItem extends StatefulWidget {
     required this.applyStatus,
     required this.pid,
     required this.userType,
+    required this.like,
   });
 
   @override
@@ -36,12 +37,6 @@ class _PostState extends State<PostItem> {
   bool _isLike = true;
   bool _isApply = true;
   bool _isLoading = false;
-
-  void toggleExpand() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-    });
-  }
 
   void toggleLike() {
     setState(() {
@@ -176,7 +171,7 @@ class _PostState extends State<PostItem> {
                   child: ElevatedButton.icon(
                       onPressed: () {},
                       icon: Icon(Icons.favorite),
-                      label: Text('123')),
+                      label: Text(widget.like.toString().replaceAll(RegExp(r'\.(\d)+$'), ''))),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(

@@ -98,6 +98,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                     applyStatus: "Applied",
                                     pid: document.id,
                                     userType: "Ngo",
+                                    like: document["LikeCount"],
                                   );
                                 }
                               }
@@ -110,6 +111,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                 applyStatus: "Apply",
                                 pid: document.id,
                                 userType: "Ngo",
+                                like: document["LikeCount"],
                               );
                             }).toList(),
                           );
