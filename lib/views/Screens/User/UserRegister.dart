@@ -73,7 +73,14 @@ class _UserRegisterState extends State<UserRegister> {
     _form.currentState!.save();
     if (isValid) {
       if (imageFile == null) {
-        print("Please Select Profile Pic");
+        Fluttertoast.showToast(
+          msg: "Please select Profile pic!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         setState(() {
           isLoading = false;
         });
@@ -437,7 +444,8 @@ class _UserRegisterState extends State<UserRegister> {
                               width: 250, //width of button
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: kprimaryColor, //background color of button
+                                    primary:
+                                        kprimaryColor, //background color of button
                                     shape: RoundedRectangleBorder(
                                         //to set border radius to button
                                         borderRadius:

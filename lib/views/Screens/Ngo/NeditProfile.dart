@@ -37,6 +37,8 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   final _cityController = TextEditingController();
   final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _aboutTextController = TextEditingController();
 
   String get date => _dateController.text;
   String get name => _nameController.text;
@@ -403,10 +405,33 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                               ],
                             ),
 
-                            const SizedBox(width: 20.0),
                             const SizedBox(height: 10.0),
                             TextFormField(
-                              // controller: _nameController,
+                              controller: _aboutTextController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Tell us more about Ngo",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.location_on_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter About Ngo!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: 10.0),
+
+                            TextFormField(
+                              controller: _addressController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Address",
