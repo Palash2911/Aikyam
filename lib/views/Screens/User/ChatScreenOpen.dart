@@ -1,5 +1,6 @@
 import 'package:aikyam/models/chats.dart';
-import 'package:aikyam/providers/chatProvider.dart';
+import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/providers/chat_provider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/chatMessageBubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,9 +13,11 @@ class ChatScreenOpen extends StatefulWidget {
   const ChatScreenOpen({
     required this.receiverId,
     required this.senderType,
+    required this.rName,
   });
   final String receiverId;
   final String senderType;
+  final String rName;
 
   @override
   _ChatScreenOpenState createState() => _ChatScreenOpenState();
@@ -26,20 +29,39 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   CollectionReference? messageRef;
   var isInit = true;
   var mssg = "";
+  var isLoading = true;
+  var rType = "Ngo";
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (isInit) {
-      messageRef = FirebaseFirestore.instance
-          .collection(widget.senderType)
-          .doc(auth.currentUser!.uid)
-          .collection('Chats')
-          .doc(widget.receiverId)
-          .collection('Messages');
+      createMessageRoom();
     }
     isInit = false;
-    // Provider.of<ChatProvider>(context, listen: false).createChatRoom("ChatRoom", "Chatting");
+  }
+
+  void createMessageRoom() async {
+    var sname = Provider.of<Auth>(context, listen: false).uName;
+    await Provider.of<ChatProvider>(context, listen: false)
+        .checkSenderType(widget.receiverId)
+        .then((value) async {
+      rType = (value ? "Users" : "Ngo");
+      await Provider.of<ChatProvider>(context, listen: false)
+          .createMessageRoom(widget.receiverId, auth.currentUser!.uid,
+              widget.senderType, widget.rName, sname)
+          .then((value) {
+        messageRef = FirebaseFirestore.instance
+            .collection(widget.senderType)
+            .doc(auth.currentUser!.uid)
+            .collection('Chats')
+            .doc(widget.receiverId)
+            .collection('Messages');
+        setState(() {
+          isLoading = false;
+        });
+      });
+    });
   }
 
   void sendMessage(BuildContext ctx) async {
@@ -80,16 +102,29 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         ),
       )
           .then((value) async {
-        await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
-          Chats(
-            receiverId: auth.currentUser!.uid,
-            senderId: widget.receiverId,
-            message: mssg,
-            dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
-            isUser: false,
-            senderName: "Palash",
-          ),
-        );
+        if (rType == "Users") {
+          await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
+            Chats(
+              receiverId: auth.currentUser!.uid,
+              senderId: widget.receiverId,
+              message: mssg,
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
+              isUser: false,
+              senderName: "Palash",
+            ),
+          );
+        } else {
+          await Provider.of<ChatProvider>(context, listen: false).sendMessageN(
+            Chats(
+              receiverId: auth.currentUser!.uid,
+              senderId: widget.receiverId,
+              message: mssg,
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
+              isUser: false,
+              senderName: "Palash",
+            ),
+          );
+        }
       });
     }
   }
@@ -97,110 +132,111 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Container(
-                        height: 70.0,
-                        width: 70.0,
-                        color: Colors.red,
-                        child: Image.asset('assets/images/ngo.png'),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SafeArea(
+              child: Column(
+                children: [
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0),
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              height: 70.0,
+                              width: 70.0,
+                              color: Colors.red,
+                              child: Image.asset('assets/images/ngo.png'),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(widget.rName, style: kTextPopM16),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: messageRef!
+                          .orderBy('DateTime', descending: false)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          if (snapshot.data!.docs.isEmpty) {
+                            return const Center(
+                              child: Text("Start Chatting !"),
+                            );
+                          } else {
+                            return ListView(
+                              children: snapshot.data!.docs.map((document) {
+                                return MessageBubble(
+                                  sender: "Palash",
+                                  text: document['Message'],
+                                  isUser: document['isUser'],
+                                  dateTime: document['DateTime'],
+                                );
+                              }).toList(),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
                       children: [
-                        Text('Smile Foundation', style: kTextPopM16),
-                        Text(
-                          'Active 5 mins ago',
-                          style: kTextPopR12,
+                        Expanded(
+                          child: TextField(
+                            controller: _textController,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.send),
+                                onPressed: () {
+                                  if (_textController.text.isNotEmpty) {
+                                    setState(() {
+                                      mssg = _textController.text;
+                                    });
+                                    sendMessage(context);
+                                    _textController.clear();
+                                  }
+                                },
+                              ),
+                              hintText: 'Message',
+                              hintStyle: kTextPopR14,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    BorderSide(width: 2, color: kprimaryColor),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    messageRef!.orderBy('DateTime', descending: false).snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    if (snapshot.data!.docs.isEmpty) {
-                      return const Center(
-                        child: Text("Start Chatting !"),
-                      );
-                    } else {
-                      return ListView(
-                        children: snapshot.data!.docs.map((document) {
-                          return MessageBubble(
-                            sender: "Palash",
-                            text: document['Message'],
-                            isUser: document['isUser'],
-                            dateTime: document['DateTime'],
-                          );
-                        }).toList(),
-                      );
-                    }
-                  }
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _textController,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {
-                            if (_textController.text.isNotEmpty) {
-                              setState(() {
-                                mssg = _textController.text;
-                              });
-                              sendMessage(context);
-                              _textController.clear();
-                            }
-                          },
-                        ),
-                        hintText: 'Message',
-                        hintStyle: kTextPopR14,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(width: 2, color: kprimaryColor),
-                        ),
-                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

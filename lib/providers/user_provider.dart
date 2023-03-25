@@ -31,10 +31,12 @@ class UserProvider extends ChangeNotifier {
 
       prefs.setBool('Profile', true);
       prefs.setString('ProfilePic', user.firebaseUrl);
+      prefs.setString("UserName", user.name);
       notifyListeners();
     } catch (e) {
       prefs.setBool('Profile', false);
       prefs.setString('ProfilePic', "");
+      prefs.setString("UserName", "");
       notifyListeners();
       rethrow;
     }
@@ -96,6 +98,7 @@ class UserProvider extends ChangeNotifier {
         "ProfilePic": user.firebaseUrl,
       });
       prefs.setString('ProfilePic', user.firebaseUrl);
+      prefs.setString("UserName", user.name);
       notifyListeners();
     } catch (e) {
       rethrow;

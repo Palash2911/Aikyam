@@ -79,6 +79,7 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                                         builder: (context) => ChatScreenOpen(
                                           receiverId: document.id,
                                           senderType: "Ngo",
+                                          rName: document["SName"],
                                         ),
                                       ),
                                     );

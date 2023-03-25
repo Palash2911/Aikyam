@@ -80,6 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                         builder: (context) => ChatScreenOpen(
                                           receiverId: document.id,
                                           senderType: "Users",
+                                          rName: document["SName"],
                                         ),
                                       ),
                                     );

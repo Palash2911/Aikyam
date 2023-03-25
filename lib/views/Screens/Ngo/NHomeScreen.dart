@@ -1,3 +1,4 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
@@ -62,8 +63,9 @@ class _NHomeScreenState extends State<NHomeScreen> {
         ),
         drawer: NgoAppdrawer(),
         body: SingleChildScrollView(
-          child:  Container(
-            height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
             padding: const EdgeInsets.only(bottom: 120),
             child: Column(
               children: [
@@ -88,32 +90,48 @@ class _NHomeScreenState extends State<NHomeScreen> {
                               if (appliedId.isNotEmpty) {
                                 if (appliedId.contains(document.id)) {
                                   return PostItem(
-                                    ngoname: document["NgoName"],
-                                    ngocity: document["NgoCity"],
-                                    drivecity: document["City"],
-                                    driveaddress: document["Address"],
-                                    driveDate: document["Date"],
+                                    post: Post(
+                                      category: document["Category"],
+                                      description: document["Description"],
+                                      ngoid: document["NgoId"],
+                                      id: document.id,
+                                      noofVolunters: document['NoOfVolunteers'],
+                                      date: document["Date"],
+                                      time: document["Time"],
+                                      city: document["City"],
+                                      driveTitle: document["Title"],
+                                      ncity: document["NgoCity"],
+                                      ngoname: document["NgoName"],
+                                      state: document["State"],
+                                      address: document["Address"],
+                                      country: document["Country"],
+                                      photos: document["Photos"],
+                                    ),
                                     applyStatus: "Applied",
-                                    pid: document.id,
                                     userType: "Ngo",
-                                    driveTime: document["Time"],
-                                    category: document["Category"],
-                                    driveTitle: document["Title"],
                                   );
                                 }
                               }
                               return PostItem(
-                                ngoname: document["NgoName"],
-                                ngocity: document["NgoCity"],
-                                drivecity: document["City"],
-                                driveaddress: document["Address"],
-                                driveDate: document["Date"],
+                                post: Post(
+                                  category: document["Category"],
+                                  description: document["Description"],
+                                  ngoid: document["NgoId"],
+                                  id: document.id,
+                                  noofVolunters: document['NoOfVolunteers'],
+                                  date: document["Date"],
+                                  time: document["Time"],
+                                  city: document["City"],
+                                  driveTitle: document["Title"],
+                                  ncity: document["NgoCity"],
+                                  ngoname: document["NgoName"],
+                                  state: document["State"],
+                                  address: document["Address"],
+                                  country: document["Country"],
+                                  photos: document["Photos"],
+                                ),
                                 applyStatus: "Apply",
-                                pid: document.id,
                                 userType: "Ngo",
-                                driveTime: document["Time"],
-                                category: document["Category"],
-                                driveTitle: document["Title"],
                               );
                             }).toList(),
                           );

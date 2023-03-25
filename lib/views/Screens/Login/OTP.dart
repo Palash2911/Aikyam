@@ -5,7 +5,6 @@ import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/BottomNavBar.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
-import 'package:aikyam/views/widgets/otpField.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
@@ -24,6 +23,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final _otpController = TextEditingController();
   String get otp => _otpController.text;
   var isLoading = false;
+  var isValid = false;
 
   @override
   void dispose() {
@@ -34,7 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
   Future _verifyOtp(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
     if (otp.length == 6) {
-      var isValid = await authProvider.verifyOtp(otp).catchError((e) {
+      isValid = await authProvider.verifyOtp(otp).catchError((e) {
         Fluttertoast.showToast(
           msg: "Invalid OTP. Please try again",
           toastLength: Toast.LENGTH_SHORT,
@@ -65,14 +65,6 @@ class _OtpScreenState extends State<OtpScreen> {
         setState(() {
           isLoading = false;
         });
-        Fluttertoast.showToast(
-          msg: "Invalid OTP. Please try again",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
       }
     } else {
       setState(() {

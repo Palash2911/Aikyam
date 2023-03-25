@@ -129,8 +129,8 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const NgoProfile()));
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) => const NgoProfile()));
       }
     });
   }

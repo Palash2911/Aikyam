@@ -36,10 +36,12 @@ class NgoProvider extends ChangeNotifier {
 
       prefs.setBool('Profile', true);
       prefs.setString('ProfilePic', ngo.firebaseUrl);
+      prefs.setString("UserName", ngo.name);
       notifyListeners();
     } catch (e) {
       prefs.setBool('Profile', false);
       prefs.setString('ProfilePic', "");
+      prefs.setString("UserName", "");
       rethrow;
     }
   }
@@ -110,6 +112,7 @@ class NgoProvider extends ChangeNotifier {
         "ProfilePic": ngo.firebaseUrl,
       });
       prefs.setString('ProfilePic', ngo.firebaseUrl);
+      prefs.setString("UserName", ngo.name);
       notifyListeners();
     } catch (e) {
       rethrow;
