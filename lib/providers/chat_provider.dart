@@ -108,15 +108,13 @@ class ChatProvider extends ChangeNotifier {
         'isUser': chat.isUser,
       });
 
-      if (chat.isUser) {
-        CollectionReference recentRef = FirebaseFirestore.instance
-            .collection('Users')
-            .doc(chat.senderId)
-            .collection('Chats');
-        await recentRef.doc(chat.receiverId).update({
-          'RecentMessage': chat.message,
-        });
-      }
+      CollectionReference recentRef = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(chat.senderId)
+          .collection('Chats');
+      await recentRef.doc(chat.receiverId).update({
+        'RecentMessage': chat.message,
+      });
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -128,8 +126,7 @@ class ChatProvider extends ChangeNotifier {
     await typeRef.doc(id).get().then((value) {
       if (value.exists) {
         return true;
-      }
-      else{
+      } else {
         return false;
       }
     });
@@ -150,15 +147,13 @@ class ChatProvider extends ChangeNotifier {
         'DateTime': chat.dateTime,
         'isUser': chat.isUser,
       });
-      if (chat.isUser) {
-        CollectionReference recentRef = FirebaseFirestore.instance
-            .collection('Ngo')
-            .doc(chat.senderId)
-            .collection('Chats');
-        await recentRef.doc(chat.receiverId).update({
-          'RecentMessage': chat.message,
-        });
-      }
+      CollectionReference recentRef = FirebaseFirestore.instance
+          .collection('Ngo')
+          .doc(chat.senderId)
+          .collection('Chats');
+      await recentRef.doc(chat.receiverId).update({
+        'RecentMessage': chat.message,
+      });
       notifyListeners();
     } catch (e) {
       rethrow;

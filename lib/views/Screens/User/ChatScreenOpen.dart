@@ -163,11 +163,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Smile Foundation', style: kTextPopM16),
-                              Text(
-                                'Active 5 mins ago',
-                                style: kTextPopR12,
-                              ),
+                              Text(widget.rName, style: kTextPopM16),
                             ],
                           ),
                         ],
