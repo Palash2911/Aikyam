@@ -107,7 +107,7 @@ class _NgoProfileState extends State<NgoProfile> {
                           height: 110,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/post2.png'),
+                              image: AssetImage('assets/images/cover.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
