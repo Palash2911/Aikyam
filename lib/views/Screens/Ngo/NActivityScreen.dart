@@ -1,3 +1,4 @@
+import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
@@ -49,8 +50,25 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                         );
                       } else {
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("No Post Yet !"),
+                          return Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 300.0,
+                                  child: Image.asset(
+                                    'assets/images/noPost.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "No Post Yet !",
+                                  style: kTextPopM16,
+                                ),
+                              ],
+                            ),
                           );
                         } else {
                           return ListView(
@@ -71,8 +89,25 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                   ngoId: document["NgoId"],
                                 );
                               }
-                              return const Center(
-                                child: Text("No Post Found"),
+                              return Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 300.0,
+                                      child: Image.asset(
+                                        'assets/images/noPost.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Text(
+                                      "No Post Found !",
+                                      style: kTextPopM16,
+                                    ),
+                                  ],
+                                ),
                               );
                             }).toList(),
                           );

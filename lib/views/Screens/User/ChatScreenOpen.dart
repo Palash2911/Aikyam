@@ -132,6 +132,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -182,8 +183,25 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                           );
                         } else {
                           if (snapshot.data!.docs.isEmpty) {
-                            return const Center(
-                              child: Text("Start Chatting !"),
+                            return Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 300.0,
+                                    child: Image.asset(
+                                      'assets/images/startchat.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    "Start Chatting !",
+                                    style: kTextPopM16,
+                                  ),
+                                ],
+                              ),
                             );
                           } else {
                             return ListView(

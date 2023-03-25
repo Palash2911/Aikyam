@@ -134,10 +134,24 @@ class _PostState extends State<PostItem> {
               children: [
                 const Icon(Icons.access_time_rounded),
                 const SizedBox(width: 5),
-                Text('Date and Time: ', style: kTextPopB14),
+                Text('Date: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
-                    "${widget.post.date}, ${widget.post.time}",
+                    " ${widget.post.date}",
+                    style: kTextPopR14,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(Icons.access_time_rounded),
+                const SizedBox(width: 5),
+                Text('Time: ', style: kTextPopB14),
+                Expanded(
+                  child: Text(
+                    " ${widget.post.time}",
                     style: kTextPopR14,
                   ),
                 ),
@@ -183,7 +197,7 @@ class _PostState extends State<PostItem> {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: () {
                             if (widget.applyStatus != "Applied" &&

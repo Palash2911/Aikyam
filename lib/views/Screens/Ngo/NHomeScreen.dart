@@ -1,6 +1,7 @@
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/AppBarHome.dart';
 import 'package:aikyam/views/widgets/AppDrawer.dart';
 import 'package:aikyam/views/widgets/Post.dart';
@@ -80,8 +81,25 @@ class _NHomeScreenState extends State<NHomeScreen> {
                         );
                       } else {
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("No Post Yet !"),
+                          return Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 300.0,
+                                  child: Image.asset(
+                                    'assets/images/noPost.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "No Post Yet !",
+                                  style: kTextPopM16,
+                                ),
+                              ],
+                            ),
                           );
                         } else {
                           return ListView(

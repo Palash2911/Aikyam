@@ -173,10 +173,8 @@ class _NActivityPostState extends State<NActivityPost> {
                     deletePost();
                   },
                 ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                const SizedBox(width: 25.0),
+               
+                const SizedBox(width: 15.0),
                 AppButton(
                   text: 'View Applicants',
                   onPressed: () {

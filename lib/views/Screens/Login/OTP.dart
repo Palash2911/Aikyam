@@ -123,7 +123,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         height: 10,
                       ),
                       Text(
-                        "We have sent the Verification Code",
+                        "We have sent the Verification Code on +91 ", //You have to do it
                         style: kTextPopR14,
                         textAlign: TextAlign.center,
                       ),
@@ -138,17 +138,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         child: Column(
                           children: [
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: const [
-                            //     textFieldOtp(first: true, last: false),
-                            //     textFieldOtp(first: false, last: false),
-                            //     textFieldOtp(first: false, last: false),
-                            //     textFieldOtp(first: false, last: false),
-                            //     textFieldOtp(first: false, last: false),
-                            //     textFieldOtp(first: false, last: true),
-                            //   ],
-                            // ),
                             TextField(
                               controller: _otpController,
                               decoration: InputDecoration(
