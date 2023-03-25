@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   CollectionReference postRef = FirebaseFirestore.instance.collection('Posts');
   List<dynamic> appliedId = [];
   var pp = "";
+  var isLoading = true;
 
   @override
   void didChangeDependencies() {
@@ -36,6 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
         .then((value) {
       appliedId = value;
       pp = Provider.of<Auth>(context, listen: false).profilePic;
+    });
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -63,101 +67,111 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         drawer: const UserAppdrawer(),
-        body: SingleChildScrollView(
-          child: Container(
-            height:
-                MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
-            padding: const EdgeInsets.only(bottom: 120),
-            child: Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: postRef.snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    if (snapshot.data!.docs.isEmpty) {
-                      return Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 300.0,
-                              child: Image.asset(
-                                'assets/images/noPost.png',
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Text(
-                              "No Post Yet !",
-                              style: kTextPopM16,
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return ListView(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        children: snapshot.data!.docs.map((document) {
-                          if (appliedId.isNotEmpty) {
-                            if (appliedId.contains(document.id)) {
-                              return PostItem(
-                                post: Post(
-                                  category: document["Category"],
-                                  description: document["Description"],
-                                  ngoid: document["NgoId"],
-                                  id: document.id,
-                                  noofVolunters: document['NoOfVolunteers'],
-                                  date: document["Date"],
-                                  time: document["Time"],
-                                  city: document["City"],
-                                  driveTitle: document["Title"],
-                                  ncity: document["NgoCity"],
-                                  ngoname: document["NgoName"],
-                                  state: document["State"],
-                                  address: document["Address"],
-                                  country: document["Country"],
-                                  photos: document["Photos"],
+        body: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () async {
+                  _getappliedId();
+                },
+                child: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height -
+                        kBottomNavigationBarHeight,
+                    padding: const EdgeInsets.only(bottom: 120),
+                    child: Expanded(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: postRef.snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            if (snapshot.data!.docs.isEmpty) {
+                              return Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 300.0,
+                                      child: Image.asset(
+                                        'assets/images/noPost.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Text(
+                                      "No Post Yet !",
+                                      style: kTextPopM16,
+                                    ),
+                                  ],
                                 ),
-                                applyStatus: "Applied",
-                                userType: "Ngo",
+                              );
+                            } else {
+                              return ListView(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs.map((document) {
+                                  if (appliedId.isNotEmpty) {
+                                    if (appliedId.contains(document.id)) {
+                                      return PostItem(
+                                        post: Post(
+                                          category: document["Category"],
+                                          description: document["Description"],
+                                          ngoid: document["NgoId"],
+                                          id: document.id,
+                                          noofVolunters:
+                                              document['NoOfVolunteers'],
+                                          date: document["Date"],
+                                          time: document["Time"],
+                                          city: document["City"],
+                                          driveTitle: document["Title"],
+                                          ncity: document["NgoCity"],
+                                          ngoname: document["NgoName"],
+                                          state: document["State"],
+                                          address: document["Address"],
+                                          country: document["Country"],
+                                          photos: document["Photos"],
+                                        ),
+                                        applyStatus: "Applied",
+                                        userType: "Ngo",
+                                      );
+                                    }
+                                  }
+                                  return PostItem(
+                                    post: Post(
+                                      category: document["Category"],
+                                      description: document["Description"],
+                                      ngoid: document["NgoId"],
+                                      id: document.id,
+                                      noofVolunters: document['NoOfVolunteers'],
+                                      date: document["Date"],
+                                      time: document["Time"],
+                                      city: document["City"],
+                                      driveTitle: document["Title"],
+                                      ncity: document["NgoCity"],
+                                      ngoname: document["NgoName"],
+                                      state: document["State"],
+                                      address: document["Address"],
+                                      country: document["Country"],
+                                      photos: document["Photos"],
+                                    ),
+                                    applyStatus: "Apply",
+                                    userType: "User",
+                                  );
+                                }).toList(),
                               );
                             }
                           }
-                          return PostItem(
-                            post: Post(
-                              category: document["Category"],
-                              description: document["Description"],
-                              ngoid: document["NgoId"],
-                              id: document.id,
-                              noofVolunters: document['NoOfVolunteers'],
-                              date: document["Date"],
-                              time: document["Time"],
-                              city: document["City"],
-                              driveTitle: document["Title"],
-                              ncity: document["NgoCity"],
-                              ngoname: document["NgoName"],
-                              state: document["State"],
-                              address: document["Address"],
-                              country: document["Country"],
-                              photos: document["Photos"],
-                            ),
-                            applyStatus: "Apply",
-                            userType: "User",
-                          );
-                        }).toList(),
-                      );
-                    }
-                  }
-                },
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -35,6 +35,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _cityController = TextEditingController();
+  final _websiteController = TextEditingController();
   final _stateController = TextEditingController();
   final _addressController = TextEditingController();
   final _aboutController = TextEditingController();
@@ -48,6 +49,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   String get city => _cityController.text;
   String get state => _stateController.text;
   String get address => _addressController.text;
+  String get website => _websiteController.text;
 
   String category = "";
   File? localUrl;
@@ -78,6 +80,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
       _dateController.text = value.date;
       _stateController.text = value.state;
       _addressController.text = value.address;
+      _websiteController.text = value.webUrl;
       ngoType = value.type;
       ngoRegisterd = value.registered;
       if (ngoType == "Profit") {
@@ -119,7 +122,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
         category: category,
         postId: postId,
         address: address,
-        webUrl: "",
+        webUrl: website,
       ),
     ).then((value) {
       if (isLoading) {
@@ -154,6 +157,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
     _cityController.dispose();
     _stateController.dispose();
     _aboutController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
@@ -661,6 +665,29 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                   style: kTextPopR14,
                                 ),
                               ],
+                            ),
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              controller: _websiteController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Website Url",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.location_on_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter url!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
                             ),
                             const SizedBox(height: 15.0),
                             Container(

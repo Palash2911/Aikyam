@@ -6,6 +6,7 @@ import 'package:aikyam/views/constants.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NgoProfile extends StatefulWidget {
   const NgoProfile({
@@ -35,6 +36,7 @@ class _NgoProfileState extends State<NgoProfile> {
   var senderId = "";
   var isInit = true;
   var isUser = "Users";
+  var url = "";
 
   void _aboutPressed() {
     setState(() {
@@ -75,6 +77,7 @@ class _NgoProfileState extends State<NgoProfile> {
       category = value.category;
       about = value.about;
       bio = value.bio;
+      url = value.webUrl;
     });
   }
 
@@ -89,6 +92,12 @@ class _NgoProfileState extends State<NgoProfile> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -177,7 +186,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                         backgroundColor: kprimaryColor,
                                         foregroundColor: ksecondaryColor,
                                         child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: _launchUrl,
                                           icon: const Icon(Icons.link_rounded),
                                         ),
                                       ),

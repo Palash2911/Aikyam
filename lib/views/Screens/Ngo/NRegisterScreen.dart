@@ -29,6 +29,7 @@ class _NgoRegisterState extends State<NgoRegister> {
   final _form = GlobalKey<FormState>();
 
   final _dateController = TextEditingController();
+  final _websiteController = TextEditingController();
   final _bioController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -47,6 +48,7 @@ class _NgoRegisterState extends State<NgoRegister> {
   String get city => _cityController.text;
   String get state => _stateController.text;
   String get address => _addressController.text;
+  String get website => _websiteController.text;
 
   String category = "";
   File? imageFile;
@@ -63,6 +65,7 @@ class _NgoRegisterState extends State<NgoRegister> {
     _aboutController.text = "";
     _dateController.text = "";
     _addressController.text = "";
+    _websiteController.text = "";
     type.add(Type("Profit", false));
     type.add(Type("Non-Profit", false));
     ngoReg.add(Registered("Yes", false));
@@ -81,6 +84,7 @@ class _NgoRegisterState extends State<NgoRegister> {
     _stateController.dispose();
     _aboutController.dispose();
     _addressController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
@@ -122,7 +126,7 @@ class _NgoRegisterState extends State<NgoRegister> {
             firebaseUrl: "",
             postId: [],
             address: address,
-            webUrl: "",
+            webUrl: website,
           ),
         )
             .catchError((e) {
@@ -543,15 +547,16 @@ class _NgoRegisterState extends State<NgoRegister> {
                             const SizedBox(height: 10),
 
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 30.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0.0, horizontal: 30.0),
                               child: CSCPicker(
                                 showCities: true,
                                 countryFilter: const [
                                   CscCountry.India,
                                 ],
                                 dropdownDecoration: BoxDecoration(
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   color: kinputColor,
                                   border:
                                       Border.all(color: kinputColor, width: 2),
@@ -560,8 +565,8 @@ class _NgoRegisterState extends State<NgoRegister> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     color: kinputColor,
-                                    border:
-                                        Border.all(color: kinputColor, width: 1)),
+                                    border: Border.all(
+                                        color: kinputColor, width: 1)),
                                 layout: Layout.vertical,
                                 onCountryChanged: (country) {},
                                 onStateChanged: (state) {
@@ -711,6 +716,29 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   style: kTextPopR14,
                                 ),
                               ],
+                            ),
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              controller: _websiteController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Website Url",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.location_on_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter url!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
                             ),
                             const SizedBox(height: 15.0),
                             Container(
