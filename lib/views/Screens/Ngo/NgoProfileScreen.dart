@@ -1,10 +1,8 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
-import 'package:aikyam/views/Screens/User/ChatScreen.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +31,7 @@ class _NgoProfileState extends State<NgoProfile> {
   var category = "";
   var senderId = "";
   var isInit = true;
+  var isUser = "Users";
 
   void _aboutPressed() {
     setState(() {
@@ -50,7 +49,7 @@ class _NgoProfileState extends State<NgoProfile> {
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(isInit){
+    if (isInit) {
       _fetchDetails();
     }
     isInit = false;
@@ -58,6 +57,7 @@ class _NgoProfileState extends State<NgoProfile> {
 
   void _fetchDetails() async {
     senderId = Provider.of<Auth>(context).token;
+    isUser = Provider.of<Auth>(context).isUser == "NGO" ? "Ngo" : "Users";
     await Provider.of<NgoProvider>(context)
         .getNgoDetails(widget.authToken)
         .then((value) {
@@ -74,7 +74,14 @@ class _NgoProfileState extends State<NgoProfile> {
   }
 
   void _chatScreen() async {
-    Navigator.push(context, MaterialPageRoute(builder: (ctx) => ChatScreenOpen(receiverId: widget.authToken, senderType: "Ngo", rName: name,)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (ctx) => ChatScreenOpen(
+                  receiverId: widget.authToken,
+                  senderType: isUser,
+                  rName: name,
+                )));
   }
 
   @override
@@ -128,7 +135,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                     const NgoEditProfile()));
+                                                      const NgoEditProfile()));
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -368,9 +375,7 @@ class _Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       // add post here which ever wanted
-      children: const [
-
-      ],
+      children: const [],
     );
   }
 }

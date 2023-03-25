@@ -123,6 +123,19 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> checkSenderType(String id) async {
+    CollectionReference typeRef = FirebaseFirestore.instance.collection('Ngo');
+    await typeRef.doc(id).get().then((value) {
+      if (value.exists) {
+        return true;
+      }
+      else{
+        return false;
+      }
+    });
+    return false;
+  }
+
   Future sendMessageN(Chats chat) async {
     try {
       CollectionReference messageNRef = FirebaseFirestore.instance
@@ -137,7 +150,6 @@ class ChatProvider extends ChangeNotifier {
         'DateTime': chat.dateTime,
         'isUser': chat.isUser,
       });
-
       if (chat.isUser) {
         CollectionReference recentRef = FirebaseFirestore.instance
             .collection('Ngo')
@@ -147,7 +159,6 @@ class ChatProvider extends ChangeNotifier {
           'RecentMessage': chat.message,
         });
       }
-
       notifyListeners();
     } catch (e) {
       rethrow;

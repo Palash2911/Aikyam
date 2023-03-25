@@ -30,6 +30,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   var isInit = true;
   var mssg = "";
   var isLoading = true;
+  var rType = "Ngo";
 
   @override
   void didChangeDependencies() {
@@ -43,19 +44,24 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   void createMessageRoom() async {
     var sname = Provider.of<Auth>(context, listen: false).uName;
     await Provider.of<ChatProvider>(context, listen: false)
-        .createMessageRoom(widget.receiverId, auth.currentUser!.uid,
-            widget.senderType, widget.rName, sname)
-        .then((value) {
-      setState(() {
-        isLoading = false;
+        .checkSenderType(widget.receiverId)
+        .then((value) async {
+      rType = (value ? "Users" : "Ngo");
+      await Provider.of<ChatProvider>(context, listen: false)
+          .createMessageRoom(widget.receiverId, auth.currentUser!.uid,
+              widget.senderType, widget.rName, sname)
+          .then((value) {
+        messageRef = FirebaseFirestore.instance
+            .collection(widget.senderType)
+            .doc(auth.currentUser!.uid)
+            .collection('Chats')
+            .doc(widget.receiverId)
+            .collection('Messages');
+        setState(() {
+          isLoading = false;
+        });
       });
     });
-    messageRef = FirebaseFirestore.instance
-        .collection(widget.senderType)
-        .doc(auth.currentUser!.uid)
-        .collection('Chats')
-        .doc(widget.receiverId)
-        .collection('Messages');
   }
 
   void sendMessage(BuildContext ctx) async {
@@ -96,16 +102,29 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         ),
       )
           .then((value) async {
-        await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
-          Chats(
-            receiverId: auth.currentUser!.uid,
-            senderId: widget.receiverId,
-            message: mssg,
-            dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
-            isUser: false,
-            senderName: "Palash",
-          ),
-        );
+        if (rType == "Users") {
+          await Provider.of<ChatProvider>(context, listen: false).sendMessageU(
+            Chats(
+              receiverId: auth.currentUser!.uid,
+              senderId: widget.receiverId,
+              message: mssg,
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
+              isUser: false,
+              senderName: "Palash",
+            ),
+          );
+        } else {
+          await Provider.of<ChatProvider>(context, listen: false).sendMessageN(
+            Chats(
+              receiverId: auth.currentUser!.uid,
+              senderId: widget.receiverId,
+              message: mssg,
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
+              isUser: false,
+              senderName: "Palash",
+            ),
+          );
+        }
       });
     }
   }
