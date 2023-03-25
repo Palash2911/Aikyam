@@ -132,6 +132,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),

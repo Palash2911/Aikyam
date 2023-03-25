@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
+
 class ApplicantsScreen extends StatefulWidget {
   final String pid;
 
@@ -59,8 +61,25 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                           );
                         } else {
                           if (snapshot.data!.docs.isEmpty) {
-                            return const Center(
-                              child: Text("No Applicants Yet !"),
+                            return  Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                  height: 300.0,
+                                  child: Image.asset(
+                                    'assets/images/noPost.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "No Applicants Yet !",
+                                  style: kTextPopM16,
+                                ),
+                                ],
+                              ),
                             );
                           } else {
                             return ListView(
