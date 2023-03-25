@@ -223,7 +223,7 @@ class _NgoProfileState extends State<NgoProfile> {
                         width: 100.0,
                         child: profileUrl.isNotEmpty
                             ? Image.network(profileUrl)
-                            : Image.asset('assets/images/dp.jpg'),
+                            : Image.asset('assets/images/ngo.png'),
                       ),
                     ),
                   ),
@@ -236,7 +236,7 @@ class _NgoProfileState extends State<NgoProfile> {
               //     height: 100.0,
               //     width: 100.0,
               //     color: const Color(0xffFF0E58),
-              //     child: Image.asset('assets/images/dp.jpg'),
+              //     child: Image.asset('assets/images/user.png'),
               //   ),
               // ),
 

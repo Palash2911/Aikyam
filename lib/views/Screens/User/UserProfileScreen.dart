@@ -150,7 +150,7 @@ class _UserProfileState extends State<UserProfile> {
                       radius: 50.0,
                       backgroundImage: profileUrl.isNotEmpty
                           ? Image.network(profileUrl).image
-                          : const AssetImage('assets/images/dp.jpg'),
+                          : const AssetImage('assets/images/user.png'),
                     ),
                   ),
                 ],
@@ -282,8 +282,7 @@ class _Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       // add post here which ever wanted
-      children: const [
-      ],
+      children: const [],
     );
   }
 }

@@ -46,7 +46,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
                   radius: 30.0,
                   backgroundImage: pp.isNotEmpty
                       ? Image.network(pp).image
-                      : const AssetImage('assets/images/dp.jpg'),
+                      : const AssetImage('assets/images/user.png'),
                 ),
                 Text(
                   name,
@@ -146,56 +146,24 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                     radius: 30.0,
                     backgroundImage: pp.isNotEmpty
                         ? Image.network(pp).image
-                        : const AssetImage('assets/images/dp.jpg'),
+                        : const AssetImage('assets/images/ngo.png'),
                   ),
                 ],
               ),
             ),
             accountEmail: null,
           ),
-          // DrawerHeader(
-          //   decoration: const BoxDecoration(
-          //     color: Color(0xfff1BB273),
-          //   ),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       ClipRRect(
-          //         borderRadius: BorderRadius.circular(10.0),
-          //         child: Container(
-          //           height: 70.0,
-          //           width: 70.0,
-          //           color: const Color(0xffFF0E58),
-          //           child: Image.asset('assets/images/dp.jpg'),
-          //         ),
-          //       ),
-          //       Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Text(
-          //             'Smile Foundation',
-          //             style: kTextPopM16.copyWith(color: ksecondaryColor),
-          //           ),
-          //           Flexible(
-          //             child: Text(
-          //               'What should we write here ',
-          //               overflow: TextOverflow.ellipsis,
-          //               maxLines: 10,
-          //               style: kTextPopR12.copyWith(color: ksecondaryColor),
-          //             ),
-          //           )
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text(' My Profile '),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NgoProfile(authToken: authToken, isUser: true,)),
+                MaterialPageRoute(
+                    builder: (context) => NgoProfile(
+                          authToken: authToken,
+                          isUser: true,
+                        )),
               );
             },
           ),
