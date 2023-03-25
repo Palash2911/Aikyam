@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NgoProfile extends StatefulWidget {
-  const NgoProfile({super.key, required this.authToken, required this.isUser});
+  const NgoProfile({
+    required this.authToken,
+    required this.isUser,
+  });
   final String authToken;
   final bool isUser;
 
@@ -410,9 +413,7 @@ class _About extends StatelessWidget {
         children: [
           Text('About', style: kTextPopB16),
           const SizedBox(height: 8),
-          Text(
-              about,
-              style: kTextPopR14),
+          Text(about, style: kTextPopR14),
           const SizedBox(height: 10),
           const Divider(),
           Text('Information', style: kTextPopB16),

@@ -68,6 +68,7 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                   title: document["Title"],
                                   time: document["Time"],
                                   date: document["Date"],
+                                  ngoId: document["NgoId"],
                                 );
                               }
                               return const Center(

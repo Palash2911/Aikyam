@@ -13,7 +13,7 @@ class Ngo {
   final String state;
   final String about;
   final String category;
-  final File? localUrl;
+  File? localUrl;
   final String address;
   String firebaseUrl;
   List<dynamic> postId;

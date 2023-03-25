@@ -48,7 +48,6 @@ class NgoProvider extends ChangeNotifier {
   }
 
   Future<Ngo?> getNgoDetails(String uid) async {
-    //instead of map Users user
     try {
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       Ngo? ngo;

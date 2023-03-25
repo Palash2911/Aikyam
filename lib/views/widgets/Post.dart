@@ -64,12 +64,14 @@ class _PostState extends State<PostItem> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NgoProfile(
-                                  authToken: widget.post.ngoid,
-                                  isUser: false,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NgoProfile(
+                          authToken: widget.post.ngoid,
+                          isUser: false,
+                        ),
+                      ),
+                    );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
