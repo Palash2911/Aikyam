@@ -24,6 +24,8 @@ class _UserBottomBarState extends State<UserBottomBar> {
     return Scaffold(
       body: PersistentTabView(
         context,
+        hideNavigationBarWhenKeyboardShows: true,
+        resizeToAvoidBottomInset: true,
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
