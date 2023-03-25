@@ -1,6 +1,4 @@
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/providers/ngo_provider.dart';
-import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
@@ -28,9 +26,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
   void setProfilePic() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
-    await Provider.of<UserProvider>(context, listen: false)
-        .getUserDetails(authProvider.token)
-        .then((value) => {name = value!.name});
+    name = authProvider.uName;
     setState(() {});
   }
 
@@ -73,12 +69,12 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
             leading: const Icon(Icons.category),
             title: const Text(' Categories'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NgoProfile(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => NgoProfile(),
+              //   ),
+              // );
             },
           ),
           ListTile(
@@ -106,6 +102,7 @@ class NgoAppdrawer extends StatefulWidget {
 class _NgoAppdrawerState extends State<NgoAppdrawer> {
   var pp = "";
   var name = "";
+  var authToken = "";
 
   @override
   void didChangeDependencies() {
@@ -116,9 +113,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
   void setProfilePic() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
-    await Provider.of<NgoProvider>(context, listen: false)
-        .getNgoDetails(authProvider.token)
-        .then((value) => {name = value!.name});
+    name = authProvider.uName;
     setState(() {});
   }
 
@@ -137,7 +132,10 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const NgoProfile(),
+                      builder: (context) => NgoProfile(
+                        authToken: authToken,
+                        isUser: true,
+                      ),
                     ));
               },
               child: Column(
@@ -196,7 +194,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NgoProfile()),
+                MaterialPageRoute(builder: (context) => NgoProfile(authToken: authToken, isUser: true,)),
               );
             },
           ),
@@ -211,7 +209,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
             onTap: () {
               Provider.of<Auth>(context, listen: false).signOut();
               Navigator.of(context, rootNavigator: true)
-                  .push(MaterialPageRoute(builder: (context) => new LogIn()));
+                  .push(MaterialPageRoute(builder: (context) => LogIn()));
             },
           ),
         ],

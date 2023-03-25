@@ -1,3 +1,4 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
@@ -6,30 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
-  final String ngoname;
-  final String ngocity;
-  final String drivecity;
-  final String driveaddress;
-  final String driveDate;
-  final String applyStatus;
-  final String pid;
+  final Post post;
   final String userType;
-  final String driveTime;
-  final String category;
-  final String driveTitle;
+  final String applyStatus;
 
   const PostItem({
-    required this.ngoname,
-    required this.ngocity,
-    required this.drivecity,
-    required this.driveaddress,
-    required this.driveDate,
-    required this.applyStatus,
-    required this.pid,
     required this.userType,
-    required this.driveTime,
-    required this.category,
-    required this.driveTitle,
+    required this.post,
+    required this.applyStatus,
   });
 
   @override
@@ -43,7 +28,7 @@ class _PostState extends State<PostItem> {
   Future applyPost() async {
     if (_isApply && widget.applyStatus == "Apply") {
       var postProvider = Provider.of<PostProvider>(context, listen: false);
-      await postProvider.applyPost(widget.pid, widget.userType).then((value) {
+      await postProvider.applyPost(widget.post.id, widget.userType).then((value) {
         setState(() {
           _isLoading = false;
         });
@@ -76,8 +61,13 @@ class _PostState extends State<PostItem> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NgoProfile()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NgoProfile(
+                                  authToken: widget.post.ngoid,
+                                  isUser: false,
+                                )));
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -97,14 +87,14 @@ class _PostState extends State<PostItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget.ngoname,
+                          widget.post.ngoname,
                           style: kTextPopM16,
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(widget.ngocity, style: kTextPopR14),
+                        Text(widget.post.ncity, style: kTextPopR14),
                       ],
                     ),
                   ],
@@ -131,7 +121,7 @@ class _PostState extends State<PostItem> {
                 const Icon(Icons.location_city),
                 const SizedBox(width: 5),
                 Text('City: ', style: kTextPopB14),
-                Text(widget.drivecity, style: kTextPopR14)
+                Text(widget.post.city, style: kTextPopR14)
               ],
             ),
             const SizedBox(height: 5),
@@ -143,7 +133,7 @@ class _PostState extends State<PostItem> {
                 Text('Date and Time: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
-                    "${widget.driveDate}, ${widget.driveTime}",
+                    "${widget.post.date}, ${widget.post.time}",
                     style: kTextPopR14,
                   ),
                 ),
@@ -154,7 +144,7 @@ class _PostState extends State<PostItem> {
                 const Icon(Icons.person),
                 const SizedBox(width: 5),
                 Text('Category: ', style: kTextPopB14),
-                Text(widget.category, style: kTextPopR14)
+                Text(widget.post.category, style: kTextPopR14)
               ],
             ),
             SizedBox(height: 5),
@@ -169,16 +159,16 @@ class _PostState extends State<PostItem> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ViewDetails(
-                              pid: widget.pid,
-                              ngoname: widget.ngoname,
-                              ngocity: widget.ngocity,
-                              drivecity: widget.drivecity,
-                              driveaddress: widget.driveaddress,
-                              driveDate: widget.driveDate,
+                              pid: widget.post.id,
+                              ngoname: widget.post.ngoname,
+                              ngocity: widget.post.ncity,
+                              drivecity: widget.post.city,
+                              driveaddress: widget.post.address,
+                              driveDate: widget.post.date,
                               applyStatus: widget.applyStatus,
                               userType: widget.userType,
-                              category: widget.category,
-                              driveTime: widget.driveTime,
+                              category: widget.post.category,
+                              driveTime: widget.post.time,
                             ),
                           ),
                         );

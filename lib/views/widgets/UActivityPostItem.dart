@@ -57,8 +57,8 @@ class _UActivityPostItemState extends State<UActivityPostItem> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => NgoProfile()));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => NgoProfile()));
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),

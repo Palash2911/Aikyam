@@ -283,19 +283,6 @@ class _Post extends StatelessWidget {
     return Column(
       // add post here which ever wanted
       children: const [
-        PostItem(
-          ngoname: 'ngoname',
-          ngocity: 'ngocity',
-          drivecity: 'drivecity',
-          driveaddress: 'driveaddress',
-          driveDate: 'driveDate',
-          applyStatus: 'applyStatus',
-          pid: 'pid',
-          userType: "Ngo",
-          driveTime: "Time",
-          category: "",
-          driveTitle: "",
-        ),
       ],
     );
   }

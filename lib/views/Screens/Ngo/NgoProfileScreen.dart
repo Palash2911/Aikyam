@@ -1,6 +1,8 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
+import 'package:aikyam/views/Screens/User/ChatScreen.dart';
+import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
@@ -8,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NgoProfile extends StatefulWidget {
-  const NgoProfile({super.key});
+  const NgoProfile({super.key, required this.authToken, required this.isUser});
+  final String authToken;
+  final bool isUser;
 
   @override
   State<NgoProfile> createState() => _NgoProfileState();
@@ -27,6 +31,8 @@ class _NgoProfileState extends State<NgoProfile> {
   var type = "";
   var est = "";
   var category = "";
+  var senderId = "";
+  var isInit = true;
 
   void _aboutPressed() {
     setState(() {
@@ -44,13 +50,16 @@ class _NgoProfileState extends State<NgoProfile> {
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _fetchDetails();
+    if(isInit){
+      _fetchDetails();
+    }
+    isInit = false;
   }
 
   void _fetchDetails() async {
-    var authToken = Provider.of<Auth>(context).token;
+    senderId = Provider.of<Auth>(context).token;
     await Provider.of<NgoProvider>(context)
-        .getNgoDetails(authToken)
+        .getNgoDetails(widget.authToken)
         .then((value) {
       name = value!.name;
       email = value.email;
@@ -62,6 +71,10 @@ class _NgoProfileState extends State<NgoProfile> {
       about = value.bio;
       bio = value.bio;
     });
+  }
+
+  void _chatScreen() async {
+    Navigator.push(context, MaterialPageRoute(builder: (ctx) => ChatScreenOpen(receiverId: widget.authToken, senderType: "Ngo", rName: name,)));
   }
 
   @override
@@ -76,127 +89,122 @@ class _NgoProfileState extends State<NgoProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 110,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/post2.png'),
-                                fit: BoxFit.cover,
-                              ),
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 110,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/post2.png'),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(
-                            height: 36.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Smile Foundation',
-                                style: kTextPopB24,
-                              ),
-                              isNgoPov
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 5.0, horizontal: 15.0),
-                                        color: kprimaryColor,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NgoEditProfile()));
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.edit,
-                                                size: 24.0,
-                                                color: ksecondaryColor,
-                                              ),
-                                              SizedBox(
-                                                width: 10.0,
-                                              ),
-                                              Text('Edit',
-                                                  style: kTextPopB14.copyWith(
-                                                      color: ksecondaryColor)),
-                                            ],
-                                          ),
+                        ),
+                        SizedBox(
+                          height: 36.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              name,
+                              style: kTextPopB24,
+                            ),
+                            widget.isUser
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 15.0),
+                                      color: kprimaryColor,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                     const NgoEditProfile()));
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            const SizedBox(width: 10.0),
+                                            Text('Edit',
+                                                style: kTextPopB14.copyWith(
+                                                    color: ksecondaryColor)),
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  : Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                  Icons.location_on_rounded)),
+                                    ),
+                                  )
+                                : Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                              Icons.location_on_rounded),
                                         ),
-                                        SizedBox(
-                                          width: 10.0,
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(Icons.link_rounded),
                                         ),
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(Icons.link_rounded)),
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon:
-                                                  Icon(Icons.message_rounded)),
-                                        ),
-                                      ],
-                                    )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            'Short info what this foundation do also the category and foundation type written by foundation',
-                            style: kTextPopR14,
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 50,
-                      left: MediaQuery.of(context).size.width / 5 - 64,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Container(
-                          height: 100.0,
-                          width: 100.0,
-                          color: const Color(0xffFF0E58),
-                          child: Image.asset('assets/images/dp.jpg'),
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                            onPressed: () {
+                                              _chatScreen();
+                                            },
+                                            icon: const Icon(
+                                                Icons.message_rounded)),
+                                      ),
+                                    ],
+                                  )
+                          ],
                         ),
+                        const SizedBox(height: 5.0),
+                        Text(
+                          bio,
+                          style: kTextPopR14,
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    left: MediaQuery.of(context).size.width / 5 - 64,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: SizedBox(
+                        height: 100.0,
+                        width: 100.0,
+                        child: profileUrl.isNotEmpty
+                            ? Image.network(profileUrl)
+                            : Image.asset('assets/images/dp.jpg'),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
 
               // ClipRRect(
@@ -282,54 +290,69 @@ class _NgoProfileState extends State<NgoProfile> {
               //     ),
               //   ],
               // ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue,
-                width: double.maxFinite,
-                height: double.maxFinite,
-                child: ContainedTabBarView(
-                  tabs: [
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      color: kprimaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.info_outline_rounded,
-                            size: 24.0,
-                            color: ksecondaryColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            'About',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+              SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: double.maxFinite,
+                  height: MediaQuery.of(context).size.height,
+                  child: ContainedTabBarView(
+                    tabBarProperties: const TabBarProperties(
+                        indicatorColor: Colors.transparent),
+                    tabs: [
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        color: kprimaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline_rounded,
+                              size: 24.0,
+                              color: ksecondaryColor,
+                            ),
+                            const SizedBox(width: 5.0),
+                            Text(
+                              'About',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      color: kprimaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.work,
-                            size: 24.0,
-                            color: ksecondaryColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            'Post',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        color: kprimaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.work,
+                              size: 24.0,
+                              color: ksecondaryColor,
+                            ),
+                            const SizedBox(width: 5.0),
+                            Text(
+                              'Post',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                  views: [_About(), _Post()],
-                  onChange: (index) => print(index),
+                    ],
+                    views: [
+                      _About(
+                        about: "",
+                        type: type,
+                        category: category,
+                        estd: est,
+                        email: email,
+                        phone: phone,
+                      ),
+                      _Post()
+                    ],
+                    onChange: (index) => print(index),
+                  ),
                 ),
               ),
             ],
@@ -346,19 +369,7 @@ class _Post extends StatelessWidget {
     return Column(
       // add post here which ever wanted
       children: const [
-        PostItem(
-          ngoname: 'ngoname',
-          ngocity: 'ngocity',
-          drivecity: 'drivecity',
-          driveaddress: 'driveaddress',
-          driveDate: 'driveDate',
-          applyStatus: 'applyStatus',
-          pid: 'pid',
-          userType: "Ngo",
-          driveTime: "Time",
-          category: "",
-          driveTitle: "",
-        ),
+
       ],
     );
   }
@@ -367,7 +378,19 @@ class _Post extends StatelessWidget {
 class _About extends StatelessWidget {
   const _About({
     super.key,
+    required this.about,
+    required this.type,
+    required this.category,
+    required this.estd,
+    required this.email,
+    required this.phone,
   });
+  final String about;
+  final String type;
+  final String category;
+  final String estd;
+  final String email;
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
