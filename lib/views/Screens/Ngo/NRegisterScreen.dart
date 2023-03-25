@@ -4,6 +4,7 @@ import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/ngoBottomBar.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -420,56 +421,15 @@ class _NgoRegisterState extends State<NgoRegister> {
                               ],
                             ),
 
-                            const SizedBox(width: 20.0),
-                            // Row(
-                            //   children: [
-                            //     Icon(
-                            //       Icons.location_on_rounded,
-                            //       size: 32.0,
-                            //       color: Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: 12.0,
-                            //     ),
-                            //     Container(
-                            //       decoration: BoxDecoration(
-                            //         color: Colors.green.shade100,
-                            //         // border: Border.all(color: kprimaryColor, width: 2),
-                            //         borderRadius: BorderRadius.circular(10.0),
-                            //       ),
-                            //       child: Row(
-                            //         children: [
-                            //           SizedBox(width: 10.0),
-                            //           Text(
-                            //             'Address',
-                            //             style: kTextPopR14.copyWith(
-                            //                 color: Colors.black54),
-                            //           ),
-                            //           SizedBox(width: 10.0),
-                            //           SizedBox(width: 10.0),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+                            const SizedBox(height: 10.0),
 
-                            // Row(
-                            //   children: [
-                            //     const SizedBox(width: 10),
-                            //     Text(
-                            //       "Location Details",
-                            //       textAlign: TextAlign.left,
-                            //       style: kTextPopB14,
-                            //     ),
-                            //   ],
-                            // ),
                             TextFormField(
                               controller: _aboutTextController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Tell us more about Ngo",
                                 hintStyle: kTextPopR14,
-                                icon: const Icon(Icons.location_on_rounded),
+                                icon: const Icon(Icons.info_outline_rounded),
                                 filled: true,
                                 fillColor: Colors.green.shade100,
                                 border: OutlineInputBorder(
@@ -542,63 +502,44 @@ class _NgoRegisterState extends State<NgoRegister> {
                                       textInputAction: TextInputAction.next,
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    flex: 1,
-                                    child: TextFormField(
-                                      maxLength: 6,
-                                      controller: _zipcodeController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        counterText: '',
-                                        hintText: "Zip",
-                                        hintStyle: kTextPopR14,
-                                        filled: true,
-                                        fillColor: Colors.green.shade100,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value!.length < 6) {
-                                          return 'Zip code must be 6 digits long';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
+                                  
                                 ],
                               ),
                             ),
-                            TextFormField(
-                              controller: _stateController,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                hintText: "State",
-                                hintStyle: kTextPopR14,
-                                icon: const Icon(
-                                  Icons.location_on_rounded,
-                                  color: Colors.transparent,
-                                ),
-                                filled: true,
-                                fillColor: Colors.green.shade100,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter state!';
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
-                            ),
+
                             const SizedBox(height: 10),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 30.0),
+                              child: CSCPicker(
+                                showCities: true,
+                                countryFilter: const [
+                                  CscCountry.India,
+                                ],
+                                dropdownDecoration: BoxDecoration(
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(10)),
+                                  color: kinputColor,
+                                  border:
+                                      Border.all(color: kinputColor, width: 2),
+                                ),
+                                disabledDropdownDecoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    color: kinputColor,
+                                    border:
+                                        Border.all(color: kinputColor, width: 1)),
+                                layout: Layout.vertical,
+                                onCountryChanged: (country) {},
+                                onStateChanged: (state) {
+                                  _stateController.text = state.toString();
+                                },
+                                onCityChanged: (city) {
+                                  _cityController.text = city.toString();
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 16),
                             const Divider(),
                             const SizedBox(height: 10),
                           ],
@@ -762,9 +703,16 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                                 value: _selectedIntrest,
                                 items: [
-                                  'Cleaning',
-                                  'Child Care',
-                                  'Women Empowerment'
+                                  'Human rights',
+                                  'Environmental',
+                                  'Health',
+                                  'Education',
+                                  'Women\'s',
+                                  'Children\'s',
+                                  'Animal welfare',
+                                  'Development ',
+                                  'Peace',
+                                  'Other'
                                 ].map((cat) {
                                   return DropdownMenuItem(
                                     value: cat,
@@ -810,25 +758,6 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                               ),
                             ),
-                            // FloatingActionButton.extended(
-                            //   elevation: 0,
-                            //   backgroundColor: Colors.green,
-                            //   foregroundColor: Colors.green,
-                            //   shape: const StadiumBorder(
-                            //       side: BorderSide(
-                            //           color: Colors.green, width: 1)),
-                            //   label: const Text(
-                            //     "        Done        ",
-                            //     style: TextStyle(color: Colors.white),
-                            //   ),
-                            //   onPressed: () {
-                            //     // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
-                            //     setState(() {
-                            //       isLoading = true;
-                            //     });
-                            //     _createProfile(context);
-                            //   },
-                            // ),
                           ],
                         ),
                       ),

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
 
@@ -52,8 +54,25 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         );
                       } else {
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("No Post Yet !"),
+                          return Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 300.0,
+                                  child: Image.asset(
+                                    'assets/images/noPost.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  "No Post Yet !",
+                                  style: kTextPopM16,
+                                ),
+                              ],
+                            ),
                           );
                         } else {
                           return ListView(
