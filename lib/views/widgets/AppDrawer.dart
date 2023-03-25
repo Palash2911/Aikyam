@@ -107,13 +107,14 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    setProfilePic();
+    setFields();
   }
 
-  void setProfilePic() async {
+  void setFields() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
     name = authProvider.uName;
+    authToken = authProvider.token;
     setState(() {});
   }
 
