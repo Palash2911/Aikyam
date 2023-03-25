@@ -11,9 +11,11 @@ class Ngo {
   final String registered;
   final String city;
   final String state;
-  final String zipcode;
+  final String about;
   final String category;
-  final File? localUrl;
+  final String webUrl;
+  File? localUrl;
+  final String address;
   String firebaseUrl;
   List<dynamic> postId;
 
@@ -28,10 +30,12 @@ class Ngo {
     required this.registered,
     required this.city,
     required this.state,
-    required this.zipcode,
+    required this.about,
     required this.category,
     required this.localUrl,
     required this.firebaseUrl,
     required this.postId,
+    required this.address,
+    required this.webUrl,
   });
 }

@@ -17,6 +17,7 @@ class NActivityPost extends StatefulWidget {
   final String title;
   final String date;
   final String time;
+  final String ngoId;
 
   const NActivityPost({
     super.key,
@@ -29,6 +30,7 @@ class NActivityPost extends StatefulWidget {
     required this.title,
     required this.date,
     required this.time,
+    required this.ngoId,
   });
 
   @override
@@ -78,10 +80,15 @@ class _NActivityPostState extends State<NActivityPost> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => NgoProfile(
-                    //
-                    //     )));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NgoProfile(
+                          isUser: false,
+                          authToken: widget.ngoId,
+                        ),
+                      ),
+                    );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),

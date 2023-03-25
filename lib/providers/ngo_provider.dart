@@ -25,12 +25,14 @@ class NgoProvider extends ChangeNotifier {
         "Email": ngo.email,
         "DateofEst": ngo.date,
         "City": ngo.city,
-        "Zipcode": ngo.zipcode,
+        "About": ngo.about,
         "State": ngo.state,
         "IsRegistered": ngo.registered,
         "Type": ngo.type,
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
+        "Address": ngo.address,
+        "WebsiteUrl": ngo.webUrl,
         "AppliedPostId": [],
       });
 
@@ -47,17 +49,14 @@ class NgoProvider extends ChangeNotifier {
   }
 
   Future<Ngo?> getNgoDetails(String uid) async {
-    //instead of map Users user
     try {
       CollectionReference ngos = FirebaseFirestore.instance.collection('Ngo');
       Ngo? ngo;
-
-      if (uid.isNotEmpty) {
-        uid = uid;
+      if (uid.isEmpty) {
+        return null;
       }
-      await ngos.doc(uid.toString()).get().then((DocumentSnapshot query) {
+      await ngos.doc(uid).get().then((DocumentSnapshot query) {
         Map<String, dynamic> data = query.data() as Map<String, dynamic>;
-
         ngo = Ngo(
           id: data["UID"],
           bio: data["Bio"],
@@ -69,19 +68,22 @@ class NgoProvider extends ChangeNotifier {
           registered: data["IsRegistered"],
           city: data["City"],
           state: data["State"],
-          zipcode: data["Zipcode"],
+          about: data["About"],
           category: data["Category"],
           postId: data["PostId"],
           localUrl: null,
+          address: data["Address"],
           firebaseUrl: data['ProfilePic'],
+          webUrl: data["WebsiteUrl"],
         );
+      }).catchError((e) {
+        print(e);
       });
       notifyListeners();
       return ngo;
     } catch (e) {
       print(e);
     }
-    return null;
   }
 
   Future updateNgo(Ngo ngo) async {
@@ -104,12 +106,14 @@ class NgoProvider extends ChangeNotifier {
         "Email": ngo.email,
         "DateofEst": ngo.date,
         "City": ngo.city,
-        "Zipcode": ngo.zipcode,
+        "About": ngo.about,
         "State": ngo.state,
         "IsRegistered": ngo.registered,
         "Type": ngo.type,
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
+        "Address": ngo.address,
+        "WebsiteUrl": ngo.webUrl,
       });
       prefs.setString('ProfilePic', ngo.firebaseUrl);
       prefs.setString("UserName", ngo.name);

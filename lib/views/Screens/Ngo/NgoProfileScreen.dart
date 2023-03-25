@@ -6,9 +6,13 @@ import 'package:aikyam/views/constants.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NgoProfile extends StatefulWidget {
-  const NgoProfile({super.key, required this.authToken, required this.isUser});
+  const NgoProfile({
+    required this.authToken,
+    required this.isUser,
+  });
   final String authToken;
   final bool isUser;
 
@@ -17,7 +21,7 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool isNgoPov = true;  // ithe false kel ka dista chat option 
+  bool isNgoPov = true; // ithe false kel ka dista chat option
   bool _isAboutActive = true;
   bool _isWorkSelected = false;
   var profileUrl = "";
@@ -32,6 +36,7 @@ class _NgoProfileState extends State<NgoProfile> {
   var senderId = "";
   var isInit = true;
   var isUser = "Users";
+  var url = "";
 
   void _aboutPressed() {
     setState(() {
@@ -60,7 +65,9 @@ class _NgoProfileState extends State<NgoProfile> {
     isUser = Provider.of<Auth>(context).isUser == "NGO" ? "Ngo" : "Users";
     await Provider.of<NgoProvider>(context)
         .getNgoDetails(widget.authToken)
-        .then((value) {
+        .catchError((e) {
+      print(e);
+    }).then((value) {
       name = value!.name;
       email = value.email;
       phone = value.phone;
@@ -68,20 +75,29 @@ class _NgoProfileState extends State<NgoProfile> {
       est = value.date;
       type = value.type;
       category = value.category;
-      about = value.bio;
+      about = value.about;
       bio = value.bio;
+      url = value.webUrl;
     });
   }
 
   void _chatScreen() async {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (ctx) => ChatScreenOpen(
-                  receiverId: widget.authToken,
-                  senderType: isUser,
-                  rName: name,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => ChatScreenOpen(
+          receiverId: widget.authToken,
+          senderType: isUser,
+          rName: name,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -170,7 +186,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                         backgroundColor: kprimaryColor,
                                         foregroundColor: ksecondaryColor,
                                         child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: _launchUrl,
                                           icon: const Icon(Icons.link_rounded),
                                         ),
                                       ),
@@ -349,7 +365,7 @@ class _NgoProfileState extends State<NgoProfile> {
                     ],
                     views: [
                       _About(
-                        about: "",
+                        about: about,
                         type: type,
                         category: category,
                         estd: est,
@@ -406,25 +422,23 @@ class _About extends StatelessWidget {
         children: [
           Text('About', style: kTextPopB16),
           const SizedBox(height: 8),
-          Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis volutpat nunc, in dignissim sapien tincidunt vel. Sed eget mauris ut sem consequat venenatis. Nunc id semper magna. Nam varius quam vel lorem luctus, vel ornare nisi ultrices.',
-              style: kTextPopR14),
+          Text(about, style: kTextPopR14),
           const SizedBox(height: 10),
           const Divider(),
           Text('Information', style: kTextPopB16),
           const SizedBox(height: 8),
           ListTile(
             title: Text('Type', style: kTextPopM16),
-            subtitle: Text('Non-Profit', style: kTextPopR14),
+            subtitle: Text(type, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Category', style: kTextPopM16),
-            subtitle: Text('health,Social work,Education', style: kTextPopR14),
+            subtitle: Text(category, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Established in', style: kTextPopM16),
             subtitle: Text(
-              '2002',
+              estd,
               style: kTextPopR14,
             ),
           ),
@@ -434,11 +448,11 @@ class _About extends StatelessWidget {
           SizedBox(height: 8),
           ListTile(
             title: Text('Email id', style: kTextPopM16),
-            subtitle: Text('thisisngo@gmail.com', style: kTextPopR14),
+            subtitle: Text(email, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Mobile Number', style: kTextPopM16),
-            subtitle: Text('9876543210', style: kTextPopR14),
+            subtitle: Text("+91 $phone", style: kTextPopR14),
           ),
         ],
       ),

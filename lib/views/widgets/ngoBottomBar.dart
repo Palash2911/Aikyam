@@ -28,6 +28,9 @@ class _NgoBottomBarState extends State<NgoBottomBar> {
     return Scaffold(
       body: PersistentTabView(
         context,
+        hideNavigationBarWhenKeyboardShows: true,
+        resizeToAvoidBottomInset: true,
+        popActionScreens: PopActionScreensType.all,
         controller: _controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
@@ -38,7 +41,12 @@ class _NgoBottomBarState extends State<NgoBottomBar> {
 }
 
 List<Widget> _buildScreens() {
-  return [const NHomeScreen(), const NgoChatScreen(), const NgoAddpost(), const NgoActivityScreen()];
+  return [
+    const NHomeScreen(),
+    const NgoChatScreen(),
+    const NgoAddpost(),
+    const NgoActivityScreen()
+  ];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {

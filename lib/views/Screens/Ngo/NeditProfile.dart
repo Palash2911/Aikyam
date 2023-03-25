@@ -36,19 +36,20 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
   final _emailController = TextEditingController();
   final _cityController = TextEditingController();
   final _websiteController = TextEditingController();
-  final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
   final _addressController = TextEditingController();
-  final _aboutTextController = TextEditingController();
+  final _aboutController = TextEditingController();
 
   String get date => _dateController.text;
   String get name => _nameController.text;
   String get phone => _phoneController.text;
   String get email => _emailController.text;
   String get bio => _bioController.text;
-  String get zipcode => _zipcodeController.text;
+  String get about => _aboutController.text;
   String get city => _cityController.text;
   String get state => _stateController.text;
+  String get address => _addressController.text;
+  String get website => _websiteController.text;
 
   String category = "";
   File? localUrl;
@@ -75,9 +76,11 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
       _phoneController.text = value.phone;
       _emailController.text = value.email;
       _cityController.text = value.city;
-      _zipcodeController.text = value.zipcode;
+      _aboutController.text = value.about;
       _dateController.text = value.date;
       _stateController.text = value.state;
+      _addressController.text = value.address;
+      _websiteController.text = value.webUrl;
       ngoType = value.type;
       ngoRegisterd = value.registered;
       if (ngoType == "Profit") {
@@ -95,13 +98,13 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
         firebaseUrl = value.firebaseUrl;
         localUrl = value.localUrl;
         postId = value.postId;
+        category = value.category;
       });
     });
   }
 
   void _updateDetails() async {
-    await Provider.of<NgoProvider>(context, listen: false)
-        .updateNgo(
+    await Provider.of<NgoProvider>(context, listen: false).updateNgo(
       Ngo(
         id: authToken,
         bio: bio,
@@ -115,12 +118,13 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
         registered: ngoRegisterd,
         city: city,
         state: state,
-        zipcode: zipcode,
+        about: about,
         category: category,
         postId: postId,
+        address: address,
+        webUrl: website,
       ),
-    )
-        .then((value) {
+    ).then((value) {
       if (isLoading) {
         Fluttertoast.showToast(
           msg: "Profile Updated Successfully!",
@@ -130,8 +134,15 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => const NgoProfile()));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NgoProfile(
+              isUser: true,
+              authToken: authToken,
+            ),
+          ),
+        );
       }
     });
   }
@@ -145,7 +156,8 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
     _dateController.dispose();
     _cityController.dispose();
     _stateController.dispose();
-    _zipcodeController.dispose();
+    _aboutController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
@@ -408,7 +420,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
 
                             const SizedBox(height: 10.0),
                             TextFormField(
-                              controller: _aboutTextController,
+                              controller: _aboutController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Tell us more about Ngo",
@@ -659,7 +671,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                               controller: _websiteController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
-                                hintText: "Address",
+                                hintText: "Website Url",
                                 hintStyle: kTextPopR14,
                                 icon: const Icon(Icons.location_on_rounded),
                                 filled: true,
@@ -671,7 +683,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter address!';
+                                  return 'Please enter url!';
                                 }
                                 return null;
                               },
@@ -696,7 +708,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                       color: kprimaryColor,
                                     ),
                                     const SizedBox(width: 10.0),
-                                    const Text('Select a category'),
+                                    Text(category),
                                   ],
                                 ),
                                 value: _selectedIntrest,

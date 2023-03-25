@@ -64,12 +64,14 @@ class _PostState extends State<PostItem> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NgoProfile(
-                                  authToken: widget.post.ngoid,
-                                  isUser: false,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NgoProfile(
+                          authToken: widget.post.ngoid,
+                          isUser: false,
+                        ),
+                      ),
+                    );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -114,7 +116,7 @@ class _PostState extends State<PostItem> {
             const Divider(),
             const SizedBox(height: 16),
             Text(
-              'This is title of the ngo drive its a little bit big tittle its a little bit big tittler',
+              widget.post.driveTitle,
               style: kTextPopM16,
             ),
             const SizedBox(height: 5),
@@ -171,8 +173,7 @@ class _PostState extends State<PostItem> {
                 Expanded(
                   child: OutlinedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
+                        Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(
                             builder: (context) => ViewDetails(
                               pid: widget.post.id,
@@ -185,6 +186,8 @@ class _PostState extends State<PostItem> {
                               userType: widget.userType,
                               category: widget.post.category,
                               driveTime: widget.post.time,
+                              title: widget.post.driveTitle,
+                              desc: widget.post.description,
                             ),
                           ),
                         );
@@ -197,11 +200,14 @@ class _PostState extends State<PostItem> {
                       ? Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: () {
-                            applyPost();
-                            setState(() {
-                              _isApply = false;
-                              _isLoading = true;
-                            });
+                            if (widget.applyStatus != "Applied" &&
+                                widget.applyStatus != "YOUR POST") {
+                              applyPost();
+                              setState(() {
+                                _isApply = false;
+                                _isLoading = true;
+                              });
+                            }
                           },
                           child: Text(
                             _isApply ? widget.applyStatus : 'Applied',

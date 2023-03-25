@@ -36,17 +36,20 @@ class _NgoRegisterState extends State<NgoRegister> {
   final _emailController = TextEditingController();
   final _addressController = TextEditingController();
   final _cityController = TextEditingController();
-  final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
-  final _aboutTextController = TextEditingController();
+  final _aboutController = TextEditingController();
+
   String get date => _dateController.text;
   String get name => _nameController.text;
   String get phone => _phoneController.text;
   String get email => _emailController.text;
   String get bio => _bioController.text;
-  String get zipcode => _zipcodeController.text;
+  String get about => _aboutController.text;
   String get city => _cityController.text;
   String get state => _stateController.text;
+  String get address => _addressController.text;
+  String get website => _websiteController.text;
+
   String category = "";
   File? imageFile;
   var isLoading = false;
@@ -59,8 +62,10 @@ class _NgoRegisterState extends State<NgoRegister> {
     _bioController.text = "";
     _cityController.text = "";
     _stateController.text = "";
-    _zipcodeController.text = "";
+    _aboutController.text = "";
     _dateController.text = "";
+    _addressController.text = "";
+    _websiteController.text = "";
     type.add(Type("Profit", false));
     type.add(Type("Non-Profit", false));
     ngoReg.add(Registered("Yes", false));
@@ -77,7 +82,9 @@ class _NgoRegisterState extends State<NgoRegister> {
     _dateController.dispose();
     _cityController.dispose();
     _stateController.dispose();
-    _zipcodeController.dispose();
+    _aboutController.dispose();
+    _addressController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
@@ -113,11 +120,13 @@ class _NgoRegisterState extends State<NgoRegister> {
             registered: ngoRegisterd,
             city: city,
             state: state,
-            zipcode: zipcode,
+            about: about,
             category: category,
             localUrl: imageFile,
             firebaseUrl: "",
             postId: [],
+            address: address,
+            webUrl: website,
           ),
         )
             .catchError((e) {
@@ -425,7 +434,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                             const SizedBox(height: 10.0),
 
                             TextFormField(
-                              controller: _aboutTextController,
+                              controller: _aboutController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Tell us more about Ngo",
@@ -503,6 +512,34 @@ class _NgoRegisterState extends State<NgoRegister> {
                                       textInputAction: TextInputAction.next,
                                     ),
                                   ),
+                                  const SizedBox(width: 10),
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: TextFormField(
+                                  //     maxLength: 6,
+                                  //     controller: _zipcodeController,
+                                  //     keyboardType: TextInputType.number,
+                                  //     decoration: InputDecoration(
+                                  //       counterText: '',
+                                  //       hintText: "Zip",
+                                  //       hintStyle: kTextPopR14,
+                                  //       filled: true,
+                                  //       fillColor: Colors.green.shade100,
+                                  //       border: OutlineInputBorder(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(10),
+                                  //         borderSide: BorderSide.none,
+                                  //       ),
+                                  //     ),
+                                  //     textInputAction: TextInputAction.next,
+                                  //     validator: (value) {
+                                  //       if (value!.length < 6) {
+                                  //         return 'Zip code must be 6 digits long';
+                                  //       }
+                                  //       return null;
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -685,7 +722,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                               controller: _websiteController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
-                                hintText: "Address",
+                                hintText: "Website Url",
                                 hintStyle: kTextPopR14,
                                 icon: const Icon(Icons.location_on_rounded),
                                 filled: true,
@@ -697,7 +734,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter address!';
+                                  return 'Please enter url!';
                                 }
                                 return null;
                               },
