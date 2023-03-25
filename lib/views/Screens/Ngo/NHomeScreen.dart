@@ -36,6 +36,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
       appliedId = value;
       pp = Provider.of<Auth>(context, listen: false).profilePic;
     });
+    setState(() {});
   }
 
   @override
@@ -87,30 +88,29 @@ class _NHomeScreenState extends State<NHomeScreen> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             children: snapshot.data!.docs.map((document) {
-                              if(document["NgoId"] == auth.currentUser!.uid)
-                                {
-                                  return PostItem(
-                                    post: Post(
-                                      category: document["Category"],
-                                      description: document["Description"],
-                                      ngoid: document["NgoId"],
-                                      id: document.id,
-                                      noofVolunters: document['NoOfVolunteers'],
-                                      date: document["Date"],
-                                      time: document["Time"],
-                                      city: document["City"],
-                                      driveTitle: document["Title"],
-                                      ncity: document["NgoCity"],
-                                      ngoname: document["NgoName"],
-                                      state: document["State"],
-                                      address: document["Address"],
-                                      country: document["Country"],
-                                      photos: document["Photos"],
-                                    ),
-                                    applyStatus: "YOUR POST",
-                                    userType: "Ngo",
-                                  );
-                                }
+                              if (document["NgoId"] == auth.currentUser!.uid) {
+                                return PostItem(
+                                  post: Post(
+                                    category: document["Category"],
+                                    description: document["Description"],
+                                    ngoid: document["NgoId"],
+                                    id: document.id,
+                                    noofVolunters: document['NoOfVolunteers'],
+                                    date: document["Date"],
+                                    time: document["Time"],
+                                    city: document["City"],
+                                    driveTitle: document["Title"],
+                                    ncity: document["NgoCity"],
+                                    ngoname: document["NgoName"],
+                                    state: document["State"],
+                                    address: document["Address"],
+                                    country: document["Country"],
+                                    photos: document["Photos"],
+                                  ),
+                                  applyStatus: "YOUR POST",
+                                  userType: "Ngo",
+                                );
+                              }
                               if (appliedId.isNotEmpty) {
                                 if (appliedId.contains(document.id)) {
                                   return PostItem(
