@@ -32,6 +32,7 @@ class NgoProvider extends ChangeNotifier {
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
         "Address": ngo.address,
+        "WebsiteUrl": ngo.webUrl,
         "AppliedPostId": [],
       });
 
@@ -73,6 +74,7 @@ class NgoProvider extends ChangeNotifier {
           localUrl: null,
           address: data["Address"],
           firebaseUrl: data['ProfilePic'],
+          webUrl: data["WebsiteUrl"],
         );
       }).catchError((e) {
         print(e);
@@ -111,6 +113,7 @@ class NgoProvider extends ChangeNotifier {
         "Category": ngo.category,
         "ProfilePic": ngo.firebaseUrl,
         "Address": ngo.address,
+        "WebsiteUrl": ngo.webUrl,
       });
       prefs.setString('ProfilePic', ngo.firebaseUrl);
       prefs.setString("UserName", ngo.name);

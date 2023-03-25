@@ -122,6 +122,7 @@ class _NgoRegisterState extends State<NgoRegister> {
             firebaseUrl: "",
             postId: [],
             address: address,
+            webUrl: "",
           ),
         )
             .catchError((e) {

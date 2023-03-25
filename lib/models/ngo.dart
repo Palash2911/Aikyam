@@ -13,6 +13,7 @@ class Ngo {
   final String state;
   final String about;
   final String category;
+  final String webUrl;
   File? localUrl;
   final String address;
   String firebaseUrl;
@@ -35,5 +36,6 @@ class Ngo {
     required this.firebaseUrl,
     required this.postId,
     required this.address,
+    required this.webUrl,
   });
 }

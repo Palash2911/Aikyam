@@ -119,6 +119,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
         category: category,
         postId: postId,
         address: address,
+        webUrl: "",
       ),
     ).then((value) {
       if (isLoading) {
