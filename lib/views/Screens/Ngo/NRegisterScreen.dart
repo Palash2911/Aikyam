@@ -202,7 +202,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   radius: 50,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        AssetImage("assets/images/group.png"),
+                                        AssetImage("assets/images/ngo.png"),
                                     radius: 60,
                                   ),
                                 ),
