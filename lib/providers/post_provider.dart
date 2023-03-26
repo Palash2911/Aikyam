@@ -334,7 +334,7 @@ class PostProvider extends ChangeNotifier {
           state: data["State"],
           address: data["Address"],
           country: data["Country"],
-          photos: data["Photos"],
+          photos: data["Photos"] as List<dynamic>,
         );
       }).catchError((e) {
         print(e);

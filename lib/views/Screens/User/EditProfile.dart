@@ -127,12 +127,14 @@ class _EditUserState extends State<EditUser> {
           fontSize: 16.0,
         );
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UserProfile(
-                      isUser: true,
-                      authToken: authToken,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfile(
+              isUser: true,
+              authToken: authToken,
+            ),
+          ),
+        );
       }
     });
   }

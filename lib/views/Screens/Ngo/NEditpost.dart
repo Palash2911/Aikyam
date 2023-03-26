@@ -91,6 +91,8 @@ class _NgoEditPost extends State<NgoEditPost> {
         _timeController.text = value.time;
         _stateController.text = value.state;
         _cityController.text = value.city;
+        postImages = value.photos;
+        print(postImages);
       }
     });
     setState(() {
@@ -189,7 +191,7 @@ class _NgoEditPost extends State<NgoEditPost> {
           elevation: 0.0,
           toolbarHeight: 80,
           flexibleSpace: const RoundAppBar(
-            title: '    Create Post',
+            title: '    Edit Post',
           ),
         ),
         body: SingleChildScrollView(
@@ -489,7 +491,7 @@ class _addImage extends StatelessWidget {
     required this.imageFile,
     required this.onTap,
   });
-  final File? imageFile;
+  final String? imageFile;
   final Function() onTap;
 
   @override
@@ -504,7 +506,7 @@ class _addImage extends StatelessWidget {
           ? SizedBox(
               width: 100,
               height: 100,
-              child: Image.file(
+              child: Image.network(
                 imageFile!,
                 fit: BoxFit.cover,
               ),
