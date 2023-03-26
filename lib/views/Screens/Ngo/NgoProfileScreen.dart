@@ -1,9 +1,11 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -177,16 +179,6 @@ class _NgoProfileState extends State<NgoProfile> {
                                         backgroundColor: kprimaryColor,
                                         foregroundColor: ksecondaryColor,
                                         child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.location_on_rounded),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10.0),
-                                      CircleAvatar(
-                                        backgroundColor: kprimaryColor,
-                                        foregroundColor: ksecondaryColor,
-                                        child: IconButton(
                                           onPressed: _launchUrl,
                                           icon: const Icon(Icons.link_rounded),
                                         ),
@@ -203,7 +195,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                                 Icons.message_rounded)),
                                       ),
                                     ],
-                                  )
+                                  ),
                           ],
                         ),
                         const SizedBox(height: 5.0),
@@ -293,7 +285,27 @@ class _NgoProfileState extends State<NgoProfile> {
                         email: email,
                         phone: phone,
                       ),
-                      _Post()
+                      isNgoPov
+                          ? _Post()
+                          : PostItem(
+                              userType: 'userType',
+                              post: Post(
+                                  category: 'category',
+                                  description: 'description',
+                                  ngoid: 'ngoid',
+                                  id: 'id',
+                                  noofVolunters: 'noofVolunters',
+                                  date: 'date',
+                                  time: 'time',
+                                  city: 'city',
+                                  driveTitle: 'driveTitle',
+                                  ncity: 'ncity',
+                                  ngoname: 'ngoname',
+                                  state: 'state',
+                                  address: 'address',
+                                  country: 'country',
+                                  photos: []),
+                              applyStatus: 'applyStatus'),
                     ],
                     onChange: (index) => print(index),
                   ),

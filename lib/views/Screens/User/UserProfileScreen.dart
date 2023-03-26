@@ -1,8 +1,10 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/UActivityPostItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
@@ -218,7 +220,34 @@ class _UserProfileState extends State<UserProfile> {
                 interest: interest,
                 email: email,
                 phone: phone),
-            _Post()
+            _isUserPov
+                ? UActivityPostItem(
+                    ngoName: 'ngoName',
+                    ngoCity: 'ngoCity',
+                    driveCity: 'driveCity',
+                    date: 'date',
+                    time: 'time',
+                    applyStatus: 'applyStatus',
+                    pid: 'pid')
+                : PostItem(
+                    userType: 'userType',
+                    post: Post(
+                        category: 'category',
+                        description: 'description',
+                        ngoid: 'ngoid',
+                        id: 'id',
+                        noofVolunters: 'noofVolunters',
+                        date: 'date',
+                        time: 'time',
+                        city: 'city',
+                        driveTitle: 'driveTitle',
+                        ncity: 'ncity',
+                        ngoname: 'ngoname',
+                        state: 'state',
+                        address: 'address',
+                        country: 'country',
+                        photos: []),
+                    applyStatus: 'applyStatus')
           ],
         ),
       ),
@@ -281,7 +310,6 @@ class _Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // add post here which ever wanted
       children: const [],
     );
   }
