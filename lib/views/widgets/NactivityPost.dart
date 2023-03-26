@@ -1,5 +1,6 @@
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NEditpost.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';
@@ -123,7 +124,15 @@ class _NActivityPostState extends State<NActivityPost> {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => NgoEditPost(
+                          pid: widget.pid,
+                        ),
+                      ),
+                    );
+                  },
                   child: const Icon(
                     FeatherIcons.edit,
                     size: 32.0,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -13,16 +14,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class NgoAddpost extends StatefulWidget {
-  const NgoAddpost({super.key});
-
-  static const routeName = '/ngo_add_post';
+class NgoEditPost extends StatefulWidget {
+  final String pid;
+  const NgoEditPost({super.key, required this.pid});
 
   @override
-  State<NgoAddpost> createState() => _NgoAddpostState();
+  State<NgoEditPost> createState() => _NgoEditPost();
 }
 
-class _NgoAddpostState extends State<NgoAddpost> {
+class _NgoEditPost extends State<NgoEditPost> {
   List<String> categories = [
     "Select Category",
     "Health",
@@ -75,20 +75,29 @@ class _NgoAddpostState extends State<NgoAddpost> {
     super.dispose();
   }
 
-  void setFields() {
-    _addressController.text = "";
-    _driveTitleController.text = "";
-    _descriptionController.text = "";
-    _noVoluntersController.text = "";
-    _dateController.text = "";
-    _timeController.text = "";
-    _stateController.text = "";
-    _cityController.text = "";
-    selectedCategory = categories.first;
-    postImages.clear();
+  void setFields() async {
+    setState(() {
+      isLoading = true;
+    });
+    var postProvider = Provider.of<PostProvider>(context, listen: false);
+    await postProvider.getPostDetails(widget.pid).then((value) {
+      if (value != null) {
+        _addressController.text = value.address;
+        _driveTitleController.text = value.driveTitle;
+        _descriptionController.text = value.description;
+        _noVoluntersController.text = value.noofVolunters;
+        _dateController.text = value.date;
+        _timeController.text = value.time;
+        _stateController.text = value.state;
+        _cityController.text = value.city;
+      }
+    });
+    setState(() {
+      isLoading = false;
+    });
   }
 
-  Future _createPost(BuildContext ctx) async {
+  Future _updatePost(BuildContext ctx) async {
     var authProvider = Provider.of<Auth>(ctx, listen: false);
     var postProvider = Provider.of<PostProvider>(ctx, listen: false);
     var ngoProvider = Provider.of<NgoProvider>(ctx, listen: false);
@@ -131,7 +140,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
           );
         }).then((_) {
           Fluttertoast.showToast(
-            msg: "Post Created Successfully !!",
+            msg: "Post Edited Successfully !!",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: kprimaryColor,
@@ -142,7 +151,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
             isLoading = false;
           });
           setFields();
-          Navigator.of(context).pushReplacementNamed(NgoAddpost.routeName);
+          Navigator.of(context)
+              .pushReplacementNamed(NgoActivityScreen.routeName);
         });
       } else {
         setState(() {
@@ -423,6 +433,9 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         ),
                         const SizedBox(height: 16),
                         CSCPicker(
+                          currentCity: _cityController.text,
+                          currentState: _stateController.text,
+                          currentCountry: "India",
                           showCities: true,
                           countryFilter: const [
                             CscCountry.India,
@@ -450,7 +463,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () {
-                            _createPost(context);
+                            _updatePost(context);
                           },
                           child: Text(
                             'Post',
