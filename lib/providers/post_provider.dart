@@ -101,7 +101,7 @@ class PostProvider extends ChangeNotifier {
         final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
         postImages.add(downloadUrl);
       }
-      if (post.photos.length == 3) {
+      if (post.photos.length >= 3) {
         var storage = FirebaseStorage.instance;
         TaskSnapshot taskSnapshot = await storage
             .ref()
@@ -111,7 +111,6 @@ class PostProvider extends ChangeNotifier {
         final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
         postImages.add(downloadUrl);
       }
-
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       await posts.doc(post.id).update({
@@ -132,6 +131,7 @@ class PostProvider extends ChangeNotifier {
       });
       notifyListeners();
     } catch (e) {
+      print(e);
       rethrow;
     }
   }

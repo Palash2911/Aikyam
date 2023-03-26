@@ -60,7 +60,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           toolbarHeight: 85,
-          flexibleSpace: HomeAppBar(),
+          flexibleSpace: const HomeAppBar(),
           leading: IconButton(
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();
@@ -73,7 +73,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
             ),
           ),
         ),
-        drawer: NgoAppdrawer(),
+        drawer: const NgoAppdrawer(),
         body: isLoading
             ? Center(
                 child: SizedBox(

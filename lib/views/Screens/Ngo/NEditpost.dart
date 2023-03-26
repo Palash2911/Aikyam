@@ -4,6 +4,7 @@ import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -117,7 +118,7 @@ class _NgoEditPost extends State<NgoEditPost> {
             category: selectedCategory!,
             description: description,
             ngoid: authProvider.token,
-            id: "",
+            id: widget.pid,
             noofVolunters: noofVolunteers,
             date: date,
             time: time,
@@ -151,8 +152,11 @@ class _NgoEditPost extends State<NgoEditPost> {
             isLoading = false;
           });
           setFields();
-          Navigator.of(context)
-              .pushReplacementNamed(NgoActivityScreen.routeName);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (ctx) => NgoActivityScreen(),
+            ),
+          );
         });
       } else {
         setState(() {
