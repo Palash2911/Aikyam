@@ -52,10 +52,11 @@ class _NgoRegisterState extends State<NgoRegister> {
 
   String category = "";
   File? imageFile;
-  var isLoading = false;
+  var isLoading = true;
 
   @override
   void initState() {
+    super.initState();
     _nameController.text = "";
     _phoneController.text = "";
     _emailController.text = "";
@@ -70,7 +71,14 @@ class _NgoRegisterState extends State<NgoRegister> {
     type.add(Type("Non-Profit", false));
     ngoReg.add(Registered("Yes", false));
     ngoReg.add(Registered("No", false));
-    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override

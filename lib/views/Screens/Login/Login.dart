@@ -1,8 +1,10 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Login/OTP.dart';
+import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +18,10 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   final _phoneController = TextEditingController();
-  String get phoneNo => "+91${_phoneController.text}";
+  String phoneNo = "";
+
   var isLoading = false;
+  final _form = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -26,27 +30,38 @@ class _LogInState extends State<LogIn> {
   }
 
   Future _sendOtp(BuildContext ctx) async {
-    var isValid = false;
+    final isValid = _form.currentState!.validate();
     isLoading = true;
-    if (phoneNo.length == 13) {
+    _form.currentState!.save();
+    if (isValid) {
       await Provider.of<Auth>(ctx, listen: false)
           .authenticate(phoneNo)
           .catchError((e) {
         Fluttertoast.showToast(
-          msg: "Otp sent Successfully!",
+          msg: e,
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );
-      }).then((value) => Navigator.of(context).pushNamed(OtpScreen.routeName));
+      }).then((value) {
+          Fluttertoast.showToast(
+            msg: "OTP Sent Successfully !",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName, arguments: phoneNo);
+      });
     } else {
       Fluttertoast.showToast(
-        msg: "Something went wrong!",
+        msg: "Enter A Valid Number !",
         toastLength: Toast.LENGTH_SHORT,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.green,
         textColor: Colors.white,
         fontSize: 16.0,
       );
@@ -74,28 +89,43 @@ class _LogInState extends State<LogIn> {
                         child: Lottie.asset('assets/animation/animation5.json'),
                       ),
                       const Center(
-                        child: Text("Login/ Sign Up",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 25,
-                            )),
+                        child: Text(
+                          "Login/ Sign Up",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 25,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       const SizedBox(height: 5),
-                      TextField(
-                        controller: _phoneController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.phone),
-                          hintText: 'Enter Your Mobile Number',
-                          counterText: "",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                      Form(
+                        key: _form,
+                        child: IntlPhoneField(
+                          controller: _phoneController,
+                          decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            counterText: "",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                           ),
+                          validator: (value) {
+                            if (value!.number.isEmpty) {
+                              return 'Please Enter Valid Number!';
+                            }
+                            return null;
+                          },
+                          initialCountryCode: 'IN',
+                          onChanged: (phone) {
+                            setState(() {
+                              phoneNo = phone.completeNumber.toString();
+                            });
+                          },
                         ),
-                        keyboardType: TextInputType.phone,
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(

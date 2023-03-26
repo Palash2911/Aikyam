@@ -62,7 +62,6 @@ class Auth extends ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
