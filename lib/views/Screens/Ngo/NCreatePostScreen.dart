@@ -452,26 +452,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         ElevatedButton(
                           onPressed: () {
                             _createPost(context);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Posted Successfully!'),
-                                  content:
-                                      const Text('Your post has been posted.'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
                           },
-                          child: const Text('Post'),
+                          child: Text('Post', style: kTextPopB16,),
                         )
                       ],
                     ),
