@@ -3,6 +3,7 @@ import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -222,97 +223,17 @@ class _NgoProfileState extends State<NgoProfile> {
                         height: 100.0,
                         width: 100.0,
                         child: profileUrl.isNotEmpty
-                            ? Image.network(profileUrl)
-                            : Image.asset('assets/images/ngo.png'),
+                            ? Image.network(
+                                profileUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/images/ngo.png',
+                                fit: BoxFit.cover),
                       ),
                     ),
                   ),
                 ],
               ),
-
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(10.0),
-              //   child: Container(
-              //     height: 100.0,
-              //     width: 100.0,
-              //     color: const Color(0xffFF0E58),
-              //     child: Image.asset('assets/images/user.png'),
-              //   ),
-              // ),
-
-              // TabBar(tabs: [
-              //   Tab(
-              //     icon: Icon(Icons.info_outline_rounded,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              //   Tab(
-              //     icon: Icon(Icons.work_outlined,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              // ]),
-              // TabBarView(
-              //   children: [
-              //     _About(),
-              //     _Post(),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child:
-              // Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _aboutPressed,
-              //           icon: Icon(
-              //             Icons.info_outline_rounded,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'About',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _workPressed,
-              //           icon: Icon(
-              //             Icons.work,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'Post',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
@@ -391,7 +312,19 @@ class _Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       // add post here which ever wanted
-      children: const [],
+      children: [
+        NActivityPost(
+            ngoname: 'ngoname',
+            ngocity: 'ngocity',
+            drivecity: 'drivecity',
+            driveaddress: 'driveaddress',
+            driveDate: 'driveDate',
+            pid: 'pid',
+            title: 'title',
+            date: 'date',
+            time: 'time',
+            ngoId: 'ngoId')
+      ],
     );
   }
 }
