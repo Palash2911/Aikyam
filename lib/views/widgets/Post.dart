@@ -136,7 +136,7 @@ class _PostState extends State<PostItem> {
               widget.post.driveTitle,
               style: kTextPopM16,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 9),
             Row(
               children: [
                 const Icon(Icons.location_city),
@@ -145,7 +145,7 @@ class _PostState extends State<PostItem> {
                 Text(widget.post.city, style: kTextPopR14)
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 9),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -160,7 +160,7 @@ class _PostState extends State<PostItem> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 9),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -175,7 +175,7 @@ class _PostState extends State<PostItem> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 9),
             Row(
               children: [
                 const Icon(Icons.person),

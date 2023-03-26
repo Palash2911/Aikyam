@@ -55,6 +55,7 @@ class _NgoProfileState extends State<NgoProfile> {
     });
   }
 
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (isInit) {
@@ -124,16 +125,14 @@ class _NgoProfileState extends State<NgoProfile> {
                       children: [
                         Container(
                           height: 110,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('assets/images/cover.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 36.0,
-                        ),
+                        const SizedBox(height: 36.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -165,9 +164,11 @@ class _NgoProfileState extends State<NgoProfile> {
                                               color: ksecondaryColor,
                                             ),
                                             const SizedBox(width: 10.0),
-                                            Text('Edit',
-                                                style: kTextPopB14.copyWith(
-                                                    color: ksecondaryColor)),
+                                            Text(
+                                              'Edit',
+                                              style: kTextPopB14.copyWith(
+                                                  color: ksecondaryColor),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -208,12 +209,12 @@ class _NgoProfileState extends State<NgoProfile> {
                   ),
                   Positioned(
                     top: 50,
-                    left: MediaQuery.of(context).size.width / 5 - 64,
+                    left: MediaQuery.of(context).size.width / 5 - 54,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: SizedBox(
-                        height: 100.0,
-                        width: 100.0,
+                        height: 90.0,
+                        width: 90.0,
                         child: profileUrl.isNotEmpty
                             ? Image.network(
                                 profileUrl,
@@ -230,7 +231,7 @@ class _NgoProfileState extends State<NgoProfile> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight - kBottomNavigationBarHeight,
                   child: ContainedTabBarView(
                     tabBarProperties: const TabBarProperties(
                         indicatorColor: Colors.transparent),
@@ -324,7 +325,7 @@ class _Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       // add post here which ever wanted
-      children: [
+      children: const [
         NActivityPost(
             ngoname: 'ngoname',
             ngocity: 'ngocity',
@@ -387,10 +388,10 @@ class _About extends StatelessWidget {
               style: kTextPopR14,
             ),
           ),
-          SizedBox(height: 10),
-          Divider(),
+          const SizedBox(height: 10),
+          const Divider(),
           Text('Contact', style: kTextPopB16),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ListTile(
             title: Text('Email id', style: kTextPopM16),
             subtitle: Text(email, style: kTextPopR14),
