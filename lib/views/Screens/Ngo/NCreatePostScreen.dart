@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/NAddpost.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -45,19 +46,12 @@ class _NgoAddpostState extends State<NgoAddpost> {
   final TextEditingController _stateController = TextEditingController();
 
   String get address => _addressController.text;
-
   String get driveTitle => _driveTitleController.text;
-
   String get description => _descriptionController.text;
-
   String get noofVolunteers => _noVoluntersController.text;
-
   String get date => _dateController.text;
-
   String get time => _timeController.text;
-
   String get state => _stateController.text;
-
   String get city => _cityController.text;
 
   var isLoading = false;
@@ -137,10 +131,19 @@ class _NgoAddpostState extends State<NgoAddpost> {
             fontSize: 16.0,
           );
         }).then((_) {
+          Fluttertoast.showToast(
+            msg: "Post Created Successfully !!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           setState(() {
             isLoading = false;
           });
           setFields();
+          Navigator.of(context).pushReplacementNamed(Addpost.routeName);
         });
       } else {
         setState(() {

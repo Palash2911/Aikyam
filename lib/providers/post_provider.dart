@@ -204,7 +204,20 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future deletePost(String id) async {
+    List<dynamic> photourl = [];
+
     final db = FirebaseFirestore.instance;
+    await db.collection("Posts").doc(id).get().then((value) {
+      photourl = value['Photos'];
+    });
+    FirebaseStorage storage = FirebaseStorage.instance;
+    photourl.forEach((element) {
+      Reference imageRef = storage.refFromURL(element);
+      imageRef
+          .delete()
+          .then((value) {})
+          .catchError((error) => print('Failed to delete image: $error'));
+    });
     await db
         .collection("Posts")
         .doc(id)
@@ -214,9 +227,19 @@ class PostProvider extends ChangeNotifier {
       if (value.docs.isNotEmpty) {
         value.docs.forEach((element) async {
           if (element["UserType"] == "Ngo") {
-            await db.collection("Ngo").doc(element.id).collection("AppliedPost").doc(id).delete();
+            await db
+                .collection("Ngo")
+                .doc(element.id)
+                .collection("AppliedPost")
+                .doc(id)
+                .delete();
           } else {
-            await db.collection("Users").doc(element.id).collection("AppliedPost").doc(id).delete();
+            await db
+                .collection("Users")
+                .doc(element.id)
+                .collection("AppliedPost")
+                .doc(id)
+                .delete();
           }
         });
       }
