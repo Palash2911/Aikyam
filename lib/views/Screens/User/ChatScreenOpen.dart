@@ -46,7 +46,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
     await Provider.of<ChatProvider>(context, listen: false)
         .checkSenderType(widget.receiverId)
         .then((value) async {
-      rType = (value ? "Users" : "Ngo");
+      rType = (!value ? "Users" : "Ngo");
       await Provider.of<ChatProvider>(context, listen: false)
           .createMessageRoom(widget.receiverId, auth.currentUser!.uid,
               widget.senderType, widget.rName, sname)
