@@ -210,7 +210,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   radius: 50,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        AssetImage("assets/images/group.png"),
+                                        AssetImage("assets/images/ngo.png"),
                                     radius: 60,
                                   ),
                                 ),
@@ -442,6 +442,8 @@ class _NgoRegisterState extends State<NgoRegister> {
                             const SizedBox(height: 10.0),
 
                             TextFormField(
+                              minLines: 1,
+                              maxLines: 10,
                               controller: _aboutController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
@@ -466,6 +468,8 @@ class _NgoRegisterState extends State<NgoRegister> {
 
                             const SizedBox(height: 10.0),
                             TextFormField(
+                              minLines: 1,
+                              maxLines: 2,
                               controller: _addressController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
@@ -486,70 +490,6 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 return null;
                               },
                               textInputAction: TextInputAction.next,
-                            ),
-
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 40.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextFormField(
-                                      controller: _cityController,
-                                      keyboardType: TextInputType.name,
-                                      decoration: InputDecoration(
-                                        hintText: "City",
-                                        hintStyle: kTextPopR14,
-                                        filled: true,
-                                        fillColor: Colors.green.shade100,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter city!';
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.next,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  // Expanded(
-                                  //   flex: 1,
-                                  //   child: TextFormField(
-                                  //     maxLength: 6,
-                                  //     controller: _zipcodeController,
-                                  //     keyboardType: TextInputType.number,
-                                  //     decoration: InputDecoration(
-                                  //       counterText: '',
-                                  //       hintText: "Zip",
-                                  //       hintStyle: kTextPopR14,
-                                  //       filled: true,
-                                  //       fillColor: Colors.green.shade100,
-                                  //       border: OutlineInputBorder(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(10),
-                                  //         borderSide: BorderSide.none,
-                                  //       ),
-                                  //     ),
-                                  //     textInputAction: TextInputAction.next,
-                                  //     validator: (value) {
-                                  //       if (value!.length < 6) {
-                                  //         return 'Zip code must be 6 digits long';
-                                  //       }
-                                  //       return null;
-                                  //     },
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
                             ),
 
                             const SizedBox(height: 10),
@@ -661,6 +601,29 @@ class _NgoRegisterState extends State<NgoRegister> {
                               ),
                             ),
                             const SizedBox(height: 25.0),
+                            TextFormField(
+                              controller: _websiteController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Website Url",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.link),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter url!';
+                                }
+                                return null;
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: 15.0),
                             Row(
                               children: [
                                 Text(
@@ -724,29 +687,6 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   style: kTextPopR14,
                                 ),
                               ],
-                            ),
-                            const SizedBox(height: 15.0),
-                            TextFormField(
-                              controller: _websiteController,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                hintText: "Website Url",
-                                hintStyle: kTextPopR14,
-                                icon: const Icon(Icons.location_on_rounded),
-                                filled: true,
-                                fillColor: Colors.green.shade100,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter url!';
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
                             ),
                             const SizedBox(height: 15.0),
                             Container(

@@ -96,7 +96,7 @@ class _NActivityPostState extends State<NActivityPost> {
                       height: 50.0,
                       width: 50.0,
                       color: Colors.grey,
-                      child: Image.asset('assets/images/dp.jpg'),
+                      child: Image.asset('assets/images/ngo.png'),
                     ),
                   ),
                 ),
@@ -173,7 +173,6 @@ class _NActivityPostState extends State<NActivityPost> {
                     deletePost();
                   },
                 ),
-               
                 const SizedBox(width: 15.0),
                 AppButton(
                   text: 'View Applicants',

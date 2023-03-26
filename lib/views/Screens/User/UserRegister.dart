@@ -171,7 +171,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   radius: 50,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        AssetImage("assets/images/group.png"),
+                                        AssetImage("assets/images/user.png"),
                                     radius: 60,
                                   ),
                                 ),

@@ -62,7 +62,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
               radius: 25.0,
               backgroundImage: pp.isNotEmpty
                   ? Image.network(pp).image
-                  : const AssetImage('assets/images/dp.jpg'),
+                  : const AssetImage('assets/images/ngo.png'),
             ),
           ),
         ),

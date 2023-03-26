@@ -104,7 +104,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: Container(
-                                child: Image.asset('assets/images/dp.jpg'),
+                                child: Image.asset('assets/images/ngo.png'),
                               ),
                             ),
                             title: Text(

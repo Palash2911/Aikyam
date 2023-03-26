@@ -1,4 +1,3 @@
-import 'package:aikyam/views/Screens/Login/introduction_animation/introduction_animation_screen.dart';
 import 'package:aikyam/views/Screens/Login/Choose.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';

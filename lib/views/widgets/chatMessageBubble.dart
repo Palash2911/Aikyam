@@ -31,13 +31,6 @@ class MessageBubble extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
-          Text(
-            dateTime,
-            style: const TextStyle(
-              fontSize: 12.0,
-              color: Colors.black54,
-            ),
-          ),
           Material(
             borderRadius: isUser
                 ? const BorderRadius.only(
@@ -61,6 +54,13 @@ class MessageBubble extends StatelessWidget {
                   fontSize: 15.0,
                 ),
               ),
+            ),
+          ),
+          Text(
+            dateTime,
+            style: const TextStyle(
+              fontSize: 10.0,
+              color: Colors.black54,
             ),
           ),
         ],

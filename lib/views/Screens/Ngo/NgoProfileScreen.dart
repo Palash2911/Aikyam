@@ -1,8 +1,11 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/NactivityPost.dart';
+import 'package:aikyam/views/widgets/Post.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -176,16 +179,6 @@ class _NgoProfileState extends State<NgoProfile> {
                                         backgroundColor: kprimaryColor,
                                         foregroundColor: ksecondaryColor,
                                         child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.location_on_rounded),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10.0),
-                                      CircleAvatar(
-                                        backgroundColor: kprimaryColor,
-                                        foregroundColor: ksecondaryColor,
-                                        child: IconButton(
                                           onPressed: _launchUrl,
                                           icon: const Icon(Icons.link_rounded),
                                         ),
@@ -202,7 +195,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                                 Icons.message_rounded)),
                                       ),
                                     ],
-                                  )
+                                  ),
                           ],
                         ),
                         const SizedBox(height: 5.0),
@@ -222,97 +215,17 @@ class _NgoProfileState extends State<NgoProfile> {
                         height: 100.0,
                         width: 100.0,
                         child: profileUrl.isNotEmpty
-                            ? Image.network(profileUrl)
-                            : Image.asset('assets/images/dp.jpg'),
+                            ? Image.network(
+                                profileUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/images/ngo.png',
+                                fit: BoxFit.cover),
                       ),
                     ),
                   ),
                 ],
               ),
-
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(10.0),
-              //   child: Container(
-              //     height: 100.0,
-              //     width: 100.0,
-              //     color: const Color(0xffFF0E58),
-              //     child: Image.asset('assets/images/dp.jpg'),
-              //   ),
-              // ),
-
-              // TabBar(tabs: [
-              //   Tab(
-              //     icon: Icon(Icons.info_outline_rounded,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              //   Tab(
-              //     icon: Icon(Icons.work_outlined,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              // ]),
-              // TabBarView(
-              //   children: [
-              //     _About(),
-              //     _Post(),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child:
-              // Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _aboutPressed,
-              //           icon: Icon(
-              //             Icons.info_outline_rounded,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'About',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _workPressed,
-              //           icon: Icon(
-              //             Icons.work,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'Post',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
@@ -372,7 +285,27 @@ class _NgoProfileState extends State<NgoProfile> {
                         email: email,
                         phone: phone,
                       ),
-                      _Post()
+                      isNgoPov
+                          ? _Post()
+                          : PostItem(
+                              userType: 'userType',
+                              post: Post(
+                                  category: 'category',
+                                  description: 'description',
+                                  ngoid: 'ngoid',
+                                  id: 'id',
+                                  noofVolunters: 'noofVolunters',
+                                  date: 'date',
+                                  time: 'time',
+                                  city: 'city',
+                                  driveTitle: 'driveTitle',
+                                  ncity: 'ncity',
+                                  ngoname: 'ngoname',
+                                  state: 'state',
+                                  address: 'address',
+                                  country: 'country',
+                                  photos: []),
+                              applyStatus: 'applyStatus'),
                     ],
                     onChange: (index) => print(index),
                   ),
@@ -391,7 +324,19 @@ class _Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       // add post here which ever wanted
-      children: const [],
+      children: [
+        NActivityPost(
+            ngoname: 'ngoname',
+            ngocity: 'ngocity',
+            drivecity: 'drivecity',
+            driveaddress: 'driveaddress',
+            driveDate: 'driveDate',
+            pid: 'pid',
+            title: 'title',
+            date: 'date',
+            time: 'time',
+            ngoId: 'ngoId')
+      ],
     );
   }
 }
