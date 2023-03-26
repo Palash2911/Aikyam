@@ -232,7 +232,7 @@ class _UserProfileState extends State<UserProfile> {
                               photos: []),
                           applyStatus: 'applyStatus')
                 ],
-                onChange: (index) => print(index),
+                onChange: (index) {},
               ),
             ),
           ],

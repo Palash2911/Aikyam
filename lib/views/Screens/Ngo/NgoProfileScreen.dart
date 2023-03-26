@@ -313,7 +313,7 @@ class _NgoProfileState extends State<NgoProfile> {
                                   photos: []),
                               applyStatus: 'applyStatus'),
                     ],
-                    onChange: (index) => print(index),
+                    onChange: (index) {},
                   ),
                 ),
               ),

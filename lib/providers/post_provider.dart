@@ -205,6 +205,23 @@ class PostProvider extends ChangeNotifier {
 
   Future deletePost(String id) async {
     final db = FirebaseFirestore.instance;
+    await db
+        .collection("Posts")
+        .doc(id)
+        .collection("Applications")
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        value.docs.forEach((element) async {
+          if (element["UserType"] == "Ngo") {
+            await db.collection("Ngo").doc(element.id).collection("AppliedPost").doc(id).delete();
+          } else {
+            await db.collection("Users").doc(element.id).collection("AppliedPost").doc(id).delete();
+          }
+        });
+      }
+    });
+
     await db.collection("Posts").doc(id).delete();
 
     await db
@@ -212,8 +229,8 @@ class PostProvider extends ChangeNotifier {
         .doc(auth.currentUser!.uid)
         .get()
         .then((value) async {
-          List<dynamic> postId = value["PostId"];
-          postId.remove(id);
+      List<dynamic> postId = value["PostId"];
+      postId.remove(id);
       await db.collection("Ngo").doc(auth.currentUser!.uid).update({
         "PostId": postId,
       });

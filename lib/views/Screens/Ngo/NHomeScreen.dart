@@ -31,16 +31,14 @@ class _NHomeScreenState extends State<NHomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(isInit)
-      {
-        _getappliedId();
-      }
+    if (isInit) {
+      _getappliedId();
+    }
     isInit = false;
   }
 
   void _getappliedId() async {
     await Provider.of<PostProvider>(context).getAppliedID("Ngo").then((value) {
-      print(value);
       appliedId = value;
       pp = Provider.of<Auth>(context, listen: false).profilePic;
     });
@@ -108,9 +106,7 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                             fit: BoxFit.contain,
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
+                                        const SizedBox(height: 20.0),
                                         Text(
                                           "No Post Yet !",
                                           style: kTextPopM16,
