@@ -68,9 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: const UserAppdrawer(),
         body: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            )
             : RefreshIndicator(
                 onRefresh: () async {
                   _getappliedId();

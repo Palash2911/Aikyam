@@ -131,8 +131,14 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
             )
           : SafeArea(
               child: SingleChildScrollView(
@@ -246,16 +252,20 @@ class _OtpScreenState extends State<OtpScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             InkWell(
-                              onTap: resendVisible ? null : () {
-                                _sendOtp(context);
-                                setState(() {
-                                  resendVisible = true;
-                                });
-                              },
+                              onTap: resendVisible
+                                  ? null
+                                  : () {
+                                      _sendOtp(context);
+                                      setState(() {
+                                        resendVisible = true;
+                                      });
+                                    },
                               child: Text(
                                 "Resend OTP",
-                                style:
-                                    kTextPopB16.copyWith(color: resendVisible ? Colors.grey : kprimaryColor),
+                                style: kTextPopB16.copyWith(
+                                    color: resendVisible
+                                        ? Colors.grey
+                                        : kprimaryColor),
                                 textAlign: TextAlign.center,
                               ),
                             ),

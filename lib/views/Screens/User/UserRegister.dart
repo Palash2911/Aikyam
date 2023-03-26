@@ -150,8 +150,14 @@ class _UserRegisterState extends State<UserRegister> {
     return SafeArea(
       child: Scaffold(
         body: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: SizedBox(
+                  height: 200.0,
+                  child: Image.asset(
+                    'assets/images/loading.gif',
+                    fit: BoxFit.contain,
+                  ),
+                ),
               )
             : SingleChildScrollView(
                 child: Container(

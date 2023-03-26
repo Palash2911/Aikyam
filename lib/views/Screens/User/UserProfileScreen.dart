@@ -160,7 +160,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              color: Colors.blue,
+              color: kprimaryColor,
               width: double.maxFinite,
               height: double.maxFinite,
               child: ContainedTabBarView(
@@ -210,27 +210,7 @@ class _UserProfileState extends State<UserProfile> {
                       interest: interest,
                       email: email,
                       phone: phone),
-                  isUserPov
-                      ? _Post()
-                      : PostItem(
-                          userType: 'userType',
-                          post: Post(
-                              category: 'category',
-                              description: 'description',
-                              ngoid: 'ngoid',
-                              id: 'id',
-                              noofVolunters: 'noofVolunters',
-                              date: 'date',
-                              time: 'time',
-                              city: 'city',
-                              driveTitle: 'driveTitle',
-                              ncity: 'ncity',
-                              ngoname: 'ngoname',
-                              state: 'state',
-                              address: 'address',
-                              country: 'country',
-                              photos: []),
-                          applyStatus: 'applyStatus')
+                  _Post()
                 ],
                 onChange: (index) {},
               ),
@@ -264,7 +244,6 @@ class _About extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10),
-          Divider(),
           Text('Information', style: kTextPopB16),
           SizedBox(height: 8),
           ListTile(
@@ -296,13 +275,37 @@ class _About extends StatelessWidget {
 class _Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return UActivityPostItem(
-        ngoName: 'ngoName',
-        ngoCity: 'ngoCity',
-        driveCity: 'driveCity',
-        date: 'date',
-        time: 'time',
-        applyStatus: 'applyStatus',
-        pid: 'pid');
+    return Column(
+      children: [
+        SizedBox(
+          height: 10.0,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.0),
+            border: Border.all(
+              color: kprimaryColor,
+              width: 2.0,
+            ),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
+            child: Text(
+              'Drive History',
+              style: kTextPopR14,
+            ),
+          ),
+        ),
+        UActivityPostItem(
+            ngoName: 'ngoName',
+            ngoCity: 'Pune',
+            driveCity: 'driveCity',
+            date: 'date',
+            time: 'time',
+            applyStatus: 'applyStatus',
+            pid: 'pid'),
+      ],
+    );
   }
 }

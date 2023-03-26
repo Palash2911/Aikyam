@@ -39,6 +39,7 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -49,8 +49,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     stream: applyRef.snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Center(
+                          child: SizedBox(
+                            height: 200.0,
+                            child: Image.asset(
+                              'assets/images/loading.gif',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         );
                       } else {
                         if (snapshot.data!.docs.isEmpty) {
