@@ -65,7 +65,6 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
               );
             },
           ),
-          
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
@@ -129,13 +128,17 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                     ));
               },
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
                     radius: 30.0,
                     backgroundImage: pp.isNotEmpty
                         ? Image.network(pp).image
                         : const AssetImage('assets/images/ngo.png'),
+                  ),
+                  Text(
+                    name,
+                    style: kTextPopM16.copyWith(color: ksecondaryColor),
                   ),
                 ],
               ),
