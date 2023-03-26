@@ -18,7 +18,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   bool _isSelected = true;
-  bool _isUserPov = true;
+  bool isUserPov = true;
   bool _isAboutActive = true;
   var name = "";
   var profileUrl = "";
@@ -104,7 +104,7 @@ class _UserProfileState extends State<UserProfile> {
                                               builder: (context) =>
                                                   EditUser()));
                                     },
-                                    child: _isUserPov
+                                    child: isUserPov
                                         ? Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -210,44 +210,31 @@ class _UserProfileState extends State<UserProfile> {
                       interest: interest,
                       email: email,
                       phone: phone),
-                  _Post()
+                  isUserPov
+                      ? _Post()
+                      : PostItem(
+                          userType: 'userType',
+                          post: Post(
+                              category: 'category',
+                              description: 'description',
+                              ngoid: 'ngoid',
+                              id: 'id',
+                              noofVolunters: 'noofVolunters',
+                              date: 'date',
+                              time: 'time',
+                              city: 'city',
+                              driveTitle: 'driveTitle',
+                              ncity: 'ncity',
+                              ngoname: 'ngoname',
+                              state: 'state',
+                              address: 'address',
+                              country: 'country',
+                              photos: []),
+                          applyStatus: 'applyStatus')
                 ],
                 onChange: (index) => print(index),
               ),
             ),
-            _About(
-                occupation: occupation,
-                interest: interest,
-                email: email,
-                phone: phone),
-            _isUserPov
-                ? UActivityPostItem(
-                    ngoName: 'ngoName',
-                    ngoCity: 'ngoCity',
-                    driveCity: 'driveCity',
-                    date: 'date',
-                    time: 'time',
-                    applyStatus: 'applyStatus',
-                    pid: 'pid')
-                : PostItem(
-                    userType: 'userType',
-                    post: Post(
-                        category: 'category',
-                        description: 'description',
-                        ngoid: 'ngoid',
-                        id: 'id',
-                        noofVolunters: 'noofVolunters',
-                        date: 'date',
-                        time: 'time',
-                        city: 'city',
-                        driveTitle: 'driveTitle',
-                        ncity: 'ncity',
-                        ngoname: 'ngoname',
-                        state: 'state',
-                        address: 'address',
-                        country: 'country',
-                        photos: []),
-                    applyStatus: 'applyStatus')
           ],
         ),
       ),
@@ -309,8 +296,13 @@ class _About extends StatelessWidget {
 class _Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [],
-    );
+    return UActivityPostItem(
+        ngoName: 'ngoName',
+        ngoCity: 'ngoCity',
+        driveCity: 'driveCity',
+        date: 'date',
+        time: 'time',
+        applyStatus: 'applyStatus',
+        pid: 'pid');
   }
 }

@@ -65,18 +65,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.category),
-            title: const Text(' Categories'),
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => NgoProfile(),
-              //   ),
-              // );
-            },
-          ),
+          
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
