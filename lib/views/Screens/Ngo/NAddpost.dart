@@ -1,6 +1,8 @@
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/editPostScreen.dart';
+import 'package:aikyam/views/Screens/User/UActivityScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +111,7 @@ class Addpost extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NgoAddpost()));
+                              builder: (context) => EditPostScreen()));
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
