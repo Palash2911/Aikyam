@@ -173,7 +173,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
           elevation: 0.0,
           toolbarHeight: 80,
           flexibleSpace: const RoundAppBar(
-            title: 'Create Post',
+            title: '    Create Post',
           ),
         ),
         body: SingleChildScrollView(
