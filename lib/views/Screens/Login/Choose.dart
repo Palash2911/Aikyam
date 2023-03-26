@@ -22,7 +22,7 @@ class _ChooseState extends State<Choose> {
     Provider.of<Auth>(context, listen: false).chooseUserType(selectType);
     if (selectType == "NGO") {
       Navigator.of(context).pushNamed(NgoRegister.routeName);
-    } else if (selectType == "User") {
+    } else if (selectType == "Individual") {
       Navigator.of(context).pushNamed(UserRegister.routeName);
     } else {
       Fluttertoast.showToast(
@@ -74,6 +74,7 @@ class _ChooseState extends State<Choose> {
                     onTap: () {
                       setState(() {
                         selectType = "Individual";
+                        isBtnVisible = true;
                       });
                     },
                     child: Container(

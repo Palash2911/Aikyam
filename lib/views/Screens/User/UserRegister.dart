@@ -74,7 +74,7 @@ class _UserRegisterState extends State<UserRegister> {
     if (isValid) {
       if (imageFile == null) {
         Fluttertoast.showToast(
-          msg: "Please select Profile pic!",
+          msg: "Please Select A Profile Image!",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
@@ -85,7 +85,6 @@ class _UserRegisterState extends State<UserRegister> {
           isLoading = false;
         });
       } else {
-        print("hi");
         await userProvider
             .registerUser(
           Users(
@@ -111,6 +110,14 @@ class _UserRegisterState extends State<UserRegister> {
             fontSize: 16.0,
           );
         }).then((_) {
+          Fluttertoast.showToast(
+            msg: "Successfully Registered !",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           setState(() {
             isLoading = false;
           });
@@ -212,7 +219,6 @@ class _UserRegisterState extends State<UserRegister> {
                           children: [
                             SizedBox(
                               width: 200,
-                              //height: 10.0,
                               child: TextFormField(
                                 maxLines: 1,
                                 keyboardType: TextInputType.text,
@@ -238,7 +244,6 @@ class _UserRegisterState extends State<UserRegister> {
                               ),
                             ),
                             const SizedBox(height: 20.0),
-                            // name
                             TextFormField(
                               controller: _nameController,
                               keyboardType: TextInputType.name,
@@ -262,7 +267,7 @@ class _UserRegisterState extends State<UserRegister> {
                               textInputAction: TextInputAction.next,
                             ),
 
-                            const SizedBox(height: 10.0),
+                            const SizedBox(height: 15.0),
                             //contact
                             TextFormField(
                               maxLength: 10,
@@ -292,9 +297,7 @@ class _UserRegisterState extends State<UserRegister> {
                                 return null;
                               },
                             ),
-
-                            const SizedBox(height: 10.0),
-                            //email
+                            const SizedBox(height: 15.0),
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
@@ -318,7 +321,7 @@ class _UserRegisterState extends State<UserRegister> {
                               textInputAction: TextInputAction.next,
                             ),
 
-                            const SizedBox(height: 10.0),
+                            const SizedBox(height: 15.0),
                             //  Gender
                             Row(
                               children: [
@@ -414,8 +417,7 @@ class _UserRegisterState extends State<UserRegister> {
                               },
                               textInputAction: TextInputAction.next,
                             ),
-                            const SizedBox(height: 10.0),
-
+                            const SizedBox(height: 15.0),
                             TextFormField(
                               controller: _interestController,
                               keyboardType: TextInputType.text,
@@ -432,7 +434,7 @@ class _UserRegisterState extends State<UserRegister> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter interest!';
+                                  return 'Please Enter Interest!';
                                 }
                                 return null;
                               },
@@ -455,7 +457,8 @@ class _UserRegisterState extends State<UserRegister> {
                                     ),
                                 onPressed: () => _createProfile(context),
                                 child: const Text(
-                                  "Register",
+                                  "Let's Volunteer ",
+                                  style: TextStyle(fontSize: 18),
                                 ),
                               ),
                             ),

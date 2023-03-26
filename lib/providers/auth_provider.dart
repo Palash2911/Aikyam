@@ -116,8 +116,6 @@ class Auth extends ChangeNotifier {
         if (user) {
           _isUser = 'NGO';
           _profileCreated = true;
-        } else {
-          print("Error");
         }
       } else {
         _isUser = 'Individual';
@@ -136,9 +134,13 @@ class Auth extends ChangeNotifier {
     prefs.setBool("Profile", false);
   }
 
-  @override
   Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.remove('UID');
+    prefs.remove('UserType');
+    prefs.remove('Profile');
+    prefs.remove('ProfilePic');
+    prefs.remove("UserName");
     prefs.clear();
     await _auth.signOut();
     notifyListeners();
