@@ -1,7 +1,7 @@
 import 'package:aikyam/views/Screens/Login/Choose.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NchatScreen.dart';
 import 'package:aikyam/views/Screens/Login/OTP.dart';
