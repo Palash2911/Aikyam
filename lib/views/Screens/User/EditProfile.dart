@@ -126,8 +126,13 @@ class _EditUserState extends State<EditUser> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const UserProfile()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UserProfile(
+                      isUser: true,
+                      authToken: authToken,
+                    )));
       }
     });
   }

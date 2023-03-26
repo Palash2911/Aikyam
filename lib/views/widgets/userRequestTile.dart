@@ -34,6 +34,7 @@ class _ProfileTileState extends State<ProfileTile> {
     super.didChangeDependencies();
     accepted = widget.applicationStatus == "InProcess" ? false : true;
   }
+
   void applyReject(String ar) async {
     if (ar == "Accept") {
       await Provider.of<PostProvider>(context, listen: false)
@@ -88,38 +89,38 @@ class _ProfileTileState extends State<ProfileTile> {
         title: Text(widget.name),
         subtitle: Text(widget.city),
         trailing: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : accepted ? Text(widget.applicationStatus) : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                    onPressed: () {
-                      applyReject("Accept");
-                      setState(() {
-                        isLoading = true;
-                      });
-                    },
+            ? CircularProgressIndicator()
+            : accepted
+                ? Text(widget.applicationStatus)
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                        onPressed: () {
+                          applyReject("Accept");
+                          setState(() {
+                            isLoading = true;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          applyReject("Reject");
+                          setState(() {
+                            isLoading = true;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      applyReject("Reject");
-                      setState(() {
-                        isLoading = true;
-                      });
-                    },
-                  ),
-                ],
-              ),
       ),
     );
   }

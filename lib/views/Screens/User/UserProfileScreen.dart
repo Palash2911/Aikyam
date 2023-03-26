@@ -5,12 +5,19 @@ import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/UActivityPostItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  const UserProfile({
+    required this.authToken,
+    required this.isUser,
+  });
+  final String authToken;
+  final bool isUser;
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -160,10 +167,11 @@ class _UserProfileState extends State<UserProfile> {
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              color: kprimaryColor,
               width: double.maxFinite,
-              height: double.maxFinite,
+              height: MediaQuery.of(context).size.height,
               child: ContainedTabBarView(
+                tabBarProperties:
+                    const TabBarProperties(indicatorColor: Colors.transparent),
                 tabs: [
                   Container(
                     padding: EdgeInsets.all(10.0),
@@ -176,7 +184,7 @@ class _UserProfileState extends State<UserProfile> {
                           size: 24.0,
                           color: ksecondaryColor,
                         ),
-                        SizedBox(width: 5.0),
+                        const SizedBox(width: 5.0),
                         Text(
                           'About',
                           style: kTextPopM16.copyWith(color: ksecondaryColor),
@@ -195,7 +203,7 @@ class _UserProfileState extends State<UserProfile> {
                           size: 24.0,
                           color: ksecondaryColor,
                         ),
-                        SizedBox(width: 5.0),
+                        const SizedBox(width: 5.0),
                         Text(
                           'Post',
                           style: kTextPopM16.copyWith(color: ksecondaryColor),
@@ -272,40 +280,86 @@ class _About extends StatelessWidget {
   }
 }
 
-class _Post extends StatelessWidget {
+class _Post extends StatefulWidget {
+  @override
+  State<_Post> createState() => _PostState();
+}
+
+class _PostState extends State<_Post> {
+  final auth = FirebaseAuth.instance;
+  CollectionReference applyRef = FirebaseFirestore.instance.collection('Users');
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10.0,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50.0),
-            border: Border.all(
-              color: kprimaryColor,
-              width: 2.0,
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        padding: const EdgeInsets.only(bottom: 120),
+        child: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: applyRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        height: 200.0,
+                        child: Image.asset(
+                          'assets/images/loading.gif',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    );
+                  } else {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 300.0,
+                              child: Image.asset(
+                                'assets/images/noPost.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Text(
+                              "No Post Yet !",
+                              style: kTextPopM16,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: snapshot.data!.docs.map((document) {
+                        return UActivityPostItem(
+                          ngoName: document["NgoName"],
+                          ngoCity: document["NgoCity"],
+                          driveCity: document["City"],
+                          date: document["Date"],
+                          time: document["Time"],
+                          applyStatus: document['ApplicationStatus'],
+                          pid: document.id,
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
-            child: Text(
-              'Drive History',
-              style: kTextPopR14,
-            ),
-          ),
+          ],
         ),
-        UActivityPostItem(
-            ngoName: 'ngoName',
-            ngoCity: 'Pune',
-            driveCity: 'driveCity',
-            date: 'date',
-            time: 'time',
-            applyStatus: 'applyStatus',
-            pid: 'pid'),
-      ],
+      ),
     );
   }
 }

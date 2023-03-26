@@ -16,6 +16,7 @@ class UserAppdrawer extends StatefulWidget {
 class _UserAppdrawerState extends State<UserAppdrawer> {
   var pp = "";
   var name = "";
+  var authToken = "";
 
   @override
   void didChangeDependencies() {
@@ -27,6 +28,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
     name = authProvider.uName;
+    authToken = authProvider.token;
     setState(() {});
   }
 
@@ -61,7 +63,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfile()),
+                MaterialPageRoute(builder: (context) => UserProfile(isUser: true,authToken: authToken,)),
               );
             },
           ),

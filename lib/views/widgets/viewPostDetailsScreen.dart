@@ -196,9 +196,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   children: [
                                     Icon(Icons.person),
                                     SizedBox(width: 5),
-                                    Text('No of required volunteers: ',
+                                    Text('${noVol.toString()} Volunteers Required',
                                         style: kTextPopB14),
-                                    Text(noVol.toString(), style: kTextPopR14)
                                   ],
                                 ),
                                 SizedBox(height: 5),

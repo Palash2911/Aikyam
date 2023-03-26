@@ -234,9 +234,7 @@ class _NgoProfileState extends State<NgoProfile> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height -
-                      kBottomNavigationBarHeight -
-                      kBottomNavigationBarHeight,
+                  height: MediaQuery.of(context).size.height,
                   child: ContainedTabBarView(
                     tabBarProperties: const TabBarProperties(
                         indicatorColor: Colors.transparent),
@@ -292,7 +290,7 @@ class _NgoProfileState extends State<NgoProfile> {
                         phone: phone,
                       ),
                       isNgoPov
-                          ? _Post()
+                          ? _Post(authToken: widget.authToken,)
                           : PostItem(
                               userType: 'userType',
                               post: Post(
@@ -326,18 +324,20 @@ class _NgoProfileState extends State<NgoProfile> {
 }
 
 class _Post extends StatefulWidget {
+  final String authToken;
+
+  const _Post({super.key, required this.authToken});
   @override
   State<_Post> createState() => _PostState();
 }
 
 class _PostState extends State<_Post> {
-  final auth = FirebaseAuth.instance;
   CollectionReference applyRef = FirebaseFirestore.instance.collection('Ngo');
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+    applyRef = applyRef.doc(widget.authToken).collection("AppliedPost");
   }
 
   @override
