@@ -98,6 +98,7 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                   uid: document.id,
                                   applicationStatus:
                                       document["ApplicationStatus"],
+                                  userType: document["UserType"],
                                 );
                               }).toList(),
                             );

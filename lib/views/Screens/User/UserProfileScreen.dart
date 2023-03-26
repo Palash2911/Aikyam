@@ -48,9 +48,8 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   void _fetchDetails() async {
-    var authToken = Provider.of<Auth>(context).token;
     await Provider.of<UserProvider>(context)
-        .getUserDetails(authToken)
+        .getUserDetails(widget.authToken)
         .then((value) {
       name = value!.name;
       email = value.email;
@@ -82,7 +81,7 @@ class _UserProfileState extends State<UserProfile> {
                       children: [
                         Container(
                           height: 110,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('assets/images/cover.png'),
                               fit: BoxFit.cover,
@@ -111,7 +110,7 @@ class _UserProfileState extends State<UserProfile> {
                                               builder: (context) =>
                                                   EditUser()));
                                     },
-                                    child: isUserPov
+                                    child: widget.isUser
                                         ? Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [

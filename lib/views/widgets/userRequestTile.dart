@@ -1,4 +1,6 @@
 import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,6 +13,7 @@ class ProfileTile extends StatefulWidget {
   final String uid;
   final String pid;
   final String applicationStatus;
+  final String userType;
 
   ProfileTile({
     required this.name,
@@ -19,6 +22,7 @@ class ProfileTile extends StatefulWidget {
     required this.uid,
     required this.pid,
     required this.applicationStatus,
+    required this.userType,
   });
 
   @override
@@ -83,13 +87,65 @@ class _ProfileTileState extends State<ProfileTile> {
       ),
       color: ksecondaryColor,
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: Image.network(widget.imageUrl).image,
+        leading: InkWell(
+          onTap: () {
+            if (widget.userType != "Ngo") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(
+                    authToken: widget.uid,
+                    isUser: false,
+                  ),
+                ),
+              );
+            }
+            else{
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NgoProfile(
+                    authToken: widget.uid,
+                    isUser: false,
+                  ),
+                ),
+              );
+            }
+          },
+          child: CircleAvatar(
+            backgroundImage: Image.network(widget.imageUrl).image,
+          ),
         ),
-        title: Text(widget.name),
+        title: InkWell(
+          onTap: () {
+            if (widget.userType != "Ngo") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(
+                    authToken: widget.uid,
+                    isUser: false,
+                  ),
+                ),
+              );
+            }
+            else{
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NgoProfile(
+                    authToken: widget.uid,
+                    isUser: false,
+                  ),
+                ),
+              );
+            }
+          },
+          child: Text(widget.name),
+        ),
         subtitle: Text(widget.city),
         trailing: isLoading
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : accepted
                 ? Text(widget.applicationStatus)
                 : Row(
