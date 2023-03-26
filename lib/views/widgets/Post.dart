@@ -1,4 +1,5 @@
 import 'package:aikyam/models/post.dart';
+import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
@@ -24,6 +25,23 @@ class PostItem extends StatefulWidget {
 class _PostState extends State<PostItem> {
   bool _isApply = true;
   bool _isLoading = false;
+  var profile = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _getProfile();
+  }
+
+  void _getProfile() async {
+    await Provider.of<NgoProvider>(context, listen: false)
+        .getNgoDetails(widget.post.ngoid)
+        .then((value) {
+      setState(() {
+        profile = value!.firebaseUrl;
+      });
+    });
+  }
 
   Future applyPost() async {
     if (_isApply && widget.applyStatus == "Apply") {
@@ -79,7 +97,7 @@ class _PostState extends State<PostItem> {
                       height: 50.0,
                       width: 50.0,
                       color: Colors.grey,
-                      child: Image.asset('assets/images/user.png'),
+                      child: profile.isNotEmpty ? Image.network(profile) : Image.asset('assets/images/user.png'),
                     ),
                   ),
                 ),
@@ -114,12 +132,11 @@ class _PostState extends State<PostItem> {
               ],
             ),
             const Divider(),
-            const SizedBox(height: 16),
             Text(
               widget.post.driveTitle,
               style: kTextPopM16,
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 12),
             Row(
               children: [
                 const Icon(Icons.location_city),
@@ -128,7 +145,7 @@ class _PostState extends State<PostItem> {
                 Text(widget.post.city, style: kTextPopR14)
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -143,6 +160,7 @@ class _PostState extends State<PostItem> {
                 ),
               ],
             ),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -157,6 +175,7 @@ class _PostState extends State<PostItem> {
                 ),
               ],
             ),
+            const SizedBox(height: 12),
             Row(
               children: [
                 const Icon(Icons.person),
@@ -165,7 +184,6 @@ class _PostState extends State<PostItem> {
                 Text(widget.post.category, style: kTextPopR14)
               ],
             ),
-            SizedBox(height: 5),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -197,7 +215,7 @@ class _PostState extends State<PostItem> {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: _isLoading
-                      ? Center(child: CircularProgressIndicator())
+                      ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
                           onPressed: () {
                             if (widget.applyStatus != "Applied" &&

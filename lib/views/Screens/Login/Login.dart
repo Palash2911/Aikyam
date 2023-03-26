@@ -90,7 +90,7 @@ class _LogInState extends State<LogIn> {
                       ),
                       const Center(
                         child: Text(
-                          "Login/ Sign Up",
+                          "Let's Unite",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
