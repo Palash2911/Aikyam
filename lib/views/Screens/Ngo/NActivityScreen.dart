@@ -46,26 +46,6 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                           child: CircularProgressIndicator(),
                         );
                       } else {
-                        if (snapshot.data!.docs.isEmpty) {
-                          return Center(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 300.0,
-                                  child: Image.asset(
-                                    'assets/images/noPost.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                const SizedBox(height: 20.0),
-                                Text(
-                                  "No Post Found !",
-                                  style: kTextPopM16,
-                                ),
-                              ],
-                            ),
-                          );
-                        }
                         return ListView(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,

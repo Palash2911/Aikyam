@@ -206,7 +206,18 @@ class PostProvider extends ChangeNotifier {
   Future deletePost(String id) async {
     final db = FirebaseFirestore.instance;
     await db.collection("Posts").doc(id).delete();
-    // TODO: DELETE ID FROM USERS AND NGO
+
+    await db
+        .collection("Ngo")
+        .doc(auth.currentUser!.uid)
+        .get()
+        .then((value) async {
+          List<dynamic> postId = value["PostId"];
+          postId.remove(id);
+      await db.collection("Ngo").doc(auth.currentUser!.uid).update({
+        "PostId": postId,
+      });
+    });
   }
 
   Future<Post?> getPostDetails(String id) async {
