@@ -3,18 +3,36 @@ import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-class Choose extends StatelessWidget {
+class Choose extends StatefulWidget {
   static var routeName = "/chooseScreen";
   const Choose({super.key});
 
-  void chooseUser(String user, BuildContext context) {
-    Provider.of<Auth>(context, listen: false).chooseUserType(user);
-    if (user == "NGO") {
-      Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
+  @override
+  State<Choose> createState() => _ChooseState();
+}
+
+class _ChooseState extends State<Choose> {
+  var selectType = "None";
+  var isBtnVisible = false;
+
+  void chooseUser() {
+    Provider.of<Auth>(context, listen: false).chooseUserType(selectType);
+    if (selectType == "NGO") {
+      Navigator.of(context).pushNamed(NgoRegister.routeName);
+    } else if (selectType == "Individual") {
+      Navigator.of(context).pushNamed(UserRegister.routeName);
     } else {
-      Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
+      Fluttertoast.showToast(
+        msg: "Please Choose A Type !",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
@@ -28,13 +46,9 @@ class Choose extends StatelessWidget {
             Column(
               children: [
                 const SizedBox(height: 100),
-                const Text(
-                  "Tell us more",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
                 Text(
-                  "Are you ?",
-                  style: kTextPopR12,
+                  "Tell us more",
+                  style: kTextPopB16.merge(TextStyle(fontSize: 21)),
                 ),
               ],
             ),
@@ -50,19 +64,25 @@ class Choose extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "I am individual",
+                        "I am a Volunteer",
                         style: kTextPopB16,
                       ),
                     ],
                   ),
+                  const SizedBox(height: 9),
                   GestureDetector(
                     onTap: () {
-                      chooseUser("Individual", context);
+                      setState(() {
+                        selectType = "Individual";
+                        isBtnVisible = true;
+                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: kprimaryColor),
+                        border: selectType == "Individual"
+                            ? Border.all(width: 4, color: kprimaryColor)
+                            : Border.all(width: 2, color: kprimaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                       ),
@@ -80,7 +100,7 @@ class Choose extends StatelessWidget {
                           Flexible(
                             flex: 2,
                             child: Text(
-                              "An individual who wants to contribute to various community services.",
+                              "An Individual Who Intends To Contribute To Various Community Services",
                               style: kTextPopR14.copyWith(color: kprimaryColor),
                             ),
                           )
@@ -104,14 +124,21 @@ class Choose extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 9),
                   GestureDetector(
                     onTap: () {
-                      chooseUser("NGO", context);
+                      // chooseUser("NGO", context);
+                      setState(() {
+                        selectType = "NGO";
+                        isBtnVisible = true;
+                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: kprimaryColor),
+                        border: selectType == "NGO"
+                            ? Border.all(width: 4, color: kprimaryColor)
+                            : Border.all(width: 2, color: kprimaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                       ),
@@ -129,7 +156,7 @@ class Choose extends StatelessWidget {
                           Flexible(
                             flex: 2,
                             child: Text(
-                              "An established NGO looking for candidates who can contribute to our services.",
+                              "An Established NGO Seeking Volunteers Who Can Contribute To Society",
                               style: kTextPopR14.copyWith(color: kprimaryColor),
                             ),
                           )
@@ -137,6 +164,22 @@ class Choose extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 28),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        !isBtnVisible
+                            ? const Text("")
+                            : FloatingActionButton(
+                                onPressed: chooseUser,
+                                child: const Icon(Icons.arrow_forward_ios,
+                                    color: Colors.green, size: 35),
+                              ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

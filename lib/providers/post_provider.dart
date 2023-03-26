@@ -80,6 +80,38 @@ class PostProvider extends ChangeNotifier {
 
   Future updatePost(Post post) async {
     try {
+      List<dynamic> postImages = [];
+      if (post.photos.isNotEmpty) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
+            .putFile(post.photos[0]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
+      if (post.photos.length >= 2) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
+            .putFile(post.photos[1]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
+      if (post.photos.length == 3) {
+        var storage = FirebaseStorage.instance;
+        TaskSnapshot taskSnapshot = await storage
+            .ref()
+            .child(
+            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
+            .putFile(post.photos[2]);
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        postImages.add(downloadUrl);
+      }
+
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       await posts.doc(post.id).update({
@@ -92,7 +124,7 @@ class PostProvider extends ChangeNotifier {
         "Address": post.address,
         "City": post.city,
         "State": post.state,
-        "Ngoid": post.ngoid,
+        "NgoId": post.ngoid,
         "Country": post.country,
         "Photos": post.photos,
         "Title": post.driveTitle,
@@ -114,6 +146,7 @@ class PostProvider extends ChangeNotifier {
 
       var aName = "";
       var profilePic = "";
+      print(userType);
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
@@ -154,13 +187,20 @@ class PostProvider extends ChangeNotifier {
           });
         });
       } else {
-        List<dynamic> postId = [];
-        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
-        });
-        postId.add(pid);
-        await ngo.doc(auth.currentUser!.uid).update({
-          'AppliedPostId': postId,
+        await posts.doc(pid).get().then((snapshot) async {
+          await ngo
+              .doc(auth.currentUser!.uid)
+              .collection("AppliedPost")
+              .doc(pid)
+              .set({
+            "ApplicationStatus": "InProcess",
+            "Title": snapshot["Title"],
+            "NgoName": snapshot['NgoName'],
+            "NgoCity": snapshot["NgoCity"],
+            "Date": snapshot['Date'],
+            "Time": snapshot["Time"],
+            "City": snapshot["City"],
+          });
         });
       }
       notifyListeners();
@@ -196,9 +236,60 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future deletePost(String id) async {
+    List<dynamic> photourl = [];
+
     final db = FirebaseFirestore.instance;
+    await db.collection("Posts").doc(id).get().then((value) {
+      photourl = value['Photos'];
+    });
+    FirebaseStorage storage = FirebaseStorage.instance;
+    photourl.forEach((element) {
+      Reference imageRef = storage.refFromURL(element);
+      imageRef
+          .delete()
+          .then((value) {})
+          .catchError((error) => print('Failed to delete image: $error'));
+    });
+    await db
+        .collection("Posts")
+        .doc(id)
+        .collection("Applications")
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        value.docs.forEach((element) async {
+          if (element["UserType"] == "Ngo") {
+            await db
+                .collection("Ngo")
+                .doc(element.id)
+                .collection("AppliedPost")
+                .doc(id)
+                .delete();
+          } else {
+            await db
+                .collection("Users")
+                .doc(element.id)
+                .collection("AppliedPost")
+                .doc(id)
+                .delete();
+          }
+        });
+      }
+    });
+
     await db.collection("Posts").doc(id).delete();
-    // TODO: DELETE ID FROM USERS AND NGO
+
+    await db
+        .collection("Ngo")
+        .doc(auth.currentUser!.uid)
+        .get()
+        .then((value) async {
+      List<dynamic> postId = value["PostId"];
+      postId.remove(id);
+      await db.collection("Ngo").doc(auth.currentUser!.uid).update({
+        "PostId": postId,
+      });
+    });
   }
 
   Future<Post?> getPostDetails(String id) async {
@@ -260,14 +351,34 @@ class PostProvider extends ChangeNotifier {
       List<dynamic> postId = [];
       if (userType == "Ngo") {
         CollectionReference ngo = FirebaseFirestore.instance.collection("Ngo");
-        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
+        await ngo
+            .doc(auth.currentUser!.uid)
+            .collection("AppliedPost")
+            .get()
+            .then((value) {
+          if (value.docs.isEmpty) {
+            return [];
+          } else {
+            value.docs.forEach((element) {
+              postId.add(element.id);
+            });
+          }
         });
       } else {
         CollectionReference users =
             FirebaseFirestore.instance.collection("Users");
-        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
+        await users
+            .doc(auth.currentUser!.uid)
+            .collection("AppliedPost")
+            .get()
+            .then((value) {
+          if (value.docs.isEmpty) {
+            return [];
+          } else {
+            value.docs.forEach((element) {
+              postId.add(element.id);
+            });
+          }
         });
       }
       notifyListeners();

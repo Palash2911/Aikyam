@@ -1,4 +1,5 @@
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
+import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,8 +61,25 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                           );
                         } else {
                           if (snapshot.data!.docs.isEmpty) {
-                            return const Center(
-                              child: Text("Start Chatting !"),
+                            return Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 300.0,
+                                    child: Image.asset(
+                                      'assets/images/startchat.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    "Start Chatting !",
+                                    style: kTextPopM16,
+                                  ),
+                                ],
+                              ),
                             );
                           } else {
                             return ListView(
@@ -79,6 +97,7 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                                         builder: (context) => ChatScreenOpen(
                                           receiverId: document.id,
                                           senderType: "Ngo",
+                                          rName: document["SName"],
                                         ),
                                       ),
                                     );

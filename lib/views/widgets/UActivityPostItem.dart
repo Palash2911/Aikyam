@@ -57,8 +57,8 @@ class _UActivityPostItemState extends State<UActivityPostItem> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => NgoProfile()));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => NgoProfile()));
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
@@ -66,7 +66,7 @@ class _UActivityPostItemState extends State<UActivityPostItem> {
                         height: 50.0,
                         width: 50.0,
                         color: Colors.grey,
-                        child: Image.asset('assets/images/dp.jpg'),
+                        child: Image.asset('assets/images/user.png'),
                       ),
                     ),
                   ),
@@ -126,7 +126,8 @@ class _UActivityPostItemState extends State<UActivityPostItem> {
               ),
               const SizedBox(height: 16),
               Center(
-                  child: widget.applyStatus == "InProcess" || widget.applyStatus == "Accepted"
+                  child: widget.applyStatus == "InProcess" ||
+                          widget.applyStatus == "Accepted"
                       ? Text(widget.applyStatus,
                           style: kTextPopM16.copyWith(color: kprimaryColor))
                       : Text('Rejected',

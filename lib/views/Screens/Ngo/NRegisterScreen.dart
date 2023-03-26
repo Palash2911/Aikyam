@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:aikyam/models/ngo.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/auth_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/ngoBottomBar.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,40 +29,56 @@ class _NgoRegisterState extends State<NgoRegister> {
   final _form = GlobalKey<FormState>();
 
   final _dateController = TextEditingController();
+  final _websiteController = TextEditingController();
   final _bioController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _addressController = TextEditingController();
   final _cityController = TextEditingController();
-  final _zipcodeController = TextEditingController();
   final _stateController = TextEditingController();
+  final _aboutController = TextEditingController();
+
   String get date => _dateController.text;
   String get name => _nameController.text;
   String get phone => _phoneController.text;
   String get email => _emailController.text;
   String get bio => _bioController.text;
-  String get zipcode => _zipcodeController.text;
+  String get about => _aboutController.text;
   String get city => _cityController.text;
   String get state => _stateController.text;
+  String get address => _addressController.text;
+  String get website => _websiteController.text;
+
   String category = "";
   File? imageFile;
-  var isLoading = false;
+  var isLoading = true;
 
   @override
   void initState() {
+    super.initState();
     _nameController.text = "";
     _phoneController.text = "";
     _emailController.text = "";
     _bioController.text = "";
     _cityController.text = "";
     _stateController.text = "";
-    _zipcodeController.text = "";
+    _aboutController.text = "";
     _dateController.text = "";
+    _addressController.text = "";
+    _websiteController.text = "";
     type.add(Type("Profit", false));
     type.add(Type("Non-Profit", false));
     ngoReg.add(Registered("Yes", false));
     ngoReg.add(Registered("No", false));
-    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -73,7 +90,9 @@ class _NgoRegisterState extends State<NgoRegister> {
     _dateController.dispose();
     _cityController.dispose();
     _stateController.dispose();
-    _zipcodeController.dispose();
+    _aboutController.dispose();
+    _addressController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
@@ -87,9 +106,17 @@ class _NgoRegisterState extends State<NgoRegister> {
     _form.currentState!.save();
     if (isValid) {
       if (imageFile == null) {
-        print("Please Select Profile Pic");
+        Fluttertoast.showToast(
+          msg: "Please Select A Profile Image!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: kprimaryColor,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else {
-        await ngoProvider.registerNgo(
+        await ngoProvider
+            .registerNgo(
           Ngo(
             id: authProvider.token,
             bio: bio,
@@ -101,11 +128,13 @@ class _NgoRegisterState extends State<NgoRegister> {
             registered: ngoRegisterd,
             city: city,
             state: state,
-            zipcode: zipcode,
+            about: about,
             category: category,
             localUrl: imageFile,
             firebaseUrl: "",
             postId: [],
+            address: address,
+            webUrl: website,
           ),
         )
             .catchError((e) {
@@ -113,11 +142,19 @@ class _NgoRegisterState extends State<NgoRegister> {
             msg: "Something went wrong!",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor: kprimaryColor,
             textColor: Colors.white,
             fontSize: 16.0,
           );
         }).then((_) {
+          Fluttertoast.showToast(
+            msg: "Successfully Registered !",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           setState(() {
             isLoading = false;
           });
@@ -153,10 +190,15 @@ class _NgoRegisterState extends State<NgoRegister> {
           child: isLoading
               ? Container(
                   margin: const EdgeInsets.only(top: 150),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                  child: Center(
+                    child: SizedBox(
+                      height: 200.0,
+                      child: Image.asset(
+                        'assets/images/loading.gif',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ))
               : Container(
                   margin: const EdgeInsets.symmetric(
                       horizontal: 22.0, vertical: 0.0),
@@ -181,7 +223,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   radius: 50,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        AssetImage("assets/images/group.png"),
+                                        AssetImage("assets/images/ngo.png"),
                                     radius: 60,
                                   ),
                                 ),
@@ -219,8 +261,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                         child: Column(
                           children: [
                             SizedBox(
-                              width: 250,
-                              //height: 10.0,
+                              width: 200,
                               child: TextFormField(
                                 maxLines: 1,
                                 keyboardType: TextInputType.text,
@@ -229,7 +270,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   suffixIcon: const Icon(Icons.edit),
                                   filled: true,
                                   fillColor: Colors.grey.shade300,
-                                  hintText: 'Description',
+                                  hintText: 'Bio',
                                   hintStyle: kTextPopR14,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -238,28 +279,14 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'Please enter bio!';
+                                    return 'Please Enter Bio!';
                                   }
                                   return null;
                                 },
                                 textInputAction: TextInputAction.next,
                               ),
                             ),
-
                             const SizedBox(height: 20.0),
-                            // Row(
-                            //   children: [
-                            //     const SizedBox(width: 10),
-                            //     Text(
-                            //       "Ngo Details",
-                            //       textAlign: TextAlign.left,
-                            //       style: kTextPopB14,
-                            //     ),
-                            //   ],
-                            // ),
-                            // const SizedBox(width: 20),
-
-                            // name
                             TextFormField(
                               controller: _nameController,
                               keyboardType: TextInputType.name,
@@ -282,15 +309,14 @@ class _NgoRegisterState extends State<NgoRegister> {
                               },
                               textInputAction: TextInputAction.next,
                             ),
-                            const SizedBox(height: 10.0),
-
+                            const SizedBox(height: 15.0),
                             TextFormField(
                               maxLength: 10,
                               controller: _phoneController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 counterText: '',
-                                hintText: "Contact number",
+                                hintText: "NGO Contact number",
                                 hintStyle: kTextPopR14,
                                 icon: const Icon(Icons.phone),
                                 filled: true,
@@ -303,23 +329,17 @@ class _NgoRegisterState extends State<NgoRegister> {
                               textInputAction: TextInputAction.next,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter your phone number';
-                                }
-                                final phoneRegex = RegExp(r'^\+?\d{9,15}$');
-                                if (!phoneRegex.hasMatch(value)) {
-                                  return 'Please enter a valid phone number';
+                                  return 'Please Enter Phone Number ';
                                 }
                                 return null;
                               },
                             ),
-
-                            const SizedBox(height: 10.0),
-                            //email
+                            const SizedBox(height: 15.0),
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                hintText: "Email id",
+                                hintText: "NGO Email-Id",
                                 hintStyle: kTextPopR14,
                                 icon: const Icon(Icons.email_rounded),
                                 filled: true,
@@ -331,14 +351,37 @@ class _NgoRegisterState extends State<NgoRegister> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter Email-Id!';
+                                  return 'Please Enter Email-Id!';
                                 }
                                 return null;
                               },
                               textInputAction: TextInputAction.next,
                             ),
-                            const SizedBox(height: 10.0),
-                            //gender
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              minLines: 2,
+                              maxLines: 10,
+                              controller: _aboutController,
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration(
+                                hintText: "Tell Us More About Your NGO",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.info_outline_rounded),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please Enter About!';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 15.0),
                             Row(
                               children: [
                                 const Icon(
@@ -350,7 +393,6 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.green.shade100,
-                                    // border: Border.all(color: kprimaryColor, width: 2),
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   child: Row(
@@ -409,53 +451,28 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                               ],
                             ),
-
-                            const SizedBox(width: 20.0),
-                            // Row(
-                            //   children: [
-                            //     Icon(
-                            //       Icons.location_on_rounded,
-                            //       size: 32.0,
-                            //       color: Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: 12.0,
-                            //     ),
-                            //     Container(
-                            //       decoration: BoxDecoration(
-                            //         color: Colors.green.shade100,
-                            //         // border: Border.all(color: kprimaryColor, width: 2),
-                            //         borderRadius: BorderRadius.circular(10.0),
-                            //       ),
-                            //       child: Row(
-                            //         children: [
-                            //           SizedBox(width: 10.0),
-                            //           Text(
-                            //             'Address',
-                            //             style: kTextPopR14.copyWith(
-                            //                 color: Colors.black54),
-                            //           ),
-                            //           SizedBox(width: 10.0),
-                            //           SizedBox(width: 10.0),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-
-                            // Row(
-                            //   children: [
-                            //     const SizedBox(width: 10),
-                            //     Text(
-                            //       "Location Details",
-                            //       textAlign: TextAlign.left,
-                            //       style: kTextPopB14,
-                            //     ),
-                            //   ],
-                            // ),
-                            const SizedBox(height: 10.0),
+                            const SizedBox(height: 25.0),
                             TextFormField(
-                              // controller: _nameController,
+                              controller: _websiteController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                hintText: "Website Url (Optional)",
+                                hintStyle: kTextPopR14,
+                                icon: const Icon(Icons.link),
+                                filled: true,
+                                fillColor: Colors.green.shade100,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              minLines: 1,
+                              maxLines: 2,
+                              controller: _addressController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 hintText: "Address",
@@ -470,101 +487,45 @@ class _NgoRegisterState extends State<NgoRegister> {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter address!';
+                                  return 'Please Enter Address!';
                                 }
                                 return null;
                               },
                               textInputAction: TextInputAction.next,
                             ),
-                            Container(
+                            const SizedBox(height: 15),
+                            Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 40.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextFormField(
-                                      controller: _cityController,
-                                      keyboardType: TextInputType.name,
-                                      decoration: InputDecoration(
-                                        hintText: "City",
-                                        hintStyle: kTextPopR14,
-                                        filled: true,
-                                        fillColor: Colors.green.shade100,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter city!';
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.next,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    flex: 1,
-                                    child: TextFormField(
-                                      maxLength: 6,
-                                      controller: _zipcodeController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        counterText: '',
-                                        hintText: "Zip",
-                                        hintStyle: kTextPopR14,
-                                        filled: true,
-                                        fillColor: Colors.green.shade100,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value!.length < 6) {
-                                          return 'Zip code must be 6 digits long';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
+                                  vertical: 0.0, horizontal: 30.0),
+                              child: CSCPicker(
+                                showCities: true,
+                                countryFilter: const [
+                                  CscCountry.India,
                                 ],
+                                dropdownDecoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  color: kinputColor,
+                                  border:
+                                      Border.all(color: kinputColor, width: 2),
+                                ),
+                                disabledDropdownDecoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    color: kinputColor,
+                                    border: Border.all(
+                                        color: kinputColor, width: 1)),
+                                layout: Layout.vertical,
+                                onCountryChanged: (country) {},
+                                onStateChanged: (state) {
+                                  _stateController.text = state.toString();
+                                },
+                                onCityChanged: (city) {
+                                  _cityController.text = city.toString();
+                                },
                               ),
                             ),
-                            TextFormField(
-                              controller: _stateController,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                hintText: "State",
-                                hintStyle: kTextPopR14,
-                                icon: const Icon(
-                                  Icons.location_on_rounded,
-                                  color: Colors.transparent,
-                                ),
-                                filled: true,
-                                fillColor: Colors.green.shade100,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter state!';
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
-                            ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 16),
                             const Divider(),
                             const SizedBox(height: 10),
                           ],
@@ -578,7 +539,6 @@ class _NgoRegisterState extends State<NgoRegister> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                // border: Border.all(color: kprimaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(5.0),
                               ),
                               child: Row(
@@ -593,9 +553,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
+                                  const SizedBox(width: 10),
                                   SizedBox(
                                     height: 30,
                                     width: 100,
@@ -639,7 +597,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 25.0),
+                            const SizedBox(height: 15.0),
                             Row(
                               children: [
                                 Text(
@@ -649,7 +607,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 15.0),
+                            const SizedBox(height: 11.0),
                             SizedBox(
                               width: double.infinity,
                               height: 60.0,
@@ -704,7 +662,7 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 15.0),
+                            const SizedBox(height: 11.0),
                             Container(
                               padding: const EdgeInsets.all(10),
                               width: double.infinity,
@@ -728,9 +686,16 @@ class _NgoRegisterState extends State<NgoRegister> {
                                 ),
                                 value: _selectedIntrest,
                                 items: [
-                                  'Cleaning',
-                                  'Child Care',
-                                  'Women Empowerment'
+                                  'Human rights',
+                                  'Environmental',
+                                  'Health',
+                                  'Education',
+                                  'Women\'s',
+                                  'Children\'s',
+                                  'Animal welfare',
+                                  'Development ',
+                                  'Peace',
+                                  'Other'
                                 ].map((cat) {
                                   return DropdownMenuItem(
                                     value: cat,
@@ -772,33 +737,15 @@ class _NgoRegisterState extends State<NgoRegister> {
                                   _createProfile(context);
                                 },
                                 child: const Text(
-                                  "Register",
+                                  "Start Contributing",
+                                  style: TextStyle(fontSize: 18),
                                 ),
                               ),
                             ),
-                            // FloatingActionButton.extended(
-                            //   elevation: 0,
-                            //   backgroundColor: Colors.green,
-                            //   foregroundColor: Colors.green,
-                            //   shape: const StadiumBorder(
-                            //       side: BorderSide(
-                            //           color: Colors.green, width: 1)),
-                            //   label: const Text(
-                            //     "        Done        ",
-                            //     style: TextStyle(color: Colors.white),
-                            //   ),
-                            //   onPressed: () {
-                            //     // Navigator.of(context).pushReplacementNamed(NgoBottomBar.routeName);
-                            //     setState(() {
-                            //       isLoading = true;
-                            //     });
-                            //     _createProfile(context);
-                            //   },
-                            // ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

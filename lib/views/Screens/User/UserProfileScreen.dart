@@ -1,8 +1,10 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/UActivityPostItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
@@ -16,7 +18,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   bool _isSelected = true;
-  bool _isUserPov = true;
+  bool isUserPov = true;
   bool _isAboutActive = true;
   var name = "";
   var profileUrl = "";
@@ -75,7 +77,7 @@ class _UserProfileState extends State<UserProfile> {
                           height: 110,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/post2.png'),
+                              image: AssetImage('assets/images/cover.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -102,7 +104,7 @@ class _UserProfileState extends State<UserProfile> {
                                               builder: (context) =>
                                                   EditUser()));
                                     },
-                                    child: _isUserPov
+                                    child: isUserPov
                                         ? Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -150,7 +152,7 @@ class _UserProfileState extends State<UserProfile> {
                       radius: 50.0,
                       backgroundImage: profileUrl.isNotEmpty
                           ? Image.network(profileUrl).image
-                          : const AssetImage('assets/images/dp.jpg'),
+                          : const AssetImage('assets/images/user.png'),
                     ),
                   ),
                 ],
@@ -158,7 +160,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              color: Colors.blue,
+              color: kprimaryColor,
               width: double.maxFinite,
               height: double.maxFinite,
               child: ContainedTabBarView(
@@ -210,15 +212,9 @@ class _UserProfileState extends State<UserProfile> {
                       phone: phone),
                   _Post()
                 ],
-                onChange: (index) => print(index),
+                onChange: (index) {},
               ),
             ),
-            _About(
-                occupation: occupation,
-                interest: interest,
-                email: email,
-                phone: phone),
-            _Post()
           ],
         ),
       ),
@@ -248,7 +244,6 @@ class _About extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10),
-          Divider(),
           Text('Information', style: kTextPopB16),
           SizedBox(height: 8),
           ListTile(
@@ -281,21 +276,35 @@ class _Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // add post here which ever wanted
-      children: const [
-        PostItem(
-          ngoname: 'ngoname',
-          ngocity: 'ngocity',
-          drivecity: 'drivecity',
-          driveaddress: 'driveaddress',
-          driveDate: 'driveDate',
-          applyStatus: 'applyStatus',
-          pid: 'pid',
-          userType: "Ngo",
-          driveTime: "Time",
-          category: "",
-          driveTitle: "",
+      children: [
+        SizedBox(
+          height: 10.0,
         ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.0),
+            border: Border.all(
+              color: kprimaryColor,
+              width: 2.0,
+            ),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
+            child: Text(
+              'Drive History',
+              style: kTextPopR14,
+            ),
+          ),
+        ),
+        UActivityPostItem(
+            ngoName: 'ngoName',
+            ngoCity: 'Pune',
+            driveCity: 'driveCity',
+            date: 'date',
+            time: 'time',
+            applyStatus: 'applyStatus',
+            pid: 'pid'),
       ],
     );
   }

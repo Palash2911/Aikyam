@@ -54,6 +54,8 @@ dependencies:
   animations: ^2.0.7
   fluttertoast: ^8.2.1
   contained_tab_bar_view: ^0.8.0
+  url_launcher: ^6.1.10
+  intl_phone_field: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +80,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/animation/animation1.json
     - assets/animation/
     - assets/
     - assets/images/

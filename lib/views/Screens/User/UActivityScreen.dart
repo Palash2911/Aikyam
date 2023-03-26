@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
 
@@ -47,31 +49,51 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     stream: applyRef.snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Center(
+                          child: SizedBox(
+                            height: 200.0,
+                            child: Image.asset(
+                              'assets/images/loading.gif',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         );
                       } else {
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("No Post Yet !"),
-                          );
-                        } else {
-                          return ListView(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs.map((document) {
-                              return UActivityPostItem(
-                                ngoName: document["NgoName"],
-                                ngoCity: document["NgoCity"],
-                                driveCity: document["City"],
-                                date: document["Date"],
-                                time: document["Time"],
-                                applyStatus: document['ApplicationStatus'],
-                                pid: document.id,
-                              );
-                            }).toList(),
+                          return Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 300.0,
+                                  child: Image.asset(
+                                    'assets/images/noPost.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                const SizedBox(height: 20.0),
+                                Text(
+                                  "No Post Yet !",
+                                  style: kTextPopM16,
+                                ),
+                              ],
+                            ),
                           );
                         }
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs.map((document) {
+                            return UActivityPostItem(
+                              ngoName: document["NgoName"],
+                              ngoCity: document["NgoCity"],
+                              driveCity: document["City"],
+                              date: document["Date"],
+                              time: document["Time"],
+                              applyStatus: document['ApplicationStatus'],
+                              pid: document.id,
+                            );
+                          }).toList(),
+                        );
                       }
                     },
                   ),

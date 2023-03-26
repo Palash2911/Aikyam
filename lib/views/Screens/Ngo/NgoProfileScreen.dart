@@ -1,21 +1,33 @@
+import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
+import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/UActivityPostItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NgoProfile extends StatefulWidget {
-  const NgoProfile({super.key});
+  const NgoProfile({
+    required this.authToken,
+    required this.isUser,
+  });
+  final String authToken;
+  final bool isUser;
 
   @override
   State<NgoProfile> createState() => _NgoProfileState();
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool isNgoPov = true;
+  bool isNgoPov = true; // ithe false kel ka dista chat option
   bool _isAboutActive = true;
   bool _isWorkSelected = false;
   var profileUrl = "";
@@ -27,6 +39,10 @@ class _NgoProfileState extends State<NgoProfile> {
   var type = "";
   var est = "";
   var category = "";
+  var senderId = "";
+  var isInit = true;
+  var isUser = "Users";
+  var url = "";
 
   void _aboutPressed() {
     setState(() {
@@ -42,16 +58,23 @@ class _NgoProfileState extends State<NgoProfile> {
     });
   }
 
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _fetchDetails();
+    if (isInit) {
+      _fetchDetails();
+    }
+    isInit = false;
   }
 
   void _fetchDetails() async {
-    var authToken = Provider.of<Auth>(context).token;
+    senderId = Provider.of<Auth>(context).token;
+    isUser = Provider.of<Auth>(context).isUser == "NGO" ? "Ngo" : "Users";
     await Provider.of<NgoProvider>(context)
-        .getNgoDetails(authToken)
-        .then((value) {
+        .getNgoDetails(widget.authToken)
+        .catchError((e) {
+      print(e);
+    }).then((value) {
       name = value!.name;
       email = value.email;
       phone = value.phone;
@@ -59,9 +82,29 @@ class _NgoProfileState extends State<NgoProfile> {
       est = value.date;
       type = value.type;
       category = value.category;
-      about = value.bio;
+      about = value.about;
       bio = value.bio;
+      url = value.webUrl;
     });
+  }
+
+  void _chatScreen() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => ChatScreenOpen(
+          receiverId: widget.authToken,
+          senderType: isUser,
+          rName: name,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -76,260 +119,202 @@ class _NgoProfileState extends State<NgoProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 110,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/post2.png'),
-                                fit: BoxFit.cover,
-                              ),
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 110,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/cover.png'),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(
-                            height: 36.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Smile Foundation',
-                                style: kTextPopB24,
-                              ),
-                              isNgoPov
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 5.0, horizontal: 15.0),
-                                        color: kprimaryColor,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NgoEditProfile()));
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.edit,
-                                                size: 24.0,
-                                                color: ksecondaryColor,
-                                              ),
-                                              SizedBox(
-                                                width: 10.0,
-                                              ),
-                                              Text('Edit',
-                                                  style: kTextPopB14.copyWith(
-                                                      color: ksecondaryColor)),
-                                            ],
-                                          ),
+                        ),
+                        const SizedBox(height: 36.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              name,
+                              style: kTextPopB24,
+                            ),
+                            widget.isUser
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 15.0),
+                                      color: kprimaryColor,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const NgoEditProfile()));
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            const SizedBox(width: 10.0),
+                                            Text(
+                                              'Edit',
+                                              style: kTextPopB14.copyWith(
+                                                  color: ksecondaryColor),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  : Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                  Icons.location_on_rounded)),
+                                    ),
+                                  )
+                                : Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                          onPressed: _launchUrl,
+                                          icon: const Icon(Icons.link_rounded),
                                         ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(Icons.link_rounded)),
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: kprimaryColor,
-                                          foregroundColor: ksecondaryColor,
-                                          child: IconButton(
-                                              onPressed: () {},
-                                              icon:
-                                                  Icon(Icons.message_rounded)),
-                                        ),
-                                      ],
-                                    )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            'Short info what this foundation do also the category and foundation type written by foundation',
-                            style: kTextPopR14,
-                          )
-                        ],
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      CircleAvatar(
+                                        backgroundColor: kprimaryColor,
+                                        foregroundColor: ksecondaryColor,
+                                        child: IconButton(
+                                            onPressed: () {
+                                              _chatScreen();
+                                            },
+                                            icon: const Icon(
+                                                Icons.message_rounded)),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        ),
+                        const SizedBox(height: 5.0),
+                        Text(
+                          bio,
+                          style: kTextPopR14,
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    left: MediaQuery.of(context).size.width / 5 - 54,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: SizedBox(
+                        height: 90.0,
+                        width: 90.0,
+                        child: profileUrl.isNotEmpty
+                            ? Image.network(
+                                profileUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/images/ngo.png',
+                                fit: BoxFit.cover),
                       ),
                     ),
-                    Positioned(
-                      top: 50,
-                      left: MediaQuery.of(context).size.width / 5 - 64,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Container(
-                          height: 100.0,
-                          width: 100.0,
-                          color: const Color(0xffFF0E58),
-                          child: Image.asset('assets/images/dp.jpg'),
+                  ),
+                ],
+              ),
+              SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: double.maxFinite,
+                  height: MediaQuery.of(context).size.height -
+                      kBottomNavigationBarHeight -
+                      kBottomNavigationBarHeight,
+                  child: ContainedTabBarView(
+                    tabBarProperties: const TabBarProperties(
+                        indicatorColor: Colors.transparent),
+                    tabs: [
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        color: kprimaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline_rounded,
+                              size: 24.0,
+                              color: ksecondaryColor,
+                            ),
+                            const SizedBox(width: 5.0),
+                            Text(
+                              'About',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(10.0),
-              //   child: Container(
-              //     height: 100.0,
-              //     width: 100.0,
-              //     color: const Color(0xffFF0E58),
-              //     child: Image.asset('assets/images/dp.jpg'),
-              //   ),
-              // ),
-
-              // TabBar(tabs: [
-              //   Tab(
-              //     icon: Icon(Icons.info_outline_rounded,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              //   Tab(
-              //     icon: Icon(Icons.work_outlined,
-              //         size: 24.0, color: kprimaryColor),
-              //   ),
-              // ]),
-              // TabBarView(
-              //   children: [
-              //     _About(),
-              //     _Post(),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child:
-              // Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _aboutPressed,
-              //           icon: Icon(
-              //             Icons.info_outline_rounded,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'About',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10.0),
-              //         color: Colors.white,
-              //         child: ElevatedButton.icon(
-              //           style: ElevatedButton.styleFrom(
-              //             elevation: 0.0,
-              //             backgroundColor:
-              //                 _isAboutActive ? kprimaryColor : ksecondaryColor,
-              //           ),
-              //           onPressed: _workPressed,
-              //           icon: Icon(
-              //             Icons.work,
-              //             size: 24.0,
-              //             color: _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //           ),
-              //           label: Text(
-              //             'Post',
-              //             style: kTextPopM16.copyWith(
-              //               color:
-              //                   _isAboutActive ? ksecondaryColor : kprimaryColor,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue,
-                width: double.maxFinite,
-                height: double.maxFinite,
-                child: ContainedTabBarView(
-                  tabs: [
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      color: kprimaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.info_outline_rounded,
-                            size: 24.0,
-                            color: ksecondaryColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            'About',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        color: kprimaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.work,
+                              size: 24.0,
+                              color: ksecondaryColor,
+                            ),
+                            const SizedBox(width: 5.0),
+                            Text(
+                              'Post',
+                              style:
+                                  kTextPopM16.copyWith(color: ksecondaryColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      color: kprimaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.work,
-                            size: 24.0,
-                            color: ksecondaryColor,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            'Post',
-                            style: kTextPopM16.copyWith(color: ksecondaryColor),
-                          ),
-                        ],
+                    ],
+                    views: [
+                      _About(
+                        about: about,
+                        type: type,
+                        category: category,
+                        estd: est,
+                        email: email,
+                        phone: phone,
                       ),
-                    ),
-                  ],
-                  views: [_About(), _Post()],
-                  onChange: (index) => print(index),
+                      isNgoPov
+                          ? _Post()
+                          : PostItem(
+                              userType: 'userType',
+                              post: Post(
+                                  category: 'category',
+                                  description: 'description',
+                                  ngoid: 'ngoid',
+                                  id: 'id',
+                                  noofVolunters: 'noofVolunters',
+                                  date: 'date',
+                                  time: 'time',
+                                  city: 'city',
+                                  driveTitle: 'driveTitle',
+                                  ncity: 'ncity',
+                                  ngoname: 'ngoname',
+                                  state: 'state',
+                                  address: 'address',
+                                  country: 'country',
+                                  photos: []),
+                              applyStatus: 'applyStatus'),
+                    ],
+                    onChange: (index) {},
+                  ),
                 ),
               ),
             ],
@@ -340,26 +325,84 @@ class _NgoProfileState extends State<NgoProfile> {
   }
 }
 
-class _Post extends StatelessWidget {
+class _Post extends StatefulWidget {
+  @override
+  State<_Post> createState() => _PostState();
+}
+
+class _PostState extends State<_Post> {
+  final auth = FirebaseAuth.instance;
+  CollectionReference applyRef = FirebaseFirestore.instance.collection('Ngo');
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // add post here which ever wanted
-      children: const [
-        PostItem(
-          ngoname: 'ngoname',
-          ngocity: 'ngocity',
-          drivecity: 'drivecity',
-          driveaddress: 'driveaddress',
-          driveDate: 'driveDate',
-          applyStatus: 'applyStatus',
-          pid: 'pid',
-          userType: "Ngo",
-          driveTime: "Time",
-          category: "",
-          driveTitle: "",
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Container(
+          height:
+              MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+          padding: const EdgeInsets.only(bottom: 120),
+          child: Column(
+            children: [
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: applyRef.snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 300.0,
+                                child: Image.asset(
+                                  'assets/images/noPost.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              Text(
+                                "No Post Applied Yet !",
+                                style: kTextPopM16,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs.map((document) {
+                            return UActivityPostItem(
+                              ngoName: document["NgoName"],
+                              ngoCity: document["NgoCity"],
+                              driveCity: document["City"],
+                              date: document["Date"],
+                              time: document["Time"],
+                              applyStatus: document['ApplicationStatus'],
+                              pid: document.id,
+                            );
+                          }).toList(),
+                        );
+                      }
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -367,7 +410,19 @@ class _Post extends StatelessWidget {
 class _About extends StatelessWidget {
   const _About({
     super.key,
+    required this.about,
+    required this.type,
+    required this.category,
+    required this.estd,
+    required this.email,
+    required this.phone,
   });
+  final String about;
+  final String type;
+  final String category;
+  final String estd;
+  final String email;
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
@@ -378,39 +433,37 @@ class _About extends StatelessWidget {
         children: [
           Text('About', style: kTextPopB16),
           const SizedBox(height: 8),
-          Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis volutpat nunc, in dignissim sapien tincidunt vel. Sed eget mauris ut sem consequat venenatis. Nunc id semper magna. Nam varius quam vel lorem luctus, vel ornare nisi ultrices.',
-              style: kTextPopR14),
+          Text(about, style: kTextPopR14),
           const SizedBox(height: 10),
           const Divider(),
           Text('Information', style: kTextPopB16),
           const SizedBox(height: 8),
           ListTile(
             title: Text('Type', style: kTextPopM16),
-            subtitle: Text('Non-Profit', style: kTextPopR14),
+            subtitle: Text(type, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Category', style: kTextPopM16),
-            subtitle: Text('health,Social work,Education', style: kTextPopR14),
+            subtitle: Text(category, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Established in', style: kTextPopM16),
             subtitle: Text(
-              '2002',
+              estd,
               style: kTextPopR14,
             ),
           ),
-          SizedBox(height: 10),
-          Divider(),
+          const SizedBox(height: 10),
+          const Divider(),
           Text('Contact', style: kTextPopB16),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ListTile(
             title: Text('Email id', style: kTextPopM16),
-            subtitle: Text('thisisngo@gmail.com', style: kTextPopR14),
+            subtitle: Text(email, style: kTextPopR14),
           ),
           ListTile(
             title: Text('Mobile Number', style: kTextPopM16),
-            subtitle: Text('9876543210', style: kTextPopR14),
+            subtitle: Text("+91 $phone", style: kTextPopR14),
           ),
         ],
       ),

@@ -13,9 +13,14 @@ class Auth extends ChangeNotifier {
   var _profilePic = "";
   var verificationId = '';
   var _profileCreated = false;
+  var _uName = "";
 
   bool get isAuth {
     return _auth.currentUser?.uid != null ? true : false;
+  }
+
+  String get uName {
+    return _uName;
   }
 
   bool get isProfile {
@@ -57,7 +62,6 @@ class Auth extends ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
@@ -76,6 +80,7 @@ class Auth extends ChangeNotifier {
       prefs.setString('UserType', "");
       prefs.setBool('Profile', false);
       prefs.setString('ProfilePic', "");
+      prefs.setString("UserName", "");
       notifyListeners();
       return cred.user != null ? true : false;
     } catch (e) {
@@ -94,7 +99,7 @@ class Auth extends ChangeNotifier {
               if (!datasnapshot.exists)
                 {user = false}
               else
-                {_profilePic = datasnapshot['ProfilePic']}
+                {_profilePic = datasnapshot['ProfilePic'], _uName = datasnapshot["Name"]}
             },
           );
       if (!user) {
@@ -105,14 +110,12 @@ class Auth extends ChangeNotifier {
                 if (!datasnapshot.exists)
                   {user = false}
                 else
-                  {user = true, _profilePic = datasnapshot['ProfilePic']}
+                  {user = true, _profilePic = datasnapshot['ProfilePic'], _uName = datasnapshot["Name"]}
               },
             );
         if (user) {
           _isUser = 'NGO';
           _profileCreated = true;
-        } else {
-          print("Error");
         }
       } else {
         _isUser = 'Individual';
@@ -131,9 +134,13 @@ class Auth extends ChangeNotifier {
     prefs.setBool("Profile", false);
   }
 
-  @override
   Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.remove('UID');
+    prefs.remove('UserType');
+    prefs.remove('Profile');
+    prefs.remove('ProfilePic');
+    prefs.remove("UserName");
     prefs.clear();
     await _auth.signOut();
     notifyListeners();
@@ -150,6 +157,9 @@ class Auth extends ChangeNotifier {
     }
     _profileCreated = prefs.getBool('Profile')!;
     _profilePic = prefs.getString('ProfilePic')!;
+    _uName = prefs.getString("UserName")!;
+
+    print(_uName);
     notifyListeners();
   }
 }

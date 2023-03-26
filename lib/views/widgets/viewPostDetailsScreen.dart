@@ -16,6 +16,8 @@ class ViewDetails extends StatefulWidget {
   final String pid;
   final String userType;
   final String driveTime;
+  final String title;
+  final String desc;
   final String category;
 
   const ViewDetails({
@@ -30,6 +32,8 @@ class ViewDetails extends StatefulWidget {
     required this.userType,
     required this.category,
     required this.driveTime,
+    required this.title,
+    required this.desc,
   });
 
   @override
@@ -41,6 +45,8 @@ class _ViewDetailsState extends State<ViewDetails> {
   String? noVol;
   String? loc;
   var _isLoading = true;
+  bool _isApply = true;
+  var _isApplyLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -59,13 +65,36 @@ class _ViewDetailsState extends State<ViewDetails> {
     });
   }
 
+  Future applyPost() async {
+    if (_isApply && widget.applyStatus == "Apply") {
+      var postProvider = Provider.of<PostProvider>(context, listen: false);
+      await postProvider.applyPost(widget.pid, widget.userType).then((value) {
+        setState(() {
+          _isApplyLoading = false;
+        });
+      });
+    } else {
+      setState(() {
+        _isApplyLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("View Details"),
+      ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
             )
           : SafeArea(
               child: SingleChildScrollView(
@@ -81,7 +110,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: Container(
-                                child: Image.asset('assets/images/dp.jpg'),
+                                child: Image.asset('assets/images/ngo.png'),
                               ),
                             ),
                             title: Text(
@@ -92,7 +121,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                           ),
                           const Divider(),
                           Text(
-                            'This is the title of the drive river cleaning organize by d y patil pune ',
+                            widget.title,
                             style: kTextPopM16,
                           ),
                           SizedBox(height: 12.0),
@@ -145,9 +174,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 })),
                           ),
                           SizedBox(height: 16),
-                          Text(
-                              'This is the description of the drive river cleaning organized by d y patil pune here more and more text is written this text has no limit this can be anything here written anything hi hello how are you This is the description of the drive river cleaning oraganized by d y patil pune here more and more text is written this text has no limit this can be anything here written anything hi hello how are you ',
-                              style: kTextPopR16),
+                          Text(widget.desc, style: kTextPopR16),
                           SizedBox(
                             width: 12.0,
                           ),
@@ -218,13 +245,27 @@ class _ViewDetailsState extends State<ViewDetails> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            children: [
-                              AppButton(text: 'Apply', onPressed: () {}),
-                            ],
+                          const SizedBox(height: 10.0),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(9.0),
+                            child: _isApplyLoading
+                                ? const CircularProgressIndicator()
+                                : ElevatedButton(
+                                    onPressed: () {
+                                      if (widget.applyStatus != "Applied" &&
+                                          widget.applyStatus != "YOUR POST") {
+                                        applyPost();
+                                        setState(() {
+                                          _isApply = false;
+                                          _isApplyLoading = true;
+                                        });
+                                      }
+                                    },
+                                    child: Text(
+                                      _isApply ? widget.applyStatus : 'Applied',
+                                    ),
+                                  ),
                           ),
                         ],
                       ),

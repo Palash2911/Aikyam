@@ -1,9 +1,11 @@
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NApplicantsScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NEditpost.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,7 @@ class NActivityPost extends StatefulWidget {
   final String title;
   final String date;
   final String time;
+  final String ngoId;
 
   const NActivityPost({
     super.key,
@@ -29,6 +32,7 @@ class NActivityPost extends StatefulWidget {
     required this.title,
     required this.date,
     required this.time,
+    required this.ngoId,
   });
 
   @override
@@ -78,8 +82,15 @@ class _NActivityPostState extends State<NActivityPost> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NgoProfile()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NgoProfile(
+                          isUser: false,
+                          authToken: widget.ngoId,
+                        ),
+                      ),
+                    );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -87,7 +98,7 @@ class _NActivityPostState extends State<NActivityPost> {
                       height: 50.0,
                       width: 50.0,
                       color: Colors.grey,
-                      child: Image.asset('assets/images/dp.jpg'),
+                      child: Image.asset('assets/images/ngo.png'),
                     ),
                   ),
                 ),
@@ -112,7 +123,25 @@ class _NActivityPostState extends State<NActivityPost> {
                   ],
                 ),
                 const Spacer(),
-                GestureDetector(
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => NgoEditPost(
+                          pid: widget.pid,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    FeatherIcons.edit,
+                    size: 32.0,
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
                   onTap: () {},
                   child: const Icon(
                     Icons.share,
@@ -144,7 +173,7 @@ class _NActivityPostState extends State<NActivityPost> {
               children: [
                 Icon(Icons.access_time_rounded),
                 SizedBox(width: 5),
-                Text('Date and Time: ', style: kTextPopB14),
+                Text('Date: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
                     '19 Mar ',
@@ -153,7 +182,21 @@ class _NActivityPostState extends State<NActivityPost> {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.access_time_rounded),
+                SizedBox(width: 5),
+                Text('Time: ', style: kTextPopB14),
+                Expanded(
+                  child: Text(
+                    '10:00 AM ',
+                    style: kTextPopR14,
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -164,10 +207,7 @@ class _NActivityPostState extends State<NActivityPost> {
                     deletePost();
                   },
                 ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                const SizedBox(width: 25.0),
+                const SizedBox(width: 15.0),
                 AppButton(
                   text: 'View Applicants',
                   onPressed: () {

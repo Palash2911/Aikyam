@@ -1,6 +1,4 @@
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/providers/ngo_provider.dart';
-import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
@@ -28,9 +26,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
   void setProfilePic() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
-    await Provider.of<UserProvider>(context, listen: false)
-        .getUserDetails(authProvider.token)
-        .then((value) => {name = value!.name});
+    name = authProvider.uName;
     setState(() {});
   }
 
@@ -50,7 +46,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
                   radius: 30.0,
                   backgroundImage: pp.isNotEmpty
                       ? Image.network(pp).image
-                      : const AssetImage('assets/images/dp.jpg'),
+                      : const AssetImage('assets/images/user.png'),
                 ),
                 Text(
                   name,
@@ -69,18 +65,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.category),
-            title: const Text(' Categories'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NgoProfile(),
-                ),
-              );
-            },
-          ),
+          
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
@@ -106,19 +91,19 @@ class NgoAppdrawer extends StatefulWidget {
 class _NgoAppdrawerState extends State<NgoAppdrawer> {
   var pp = "";
   var name = "";
+  var authToken = "";
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    setProfilePic();
+    setFields();
   }
 
-  void setProfilePic() async {
+  void setFields() async {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
-    await Provider.of<NgoProvider>(context, listen: false)
-        .getNgoDetails(authProvider.token)
-        .then((value) => {name = value!.name});
+    name = authProvider.uName;
+    authToken = authProvider.token;
     setState(() {});
   }
 
@@ -137,7 +122,10 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const NgoProfile(),
+                      builder: (context) => NgoProfile(
+                        authToken: authToken,
+                        isUser: true,
+                      ),
                     ));
               },
               child: Column(
@@ -147,56 +135,24 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                     radius: 30.0,
                     backgroundImage: pp.isNotEmpty
                         ? Image.network(pp).image
-                        : const AssetImage('assets/images/dp.jpg'),
+                        : const AssetImage('assets/images/ngo.png'),
                   ),
                 ],
               ),
             ),
             accountEmail: null,
           ),
-          // DrawerHeader(
-          //   decoration: const BoxDecoration(
-          //     color: Color(0xfff1BB273),
-          //   ),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       ClipRRect(
-          //         borderRadius: BorderRadius.circular(10.0),
-          //         child: Container(
-          //           height: 70.0,
-          //           width: 70.0,
-          //           color: const Color(0xffFF0E58),
-          //           child: Image.asset('assets/images/dp.jpg'),
-          //         ),
-          //       ),
-          //       Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Text(
-          //             'Smile Foundation',
-          //             style: kTextPopM16.copyWith(color: ksecondaryColor),
-          //           ),
-          //           Flexible(
-          //             child: Text(
-          //               'What should we write here ',
-          //               overflow: TextOverflow.ellipsis,
-          //               maxLines: 10,
-          //               style: kTextPopR12.copyWith(color: ksecondaryColor),
-          //             ),
-          //           )
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text(' My Profile '),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NgoProfile()),
+                MaterialPageRoute(
+                    builder: (context) => NgoProfile(
+                          authToken: authToken,
+                          isUser: true,
+                        )),
               );
             },
           ),
@@ -211,7 +167,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
             onTap: () {
               Provider.of<Auth>(context, listen: false).signOut();
               Navigator.of(context, rootNavigator: true)
-                  .push(MaterialPageRoute(builder: (context) => new LogIn()));
+                  .push(MaterialPageRoute(builder: (context) => LogIn()));
             },
           ),
         ],

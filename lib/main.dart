@@ -1,5 +1,5 @@
 import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/providers/chatProvider.dart';
+import 'package:aikyam/providers/chat_provider.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';

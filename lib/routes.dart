@@ -1,19 +1,18 @@
-import 'package:aikyam/views/Screens/Login/introduction_animation/introduction_animation_screen.dart';
 import 'package:aikyam/views/Screens/Login/Choose.dart';
 import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/NAddPostScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NchatScreen.dart';
 import 'package:aikyam/views/Screens/Login/OTP.dart';
 import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
 import 'package:aikyam/views/Screens/Login/SplashScreen.dart';
+import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
+import 'package:aikyam/views/Screens/User/BottomNavBar.dart';
 import 'package:aikyam/views/Screens/User/UActivityScreen.dart';
 import 'package:aikyam/views/Screens/User/ChatScreen.dart';
 import 'package:aikyam/views/Screens/User/HomeScreen.dart';
 import 'package:aikyam/views/Screens/User/UserRegister.dart';
-import 'package:aikyam/views/widgets/BottomNavBar.dart';
-import 'package:aikyam/views/widgets/ngoBottomBar.dart';
 import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
