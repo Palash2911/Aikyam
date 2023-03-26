@@ -26,27 +26,18 @@ class Addpost extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              children: [
-                const SizedBox(height: 100),
-                const Text(
-                  "What do you wanna do ?",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 40.0,
-            ),
+            SizedBox(height: 200,),
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Create Post",
@@ -83,59 +74,8 @@ class Addpost extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               "Here write something about create post option",
-                              style: kTextPopR14.copyWith(color: kprimaryColor),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.all(40.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Edit Post",
-                        style: kTextPopB16,
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditPostScreen()));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: kprimaryColor),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Image.asset(
-                              'assets/images/group.png',
-                              height: 90.0,
-                              width: 90.0,
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            flex: 2,
-                            child: Text(
-                              "Here write something about Edit post option",
-                              style: kTextPopR14.copyWith(color: kprimaryColor),
+                              style:
+                                  kTextPopR14.copyWith(color: kprimaryColor),
                             ),
                           )
                         ],
