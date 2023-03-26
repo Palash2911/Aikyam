@@ -68,8 +68,14 @@ class _NHomeScreenState extends State<NHomeScreen> {
         ),
         drawer: NgoAppdrawer(),
         body: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: SizedBox(
+                  height: 200.0,
+                  child: Image.asset(
+                    'assets/images/loading.gif',
+                    fit: BoxFit.contain,
+                  ),
+                ),
               )
             : RefreshIndicator(
                 onRefresh: () async {

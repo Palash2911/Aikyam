@@ -4,6 +4,7 @@ import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -121,7 +122,17 @@ class _NActivityPostState extends State<NActivityPost> {
                   ],
                 ),
                 const Spacer(),
-                GestureDetector(
+                InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    FeatherIcons.edit,
+                    size: 32.0,
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                InkWell(
                   onTap: () {},
                   child: const Icon(
                     Icons.share,
@@ -153,7 +164,7 @@ class _NActivityPostState extends State<NActivityPost> {
               children: [
                 Icon(Icons.access_time_rounded),
                 SizedBox(width: 5),
-                Text('Date and Time: ', style: kTextPopB14),
+                Text('Date: ', style: kTextPopB14),
                 Expanded(
                   child: Text(
                     '19 Mar ',
@@ -162,7 +173,21 @@ class _NActivityPostState extends State<NActivityPost> {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.access_time_rounded),
+                SizedBox(width: 5),
+                Text('Time: ', style: kTextPopB14),
+                Expanded(
+                  child: Text(
+                    '10:00 AM ',
+                    style: kTextPopR14,
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

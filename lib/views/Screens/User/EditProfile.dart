@@ -145,8 +145,14 @@ class _EditUserState extends State<EditUser> {
           ),
         ),
         body: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: SizedBox(
+                  height: 200.0,
+                  child: Image.asset(
+                    'assets/images/loading.gif',
+                    fit: BoxFit.contain,
+                  ),
+                ),
               )
             : SingleChildScrollView(
                 child: Container(
@@ -185,7 +191,7 @@ class _EditUserState extends State<EditUser> {
                                   color: Colors.grey,
                                 ),
                                 child: const Padding(
-                                  padding:  EdgeInsets.all(2.0),
+                                  padding: EdgeInsets.all(2.0),
                                   child: Icon(
                                     Icons.edit,
                                     color: Colors.white,

@@ -134,8 +134,14 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
             )
           : SafeArea(
               child: Column(

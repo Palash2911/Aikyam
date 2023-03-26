@@ -56,28 +56,34 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                       stream: applicantRef!.snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          return Center(
+                            child: SizedBox(
+                              height: 200.0,
+                              child: Image.asset(
+                                'assets/images/loading.gif',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           );
                         } else {
                           if (snapshot.data!.docs.isEmpty) {
-                            return  Center(
+                            return Center(
                               child: Column(
                                 children: [
                                   SizedBox(
-                                  height: 300.0,
-                                  child: Image.asset(
-                                    'assets/images/noPost.png',
-                                    fit: BoxFit.contain,
+                                    height: 300.0,
+                                    child: Image.asset(
+                                      'assets/images/noPost.png',
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  "No Applicants Yet !",
-                                  style: kTextPopM16,
-                                ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    "No Applicants Yet !",
+                                    style: kTextPopM16,
+                                  ),
                                 ],
                               ),
                             );
@@ -92,14 +98,14 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                   city: document['PhoneNo'],
                                   imageUrl: document['ProfilePic'],
                                   uid: document.id,
-                                  applicationStatus: document["ApplicationStatus"],
+                                  applicationStatus:
+                                      document["ApplicationStatus"],
                                 );
                               }).toList(),
                             );
                           }
                         }
-                      }
-                  ),
+                      }),
                 ),
               ],
             ),

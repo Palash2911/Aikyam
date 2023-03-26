@@ -45,8 +45,7 @@ List<Widget> _buildScreens() {
   return [
     const NHomeScreen(),
     const NgoChatScreen(),
-    // const NgoAddpost(),
-    Addpost(),
+    const NgoAddpost(),
     const NgoActivityScreen()
   ];
 }

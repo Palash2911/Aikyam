@@ -87,8 +87,14 @@ class _ViewDetailsState extends State<ViewDetails> {
         title: const Text("View Details"),
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
             )
           : SafeArea(
               child: SingleChildScrollView(

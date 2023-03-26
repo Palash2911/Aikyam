@@ -21,6 +21,7 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
   final auth = FirebaseAuth.instance;
   CollectionReference postRef = FirebaseFirestore.instance.collection('Posts');
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

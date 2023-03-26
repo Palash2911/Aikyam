@@ -46,15 +46,16 @@ class _LogInState extends State<LogIn> {
           fontSize: 16.0,
         );
       }).then((value) {
-          Fluttertoast.showToast(
-            msg: "OTP Sent Successfully !",
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: kprimaryColor,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          Navigator.of(context).pushReplacementNamed(OtpScreen.routeName, arguments: phoneNo);
+        Fluttertoast.showToast(
+          msg: "OTP Sent Successfully !",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: kprimaryColor,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.of(context)
+            .pushReplacementNamed(OtpScreen.routeName, arguments: phoneNo);
       });
     } else {
       Fluttertoast.showToast(
@@ -72,8 +73,14 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: SizedBox(
+                height: 200.0,
+                child: Image.asset(
+                  'assets/images/loading.gif',
+                  fit: BoxFit.contain,
+                ),
+              ),
             )
           : SingleChildScrollView(
               child: SafeArea(

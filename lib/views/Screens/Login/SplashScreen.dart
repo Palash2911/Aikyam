@@ -63,15 +63,16 @@ class _SplashScreenState extends State<SplashScreen> {
     // You have to call it on your starting screen
     SizeConfig().init(context);
     return Scaffold(
-        backgroundColor: kprimaryColor,
-        body: Center(
-          child: SizedBox(
-            height: 350.0,
-            child: Image.asset(
-              'assets/images/splashlogo.gif',
-              fit: BoxFit.contain,
-            ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SizedBox(
+          height: 350.0,
+          child: Image.asset(
+            'assets/images/splash.gif',
+            fit: BoxFit.contain,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

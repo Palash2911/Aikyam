@@ -190,10 +190,15 @@ class _NgoRegisterState extends State<NgoRegister> {
           child: isLoading
               ? Container(
                   margin: const EdgeInsets.only(top: 150),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                  child: Center(
+                    child: SizedBox(
+                      height: 200.0,
+                      child: Image.asset(
+                        'assets/images/loading.gif',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ))
               : Container(
                   margin: const EdgeInsets.symmetric(
                       horizontal: 22.0, vertical: 0.0),
