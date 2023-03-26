@@ -64,9 +64,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
+                                const SizedBox(height: 20.0),
                                 Text(
                                   "No Post Yet !",
                                   style: kTextPopM16,
@@ -74,23 +72,22 @@ class _ActivityScreenState extends State<ActivityScreen> {
                               ],
                             ),
                           );
-                        } else {
-                          return ListView(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs.map((document) {
-                              return UActivityPostItem(
-                                ngoName: document["NgoName"],
-                                ngoCity: document["NgoCity"],
-                                driveCity: document["City"],
-                                date: document["Date"],
-                                time: document["Time"],
-                                applyStatus: document['ApplicationStatus'],
-                                pid: document.id,
-                              );
-                            }).toList(),
-                          );
                         }
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs.map((document) {
+                            return UActivityPostItem(
+                              ngoName: document["NgoName"],
+                              ngoCity: document["NgoCity"],
+                              driveCity: document["City"],
+                              date: document["Date"],
+                              time: document["Time"],
+                              applyStatus: document['ApplicationStatus'],
+                              pid: document.id,
+                            );
+                          }).toList(),
+                        );
                       }
                     },
                   ),

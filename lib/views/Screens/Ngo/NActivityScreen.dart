@@ -1,12 +1,9 @@
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/Post.dart';
 
 class NgoActivityScreen extends StatefulWidget {
   const NgoActivityScreen({super.key});
@@ -60,58 +57,37 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
+                                const SizedBox(height: 20.0),
                                 Text(
-                                  "No Post Yet !",
+                                  "No Post Found !",
                                   style: kTextPopM16,
                                 ),
                               ],
                             ),
                           );
-                        } else {
-                          return ListView(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs.map((document) {
-                              if (auth.currentUser!.uid == document['NgoId']) {
-                                return NActivityPost(
-                                  ngoname: document['NgoName'],
-                                  ngocity: document['NgoCity'],
-                                  drivecity: document['City'],
-                                  driveaddress: document['Address'],
-                                  driveDate: document['Date'],
-                                  pid: document.id,
-                                  title: document["Title"],
-                                  time: document["Time"],
-                                  date: document["Date"],
-                                  ngoId: document["NgoId"],
-                                );
-                              }
-                              return Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 300.0,
-                                      child: Image.asset(
-                                        'assets/images/noPost.png',
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Text(
-                                      "No Post Found !",
-                                      style: kTextPopM16,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          );
                         }
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs.map((document) {
+                            if (auth.currentUser!.uid == document['NgoId']) {
+                              return NActivityPost(
+                                ngoname: document['NgoName'],
+                                ngocity: document['NgoCity'],
+                                drivecity: document['City'],
+                                driveaddress: document['Address'],
+                                driveDate: document['Date'],
+                                pid: document.id,
+                                title: document["Title"],
+                                time: document["Time"],
+                                date: document["Date"],
+                                ngoId: document["NgoId"],
+                              );
+                            } else {
+                              return const Text("");
+                            }
+                          }).toList(),
+                        );
                       }
                     },
                   ),

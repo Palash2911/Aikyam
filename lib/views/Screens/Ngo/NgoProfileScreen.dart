@@ -6,7 +6,10 @@ import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/Post.dart';
+import 'package:aikyam/views/widgets/UActivityPostItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -231,7 +234,9 @@ class _NgoProfileState extends State<NgoProfile> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight - kBottomNavigationBarHeight,
+                  height: MediaQuery.of(context).size.height -
+                      kBottomNavigationBarHeight -
+                      kBottomNavigationBarHeight,
                   child: ContainedTabBarView(
                     tabBarProperties: const TabBarProperties(
                         indicatorColor: Colors.transparent),
@@ -320,24 +325,84 @@ class _NgoProfileState extends State<NgoProfile> {
   }
 }
 
-class _Post extends StatelessWidget {
+class _Post extends StatefulWidget {
+  @override
+  State<_Post> createState() => _PostState();
+}
+
+class _PostState extends State<_Post> {
+  final auth = FirebaseAuth.instance;
+  CollectionReference applyRef = FirebaseFirestore.instance.collection('Ngo');
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // add post here which ever wanted
-      children: const [
-        NActivityPost(
-            ngoname: 'ngoname',
-            ngocity: 'ngocity',
-            drivecity: 'drivecity',
-            driveaddress: 'driveaddress',
-            driveDate: 'driveDate',
-            pid: 'pid',
-            title: 'title',
-            date: 'date',
-            time: 'time',
-            ngoId: 'ngoId')
-      ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Container(
+          height:
+              MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+          padding: const EdgeInsets.only(bottom: 120),
+          child: Column(
+            children: [
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: applyRef.snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 300.0,
+                                child: Image.asset(
+                                  'assets/images/noPost.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              Text(
+                                "No Post Applied Yet !",
+                                style: kTextPopM16,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs.map((document) {
+                            return UActivityPostItem(
+                              ngoName: document["NgoName"],
+                              ngoCity: document["NgoCity"],
+                              driveCity: document["City"],
+                              date: document["Date"],
+                              time: document["Time"],
+                              applyStatus: document['ApplicationStatus'],
+                              pid: document.id,
+                            );
+                          }).toList(),
+                        );
+                      }
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

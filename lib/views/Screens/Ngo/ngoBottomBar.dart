@@ -66,7 +66,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.add_box_outlined),
-      title: ("Add"),
+      title: ("Contribute"),
       activeColorPrimary: kprimaryColor,
     ),
     PersistentBottomNavBarItem(

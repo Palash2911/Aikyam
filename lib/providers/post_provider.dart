@@ -114,6 +114,7 @@ class PostProvider extends ChangeNotifier {
 
       var aName = "";
       var profilePic = "";
+      print(userType);
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
@@ -154,13 +155,20 @@ class PostProvider extends ChangeNotifier {
           });
         });
       } else {
-        List<dynamic> postId = [];
-        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
-        });
-        postId.add(pid);
-        await ngo.doc(auth.currentUser!.uid).update({
-          'AppliedPostId': postId,
+        await posts.doc(pid).get().then((snapshot) async {
+          await ngo
+              .doc(auth.currentUser!.uid)
+              .collection("AppliedPost")
+              .doc(pid)
+              .set({
+            "ApplicationStatus": "InProcess",
+            "Title": snapshot["Title"],
+            "NgoName": snapshot['NgoName'],
+            "NgoCity": snapshot["NgoCity"],
+            "Date": snapshot['Date'],
+            "Time": snapshot["Time"],
+            "City": snapshot["City"],
+          });
         });
       }
       notifyListeners();
@@ -260,14 +268,34 @@ class PostProvider extends ChangeNotifier {
       List<dynamic> postId = [];
       if (userType == "Ngo") {
         CollectionReference ngo = FirebaseFirestore.instance.collection("Ngo");
-        await ngo.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
+        await ngo
+            .doc(auth.currentUser!.uid)
+            .collection("AppliedPost")
+            .get()
+            .then((value) {
+          if (value.docs.isEmpty) {
+            return [];
+          } else {
+            value.docs.forEach((element) {
+              postId.add(element.id);
+            });
+          }
         });
       } else {
         CollectionReference users =
             FirebaseFirestore.instance.collection("Users");
-        await users.doc(auth.currentUser!.uid).get().then((snapshot) {
-          postId = snapshot['AppliedPostId'];
+        await users
+            .doc(auth.currentUser!.uid)
+            .collection("AppliedPost")
+            .get()
+            .then((value) {
+          if (value.docs.isEmpty) {
+            return [];
+          } else {
+            value.docs.forEach((element) {
+              postId.add(element.id);
+            });
+          }
         });
       }
       notifyListeners();

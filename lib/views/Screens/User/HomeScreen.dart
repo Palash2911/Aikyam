@@ -121,8 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           description: document["Description"],
                                           ngoid: document["NgoId"],
                                           id: document.id,
-                                          noofVolunters:
-                                              document['NoOfVolunteers'],
+                                          noofVolunters: document['NoOfVolunteers'],
                                           date: document["Date"],
                                           time: document["Time"],
                                           city: document["City"],

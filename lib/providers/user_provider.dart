@@ -26,7 +26,6 @@ class UserProvider extends ChangeNotifier {
         "Occupation": user.occupation,
         "Interest": user.interest,
         "ProfilePic": user.firebaseUrl,
-        "AppliedPostId": [],
       });
 
       prefs.setBool('Profile', true);

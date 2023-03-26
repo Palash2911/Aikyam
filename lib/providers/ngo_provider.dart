@@ -33,7 +33,6 @@ class NgoProvider extends ChangeNotifier {
         "ProfilePic": ngo.firebaseUrl,
         "Address": ngo.address,
         "WebsiteUrl": ngo.webUrl,
-        "AppliedPostId": [],
       });
 
       prefs.setBool('Profile', true);

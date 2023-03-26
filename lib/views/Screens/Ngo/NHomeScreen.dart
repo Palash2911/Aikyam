@@ -26,15 +26,21 @@ class _NHomeScreenState extends State<NHomeScreen> {
   List<dynamic> appliedId = [];
   var pp = "";
   var isLoading = true;
+  var isInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _getappliedId();
+    if(isInit)
+      {
+        _getappliedId();
+      }
+    isInit = false;
   }
 
   void _getappliedId() async {
     await Provider.of<PostProvider>(context).getAppliedID("Ngo").then((value) {
+      print(value);
       appliedId = value;
       pp = Provider.of<Auth>(context, listen: false).profilePic;
     });
@@ -118,32 +124,6 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                     shrinkWrap: true,
                                     children:
                                         snapshot.data!.docs.map((document) {
-                                      if (document["NgoId"] ==
-                                          auth.currentUser!.uid) {
-                                        return PostItem(
-                                          post: Post(
-                                            category: document["Category"],
-                                            description:
-                                                document["Description"],
-                                            ngoid: document["NgoId"],
-                                            id: document.id,
-                                            noofVolunters:
-                                                document['NoOfVolunteers'],
-                                            date: document["Date"],
-                                            time: document["Time"],
-                                            city: document["City"],
-                                            driveTitle: document["Title"],
-                                            ncity: document["NgoCity"],
-                                            ngoname: document["NgoName"],
-                                            state: document["State"],
-                                            address: document["Address"],
-                                            country: document["Country"],
-                                            photos: document["Photos"],
-                                          ),
-                                          applyStatus: "YOUR POST",
-                                          userType: "Ngo",
-                                        );
-                                      }
                                       if (appliedId.isNotEmpty) {
                                         if (appliedId.contains(document.id)) {
                                           return PostItem(
@@ -170,6 +150,10 @@ class _NHomeScreenState extends State<NHomeScreen> {
                                             userType: "Ngo",
                                           );
                                         }
+                                      }
+                                      if (document["NgoId"] ==
+                                          auth.currentUser!.uid) {
+                                        return const Text("");
                                       }
                                       return PostItem(
                                         post: Post(
