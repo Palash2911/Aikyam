@@ -110,7 +110,7 @@ class _NgoEditPost extends State<NgoEditPost> {
       var ngoDetails = await ngoProvider.getNgoDetails(authProvider.token);
       if (ngoDetails != null) {
         await postProvider
-            .createPost(
+            .updatePost(
           Post(
             ncity: ngoDetails.city,
             ngoname: ngoDetails.name,
