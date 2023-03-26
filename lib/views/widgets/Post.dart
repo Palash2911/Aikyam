@@ -132,7 +132,7 @@ class _PostState extends State<PostItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.access_time_rounded),
+                const Icon(Icons.calendar_month_rounded),
                 const SizedBox(width: 5),
                 Text('Date: ', style: kTextPopB14),
                 Expanded(
