@@ -43,7 +43,6 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   void _fetchDetails() async {
-    print(widget.authToken);
     await Provider.of<UserProvider>(context)
         .getUserDetails(widget.authToken)
         .then((value) {
@@ -171,62 +170,67 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              width: double.maxFinite,
-              height: MediaQuery.of(context).size.height,
-              child: ContainedTabBarView(
-                tabBarProperties:
-                    const TabBarProperties(indicatorColor: Colors.transparent),
-                tabs: [
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    color: kprimaryColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.info_outline_rounded,
-                          size: 24.0,
-                          color: ksecondaryColor,
+            SizedBox(
+              height: 500,
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return SizedBox(
+                    height: constraints.maxHeight,
+                    child: ContainedTabBarView(
+                      tabBarProperties:
+                      const TabBarProperties(indicatorColor: Colors.transparent),
+                      tabs: [
+                        Container(
+                          padding: const EdgeInsets.all(10.0),
+                          color: kprimaryColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.info_outline_rounded,
+                                size: 24.0,
+                                color: ksecondaryColor,
+                              ),
+                              const SizedBox(width: 5.0),
+                              Text(
+                                'About',
+                                style: kTextPopM16.copyWith(color: ksecondaryColor),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 5.0),
-                        Text(
-                          'About',
-                          style: kTextPopM16.copyWith(color: ksecondaryColor),
+                        Container(
+                          padding: const EdgeInsets.all(10.0),
+                          color: kprimaryColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.work,
+                                size: 24.0,
+                                color: ksecondaryColor,
+                              ),
+                              const SizedBox(width: 5.0),
+                              Text(
+                                'Post',
+                                style: kTextPopM16.copyWith(color: ksecondaryColor),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    color: kprimaryColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.work,
-                          size: 24.0,
-                          color: ksecondaryColor,
-                        ),
-                        const SizedBox(width: 5.0),
-                        Text(
-                          'Post',
-                          style: kTextPopM16.copyWith(color: ksecondaryColor),
-                        ),
+                      views: [
+                        _About(
+                            occupation: occupation,
+                            interest: interest,
+                            email: email,
+                            phone: phone),
+                        _Post(uid: widget.authToken),
                       ],
+                      onChange: (index) {},
                     ),
-                  ),
-                ],
-                views: [
-                  _About(
-                      occupation: occupation,
-                      interest: interest,
-                      email: email,
-                      phone: phone),
-                  _Post(uid: widget.authToken),
-                ],
-                onChange: (index) {},
+                  );
+                }
               ),
             ),
           ],

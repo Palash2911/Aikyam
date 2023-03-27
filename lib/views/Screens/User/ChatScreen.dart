@@ -64,81 +64,84 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           body: SafeArea(
             child: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height -
                     kBottomNavigationBarHeight,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: chatRef!.snapshots(),
-                        builder: (context, snapshot) {
-                          {
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: Container(
-                                  height: 200,
-                                  margin: const EdgeInsets.only(top: 60),
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/images/loading.gif',
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              if (snapshot.data!.docs.isEmpty || !chatExists) {
+                child: RefreshIndicator(
+                  onRefresh: fetchChat,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: chatRef!.snapshots(),
+                          builder: (context, snapshot) {
+                            {
+                              if (!snapshot.hasData) {
                                 return Center(
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 300.0,
-                                        child: Image.asset(
-                                          'assets/images/startchat.png',
-                                          fit: BoxFit.contain,
-                                        ),
+                                  child: Container(
+                                    height: 200,
+                                    margin: const EdgeInsets.only(top: 60),
+                                    child: Center(
+                                      child: Image.asset(
+                                        'assets/images/loading.gif',
+                                        fit: BoxFit.fitHeight,
                                       ),
-                                      const SizedBox(height: 20.0),
-                                      Text(
-                                        "Start Chatting !",
-                                        style: kTextPopM16,
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 );
                               } else {
-                                return ListView(
-                                  shrinkWrap: true,
-                                  children: snapshot.data!.docs.map((document) {
-                                    return ChatListItem(
-                                      name: document['SName'],
-                                      message: document["RecentMessage"],
-                                      isOnline: true,
-                                      imageUrl: "assets/images/ngo.png",
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChatScreenOpen(
-                                              receiverId: document.id,
-                                              senderType: "Users",
-                                              rName: document["SName"],
-                                            ),
+                                if (snapshot.data!.docs.isEmpty || !chatExists) {
+                                  return Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 300.0,
+                                          child: Image.asset(
+                                            'assets/images/startchat.png',
+                                            fit: BoxFit.contain,
                                           ),
-                                        );
-                                      },
-                                    );
-                                  }).toList(),
-                                );
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        Text(
+                                          "Start Chatting !",
+                                          style: kTextPopM16,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return ListView(
+                                    shrinkWrap: true,
+                                    children: snapshot.data!.docs.map((document) {
+                                      return ChatListItem(
+                                        name: document['SName'],
+                                        message: document["RecentMessage"],
+                                        isOnline: true,
+                                        imageUrl: "assets/images/ngo.png",
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChatScreenOpen(
+                                                receiverId: document.id,
+                                                senderType: "Users",
+                                                rName: document["SName"],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }).toList(),
+                                  );
+                                }
                               }
                             }
-                          }
-                        },
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

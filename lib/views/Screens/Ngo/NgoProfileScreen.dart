@@ -54,8 +54,8 @@ class _NgoProfileState extends State<NgoProfile> {
     isUser = Provider.of<Auth>(context).isUser == "NGO" ? "Ngo" : "Users";
     await Provider.of<NgoProvider>(context)
         .getNgoDetails(widget.authToken)
-        .catchError((e) {
-    }).then((value) {
+        .catchError((e) {})
+        .then((value) {
       name = value!.name;
       email = value.email;
       phone = value.phone;
@@ -173,11 +173,12 @@ class _NgoProfileState extends State<NgoProfile> {
                                         backgroundColor: kprimaryColor,
                                         foregroundColor: ksecondaryColor,
                                         child: IconButton(
-                                            onPressed: () {
-                                              _chatScreen();
-                                            },
-                                            icon: const Icon(
-                                                Icons.message_rounded)),
+                                          onPressed: () {
+                                            _chatScreen();
+                                          },
+                                          icon:
+                                              const Icon(Icons.message_rounded),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -271,7 +272,9 @@ class _NgoProfileState extends State<NgoProfile> {
                         phone: phone,
                       ),
                       isNgoPov
-                          ? _Post(authToken: widget.authToken,)
+                          ? _Post(
+                              authToken: widget.authToken,
+                            )
                           : PostItem(
                               userType: 'userType',
                               post: Post(

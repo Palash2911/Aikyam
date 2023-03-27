@@ -77,7 +77,7 @@ class _UserRegisterState extends State<UserRegister> {
           msg: "Please Select A Profile Image!",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -105,23 +105,25 @@ class _UserRegisterState extends State<UserRegister> {
             msg: "Something went wrong!",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }).then((_) {
-          Fluttertoast.showToast(
-            msg: "Successfully Registered !",
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
             backgroundColor: kprimaryColor,
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          setState(() {
-            isLoading = false;
+        }).then((_) async {
+          await Provider.of<Auth>(context).autoLogin().then((value) {
+            Fluttertoast.showToast(
+              msg: "Successfully Registered !",
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: kprimaryColor,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            setState(() {
+              isLoading = false;
+            });
+            Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
           });
-          Navigator.of(ctx).pushReplacementNamed(UserBottomBar.routeName);
         });
       }
     } else {

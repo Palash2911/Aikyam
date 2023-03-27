@@ -151,6 +151,18 @@ class _NgoAddpostState extends State<NgoAddpost> {
         });
         return;
       }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "Please All Details Properly !!",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        backgroundColor: kprimaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 

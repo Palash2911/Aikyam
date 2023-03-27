@@ -149,19 +149,21 @@ class _NgoRegisterState extends State<NgoRegister> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-        }).then((_) {
-          Fluttertoast.showToast(
-            msg: "Successfully Registered !",
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: kprimaryColor,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          setState(() {
-            isLoading = false;
+        }).then((_) async {
+          await Provider.of<Auth>(context).autoLogin().then((value) {
+            Fluttertoast.showToast(
+              msg: "Successfully Registered !",
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: kprimaryColor,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            setState(() {
+              isLoading = false;
+            });
+            Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
           });
-          Navigator.of(ctx).pushReplacementNamed(NgoBottomBar.routeName);
         });
       }
     } else {
