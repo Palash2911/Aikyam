@@ -312,7 +312,7 @@ class _PostState extends State<_Post> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        height: 400,
         padding: const EdgeInsets.only(bottom: 120),
         child: Column(
           children: [

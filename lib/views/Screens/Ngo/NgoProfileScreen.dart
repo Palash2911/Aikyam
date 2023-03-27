@@ -326,65 +326,62 @@ class _PostState extends State<_Post> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Container(
-          height:
-              MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
-          padding: const EdgeInsets.only(bottom: 120),
-          child: Column(
-            children: [
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: applyRef.snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+    return SingleChildScrollView(
+      child: Container(
+        height: 400,
+        padding: const EdgeInsets.only(bottom: 120),
+        child: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: applyRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 300.0,
+                              child: Image.asset(
+                                'assets/images/noPost.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Text(
+                              "No Post Applied Yet !",
+                              style: kTextPopM16,
+                            ),
+                          ],
+                        ),
                       );
                     } else {
-                      if (snapshot.data!.docs.isEmpty) {
-                        return Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 300.0,
-                                child: Image.asset(
-                                  'assets/images/noPost.png',
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              Text(
-                                "No Post Applied Yet !",
-                                style: kTextPopM16,
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return ListView(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          children: snapshot.data!.docs.map((document) {
-                            return UActivityPostItem(
-                              ngoName: document["NgoName"],
-                              ngoCity: document["NgoCity"],
-                              driveCity: document["City"],
-                              date: document["Date"],
-                              time: document["Time"],
-                              applyStatus: document['ApplicationStatus'],
-                              pid: document.id,
-                            );
-                          }).toList(),
-                        );
-                      }
+                      return ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: snapshot.data!.docs.map((document) {
+                          return UActivityPostItem(
+                            ngoName: document["NgoName"],
+                            ngoCity: document["NgoCity"],
+                            driveCity: document["City"],
+                            date: document["Date"],
+                            time: document["Time"],
+                            applyStatus: document['ApplicationStatus'],
+                            pid: document.id,
+                          );
+                        }).toList(),
+                      );
                     }
-                  },
-                ),
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
