@@ -73,9 +73,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
           message: mssg,
-          dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+          dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
           isUser: true,
-          senderName: "Palash",
+          senderName: "",
         ),
       )
           .then((value) async {
@@ -84,9 +84,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
             receiverId: auth.currentUser!.uid,
             senderId: widget.receiverId,
             message: mssg,
-            dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+            dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
             isUser: false,
-            senderName: "Palash",
+            senderName: "",
           ),
         );
       });
@@ -97,9 +97,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
           message: mssg,
-          dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+          dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
           isUser: true,
-          senderName: "Palash",
+          senderName: "",
         ),
       )
           .then((value) async {
@@ -109,9 +109,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
               receiverId: auth.currentUser!.uid,
               senderId: widget.receiverId,
               message: mssg,
-              dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
               isUser: false,
-              senderName: "Palash",
+              senderName: "",
             ),
           );
         } else {
@@ -120,9 +120,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
               receiverId: auth.currentUser!.uid,
               senderId: widget.receiverId,
               message: mssg,
-              dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
               isUser: false,
-              senderName: "Palash",
+              senderName: "",
             ),
           );
         }
@@ -214,7 +214,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                             return ListView(
                               children: snapshot.data!.docs.map((document) {
                                 return MessageBubble(
-                                  sender: "Palash",
+                                  sender: "",
                                   text: document['Message'],
                                   isUser: document['isUser'],
                                   dateTime: document['DateTime'],
