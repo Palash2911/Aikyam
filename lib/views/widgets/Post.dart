@@ -220,7 +220,7 @@ class _PostState extends State<PostItem> {
                           ),
                         );
                       },
-                      child: const Text("View")),
+                      child: const Text("View Details")),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
