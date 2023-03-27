@@ -131,6 +131,9 @@ class _NgoAddpostState extends State<NgoAddpost> {
             fontSize: 16.0,
           );
         }).then((_) {
+          setState(() {
+            isLoading = false;
+          });
           Fluttertoast.showToast(
             msg: "Post Created Successfully !!",
             toastLength: Toast.LENGTH_SHORT,
@@ -139,9 +142,6 @@ class _NgoAddpostState extends State<NgoAddpost> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          setState(() {
-            isLoading = false;
-          });
           setFields();
           Navigator.of(context).pushReplacementNamed(NgoAddpost.routeName);
         });
@@ -452,29 +452,6 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         ElevatedButton(
                           onPressed: () {
                             _createPost(context);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Posted Successfully!'),
-                                  content:
-                                      const Text('Your post has been posted.'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => NgoBottomBar(),
-                                            ),
-                                            (route) => false);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
                           },
                           child: Text(
                             'Post',
@@ -511,9 +488,12 @@ class _addImage extends StatelessWidget {
           ? SizedBox(
               width: 100,
               height: 100,
-              child: Image.file(
-                imageFile!,
-                fit: BoxFit.cover,
+              child: InkWell(
+                onTap: onTap,
+                child: Image.file(
+                  imageFile!,
+                  fit: BoxFit.cover,
+                ),
               ),
             )
           : SizedBox(

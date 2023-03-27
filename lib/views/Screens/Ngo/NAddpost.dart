@@ -12,15 +12,6 @@ class Addpost extends StatelessWidget {
   static var routeName = "/add-post";
   const Addpost({super.key});
 
-  // void chooseUser(String user, BuildContext context) {
-  //   Provider.of<Auth>(context, listen: false).chooseUserType(user);
-  //   if (user == "NGO") {
-  //     Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
-  //   } else {
-  //     Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
