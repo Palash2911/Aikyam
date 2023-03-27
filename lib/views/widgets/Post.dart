@@ -5,6 +5,7 @@ import 'package:aikyam/views/widgets/viewPostDetailsScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
@@ -123,7 +124,16 @@ class _PostState extends State<PostItem> {
                 ),
                 const Spacer(),
                 GestureDetector(
-                  onTap: () {},
+                   onTap: () {
+                    Fluttertoast.showToast(
+                      msg: "Feature Coming Soon..!!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: kprimaryColor,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
                   child: const Icon(
                     Icons.share,
                     size: 32.0,
