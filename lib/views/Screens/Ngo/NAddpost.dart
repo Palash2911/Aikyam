@@ -27,10 +27,11 @@ class Addpost extends StatelessWidget {
                     children: [
                       Text(
                         "Create Post",
-                        style: kTextPopB16,
+                        style: kTextPopB16.merge(const TextStyle(fontSize: 24)),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -41,7 +42,7 @@ class Addpost extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border.all(width: 2, color: kprimaryColor),
                         borderRadius:
@@ -57,12 +58,12 @@ class Addpost extends StatelessWidget {
                               width: 90.0,
                             ),
                           ),
-                          const SizedBox(width: 10.0),
+                          const SizedBox(width: 5),
                           Flexible(
                             flex: 2,
                             child: Text(
-                              "Here write something about create post option",
-                              style: kTextPopR14.copyWith(color: kprimaryColor),
+                              "Start Your Contribution",
+                              style: kTextPopB14.copyWith(color: kprimaryColor),
                             ),
                           )
                         ],

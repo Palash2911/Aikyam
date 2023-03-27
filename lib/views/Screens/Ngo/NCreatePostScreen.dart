@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -142,7 +143,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
             fontSize: 16.0,
           );
           setFields();
-          Navigator.of(context).pushReplacementNamed(NgoAddpost.routeName);
+          Navigator.of(context).pop();
         });
       } else {
         setState(() {
@@ -173,7 +174,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: 80,
+          toolbarHeight: 70,
           flexibleSpace: const RoundAppBar(
             title: '    Create Post',
           ),
@@ -183,9 +184,13 @@ class _NgoAddpostState extends State<NgoAddpost> {
             padding: const EdgeInsets.all(16.0),
             child: isLoading
                 ? Container(
-                    margin: const EdgeInsets.only(top: 27),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
+                    height: 200,
+                    margin: const EdgeInsets.only(top: 60),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/loading.gif',
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   )
                 : Form(
