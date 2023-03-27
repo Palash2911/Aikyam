@@ -73,7 +73,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
+        title: !widget.isUser ? const Text("User Profile") : const Text('My Profile'),
       ),
       body: SingleChildScrollView(
         child: Column(

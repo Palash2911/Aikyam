@@ -94,7 +94,7 @@ class _NgoProfileState extends State<NgoProfile> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('My Profile'),
+          title: !widget.isUser ? const Text("NGO Profile") :  const Text('My Profile'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -218,7 +218,7 @@ class _NgoProfileState extends State<NgoProfile> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height + 200,
                   child: ContainedTabBarView(
                     tabBarProperties: const TabBarProperties(
                         indicatorColor: Colors.transparent),
@@ -348,13 +348,13 @@ class _PostState extends State<_Post> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 300.0,
+                              height: 220.0,
                               child: Image.asset(
                                 'assets/images/noPost.png',
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(height: 20.0),
+                            const SizedBox(height: 10.0),
                             Text(
                               "No Post Applied Yet !",
                               style: kTextPopM16,
