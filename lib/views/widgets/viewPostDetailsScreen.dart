@@ -190,17 +190,31 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 bottomLeft: Radius.circular(10.0),
                               ),
                             ),
+
+                            child: Row(
+                              children: [
+                                Icon(Icons.person),
+                                SizedBox(width: 5),
+                                Text(noVol.toString(), style: kTextPopB14),
+                                Text(' volunteers required',
+                                    style: kTextPopB14),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: kpostColor,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
+                              ),
+                            ),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.person),
-                                    SizedBox(width: 5),
-                                    Text('No of required volunteers: ',
-                                        style: kTextPopB14),
-                                    Text(noVol.toString(), style: kTextPopR14)
-                                  ],
-                                ),
                                 SizedBox(height: 5),
                                 Row(
                                   children: [
@@ -250,7 +264,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(9.0),
                             child: _isApplyLoading
-                                ? const CircularProgressIndicator()
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : ElevatedButton(
                                     onPressed: () {
                                       if (widget.applyStatus != "Applied" &&
