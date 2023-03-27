@@ -471,13 +471,13 @@ class _NgoRegisterState extends State<NgoRegister> {
                             const SizedBox(height: 15.0),
                             TextFormField(
                               minLines: 1,
-                              maxLines: 2,
+                              maxLines: 5,
                               controller: _addressController,
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                 hintText: "Address",
                                 hintStyle: kTextPopR14,
-                                icon: const Icon(Icons.location_on_rounded),
+                                icon: const Icon(Icons.info_outline),
                                 filled: true,
                                 fillColor: Colors.green.shade100,
                                 border: OutlineInputBorder(

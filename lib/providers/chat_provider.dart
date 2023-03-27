@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ChatProvider extends ChangeNotifier {
   Future createMessageRoom(String receiverId, String senderId, String userType,
       String RName, String SName) async {
+    print(RName + SName);
     try {
       if (userType == "Users") {
         CollectionReference chatRef = FirebaseFirestore.instance
@@ -122,18 +123,18 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future<bool> checkSenderType(String id) async {
+    var isUser = false;
     CollectionReference typeRef = FirebaseFirestore.instance.collection('Ngo');
     await typeRef.doc(id).get().then((value) {
       if (value.exists) {
-        return true;
-      } else {
-        return false;
+        isUser = true;
       }
     });
-    return false;
+    return isUser;
   }
 
   Future sendMessageN(Chats chat) async {
+    print(chat.isUser);
     try {
       CollectionReference messageNRef = FirebaseFirestore.instance
           .collection('Ngo')

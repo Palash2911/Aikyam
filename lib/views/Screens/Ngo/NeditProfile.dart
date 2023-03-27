@@ -443,28 +443,30 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                             ),
                             const SizedBox(height: 10.0),
 
-                            TextFormField(
-                              controller: _addressController,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                hintText: "Address",
-                                hintStyle: kTextPopR14,
-                                icon: const Icon(Icons.location_on_rounded),
-                                filled: true,
-                                fillColor: Colors.green.shade100,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                                ),
+                          TextFormField(
+                            minLines: 1,
+                            maxLines: 5,
+                            controller: _addressController,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                              hintText: "Address",
+                              hintStyle: kTextPopR14,
+                              icon: const Icon(Icons.info_outline),
+                              filled: true,
+                              fillColor: Colors.green.shade100,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter address!';
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
                             ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Address!';
+                              }
+                              return null;
+                            },
+                            textInputAction: TextInputAction.next,
+                          ),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 40.0),
