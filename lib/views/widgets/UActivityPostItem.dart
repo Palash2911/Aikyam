@@ -1,4 +1,3 @@
-import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -98,23 +97,21 @@ class _UActivityPostItemState extends State<UActivityPostItem> {
                 "Title",
                 style: kTextPopM16,
               ),
-              SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
               Row(
                 children: [
-                  Icon(Icons.location_city),
-                  SizedBox(width: 5),
+                  const Icon(Icons.location_city),
+                  const SizedBox(width: 5),
                   Text('City: ', style: kTextPopB14),
                   Text(widget.driveCity, style: kTextPopR14)
                 ],
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.access_time_rounded),
-                  SizedBox(width: 5),
+                  const Icon(Icons.access_time_rounded),
+                  const SizedBox(width: 5),
                   Text('Date and Time: ', style: kTextPopB14),
                   Expanded(
                     child: Text(

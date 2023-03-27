@@ -1,9 +1,7 @@
-import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:aikyam/views/widgets/userRequestTile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -33,7 +31,6 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authToken = Provider.of<Auth>(context, listen: false).token;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -77,9 +74,7 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "No Applicants Yet !",
                                     style: kTextPopM16,
@@ -98,8 +93,8 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                   city: document['PhoneNo'],
                                   imageUrl: document['ProfilePic'],
                                   uid: document.id,
-                                  applicationStatus:
-                                      document["ApplicationStatus"],
+                                  applicationStatus: document["ApplicationStatus"],
+                                  userType: document["UserType"],
                                 );
                               }).toList(),
                             );

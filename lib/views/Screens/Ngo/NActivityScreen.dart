@@ -47,7 +47,7 @@ class _NgoActivityScreenState extends State<NgoActivityScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: 85,
+          toolbarHeight: 70,
           flexibleSpace: const RoundAppBar(
             title: 'Activity',
           ),

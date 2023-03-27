@@ -4,12 +4,10 @@ import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NeditProfile.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/NactivityPost.dart';
 import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/UActivityPostItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,9 +25,7 @@ class NgoProfile extends StatefulWidget {
 }
 
 class _NgoProfileState extends State<NgoProfile> {
-  bool isNgoPov = true; // ithe false kel ka dista chat option
-  bool _isAboutActive = true;
-  bool _isWorkSelected = false;
+  bool isNgoPov = true;
   var profileUrl = "";
   var name = "";
   var about = "";
@@ -43,20 +39,6 @@ class _NgoProfileState extends State<NgoProfile> {
   var isInit = true;
   var isUser = "Users";
   var url = "";
-
-  void _aboutPressed() {
-    setState(() {
-      _isAboutActive = !_isAboutActive;
-      _isWorkSelected = !_isWorkSelected;
-    });
-  }
-
-  void _workPressed() {
-    setState(() {
-      _isWorkSelected = !_isWorkSelected;
-      _isAboutActive = !_isAboutActive;
-    });
-  }
 
   @override
   void didChangeDependencies() {
@@ -73,7 +55,6 @@ class _NgoProfileState extends State<NgoProfile> {
     await Provider.of<NgoProvider>(context)
         .getNgoDetails(widget.authToken)
         .catchError((e) {
-      print(e);
     }).then((value) {
       name = value!.name;
       email = value.email;
@@ -234,9 +215,7 @@ class _NgoProfileState extends State<NgoProfile> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height -
-                      kBottomNavigationBarHeight -
-                      kBottomNavigationBarHeight,
+                  height: MediaQuery.of(context).size.height,
                   child: ContainedTabBarView(
                     tabBarProperties: const TabBarProperties(
                         indicatorColor: Colors.transparent),
@@ -292,7 +271,7 @@ class _NgoProfileState extends State<NgoProfile> {
                         phone: phone,
                       ),
                       isNgoPov
-                          ? _Post()
+                          ? _Post(authToken: widget.authToken,)
                           : PostItem(
                               userType: 'userType',
                               post: Post(
@@ -326,18 +305,20 @@ class _NgoProfileState extends State<NgoProfile> {
 }
 
 class _Post extends StatefulWidget {
+  final String authToken;
+
+  const _Post({required this.authToken});
   @override
   State<_Post> createState() => _PostState();
 }
 
 class _PostState extends State<_Post> {
-  final auth = FirebaseAuth.instance;
   CollectionReference applyRef = FirebaseFirestore.instance.collection('Ngo');
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+    applyRef = applyRef.doc(widget.authToken).collection("AppliedPost");
   }
 
   @override
@@ -409,7 +390,6 @@ class _PostState extends State<_Post> {
 
 class _About extends StatelessWidget {
   const _About({
-    super.key,
     required this.about,
     required this.type,
     required this.category,

@@ -1,35 +1,21 @@
-import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/editPostScreen.dart';
-import 'package:aikyam/views/Screens/User/UActivityScreen.dart';
-import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Addpost extends StatelessWidget {
   static var routeName = "/add-post";
   const Addpost({super.key});
-
-  // void chooseUser(String user, BuildContext context) {
-  //   Provider.of<Auth>(context, listen: false).chooseUserType(user);
-  //   if (user == "NGO") {
-  //     Navigator.of(context).pushReplacementNamed(NgoRegister.routeName);
-  //   } else {
-  //     Navigator.of(context).pushReplacementNamed(UserRegister.routeName);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 200,),
+            const SizedBox(
+              height: 200,
+            ),
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
@@ -41,19 +27,22 @@ class Addpost extends StatelessWidget {
                     children: [
                       Text(
                         "Create Post",
-                        style: kTextPopB16,
+                        style: kTextPopB16.merge(const TextStyle(fontSize: 24)),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
                   InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NgoAddpost()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NgoAddpost(),
+                        ),
+                      );
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border.all(width: 2, color: kprimaryColor),
                         borderRadius:
@@ -69,13 +58,12 @@ class Addpost extends StatelessWidget {
                               width: 90.0,
                             ),
                           ),
-                          const SizedBox(width: 10.0),
+                          const SizedBox(width: 5),
                           Flexible(
                             flex: 2,
                             child: Text(
-                              "Here write something about create post option",
-                              style:
-                                  kTextPopR14.copyWith(color: kprimaryColor),
+                              "Start Your Contribution",
+                              style: kTextPopB14.copyWith(color: kprimaryColor),
                             ),
                           )
                         ],

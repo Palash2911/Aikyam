@@ -19,17 +19,33 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
   final auth = FirebaseAuth.instance;
   CollectionReference? chatRef;
   var isInit = true;
+  var chatExists = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (isInit) {
-      chatRef = FirebaseFirestore.instance
-          .collection("Ngo")
-          .doc(auth.currentUser!.uid)
-          .collection("Chats");
+      fetchChat();
     }
     isInit = false;
+  }
+
+  Future<void> fetchChat() async {
+    chatRef = FirebaseFirestore.instance
+        .collection("Ngo")
+        .doc(auth.currentUser!.uid)
+        .collection("Chats");
+    await chatRef!.get().then((value) {
+      if (value.docs.isEmpty) {
+        setState(() {
+          chatExists = false;
+        });
+      } else {
+        setState(() {
+          chatExists = true;
+        });
+      }
+    });
   }
 
   @override
@@ -39,28 +55,38 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: 85,
+          toolbarHeight: 70,
           flexibleSpace: const RoundAppBar(
             title: 'Chat',
           ),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
-                child: Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: chatRef!.snapshots(),
-                    builder: (context, snapshot) {
-                      {
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height -
+                kBottomNavigationBarHeight,
+            child: RefreshIndicator(
+              onRefresh: fetchChat,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: chatRef!.snapshots(),
+                      builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          return Center(
+                            child: Container(
+                              height: 200,
+                              margin: const EdgeInsets.only(top: 60),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/images/loading.gif',
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
                           );
                         } else {
-                          if (snapshot.data!.docs.isEmpty) {
+                          if (snapshot.data!.docs.isEmpty || !chatExists) {
                             return Center(
                               child: Column(
                                 children: [
@@ -71,9 +97,7 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "Start Chatting !",
                                     style: kTextPopM16,
@@ -107,10 +131,10 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                             );
                           }
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

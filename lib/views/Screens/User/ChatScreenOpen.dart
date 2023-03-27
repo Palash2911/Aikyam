@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
   const ChatScreenOpen({
+    super.key,
     required this.receiverId,
     required this.senderType,
     required this.rName,
@@ -72,9 +73,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
           message: mssg,
-          dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+          dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
           isUser: true,
-          senderName: "Palash",
+          senderName: "",
         ),
       )
           .then((value) async {
@@ -83,9 +84,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
             receiverId: auth.currentUser!.uid,
             senderId: widget.receiverId,
             message: mssg,
-            dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+            dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
             isUser: false,
-            senderName: "Palash",
+            senderName: "",
           ),
         );
       });
@@ -96,9 +97,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           receiverId: widget.receiverId,
           senderId: auth.currentUser!.uid,
           message: mssg,
-          dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+          dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
           isUser: true,
-          senderName: "Palash",
+          senderName: "",
         ),
       )
           .then((value) async {
@@ -108,9 +109,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
               receiverId: auth.currentUser!.uid,
               senderId: widget.receiverId,
               message: mssg,
-              dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
               isUser: false,
-              senderName: "Palash",
+              senderName: "",
             ),
           );
         } else {
@@ -119,9 +120,9 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
               receiverId: auth.currentUser!.uid,
               senderId: widget.receiverId,
               message: mssg,
-              dateTime: DateFormat('MMM d, h:mm:ss a').format(DateTime.now()),
+              dateTime: DateFormat('MMM d, h:mm a').format(DateTime.now()),
               isUser: false,
-              senderName: "Palash",
+              senderName: "",
             ),
           );
         }
@@ -132,7 +133,6 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: isLoading
           ? Center(
               child: SizedBox(
@@ -199,9 +199,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "Start Chatting !",
                                     style: kTextPopM16,
@@ -213,7 +211,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                             return ListView(
                               children: snapshot.data!.docs.map((document) {
                                 return MessageBubble(
-                                  sender: "Palash",
+                                  sender: "",
                                   text: document['Message'],
                                   isUser: document['isUser'],
                                   dateTime: document['DateTime'],
@@ -226,7 +224,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -234,7 +232,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                             controller: _textController,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
-                                icon: Icon(Icons.send),
+                                icon: const Icon(Icons.send),
                                 onPressed: () {
                                   if (_textController.text.isNotEmpty) {
                                     setState(() {

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -80,38 +78,37 @@ class PostProvider extends ChangeNotifier {
 
   Future updatePost(Post post) async {
     try {
-      List<dynamic> postImages = [];
-      if (post.photos.isNotEmpty) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
-            .putFile(post.photos[0]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
-      if (post.photos.length >= 2) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
-            .putFile(post.photos[1]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
-      if (post.photos.length == 3) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
-            .putFile(post.photos[2]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
-
+      // List<dynamic> postImages = [];
+      // if (post.photos.isNotEmpty) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
+      //       .putFile(post.photos[0]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
+      // if (post.photos.length >= 2) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
+      //       .putFile(post.photos[1]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
+      // if (post.photos.length >= 3) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
+      //       .putFile(post.photos[2]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       await posts.doc(post.id).update({
@@ -146,7 +143,6 @@ class PostProvider extends ChangeNotifier {
 
       var aName = "";
       var profilePic = "";
-      print(userType);
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
@@ -209,7 +205,7 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-  Future acceptdeleteUser(String ar, String pid, String uid) async {
+  Future acceptRejectUser(String ar, String pid, String uid) async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
     CollectionReference posts = FirebaseFirestore.instance
@@ -334,7 +330,7 @@ class PostProvider extends ChangeNotifier {
           state: data["State"],
           address: data["Address"],
           country: data["Country"],
-          photos: data["Photos"],
+          photos: data["Photos"] as List<dynamic>,
         );
       }).catchError((e) {
         print(e);

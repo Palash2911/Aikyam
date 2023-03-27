@@ -68,7 +68,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       return user;
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 

@@ -16,6 +16,7 @@ class UserAppdrawer extends StatefulWidget {
 class _UserAppdrawerState extends State<UserAppdrawer> {
   var pp = "";
   var name = "";
+  var authToken = "";
 
   @override
   void didChangeDependencies() {
@@ -27,6 +28,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
     var authProvider = Provider.of<Auth>(context, listen: false);
     pp = authProvider.profilePic;
     name = authProvider.uName;
+    authToken = authProvider.token;
     setState(() {});
   }
 
@@ -61,11 +63,15 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfile()),
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(
+                    isUser: true,
+                    authToken: authToken,
+                  ),
+                ),
               );
             },
           ),
-          
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
@@ -120,16 +126,17 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
             currentAccountPicture: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NgoProfile(
-                        authToken: authToken,
-                        isUser: true,
-                      ),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NgoProfile(
+                      authToken: authToken,
+                      isUser: true,
+                    ),
+                  ),
+                );
               },
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
                     radius: 30.0,

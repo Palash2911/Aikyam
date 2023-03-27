@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
-import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
+import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -131,6 +131,9 @@ class _NgoAddpostState extends State<NgoAddpost> {
             fontSize: 16.0,
           );
         }).then((_) {
+          setState(() {
+            isLoading = false;
+          });
           Fluttertoast.showToast(
             msg: "Post Created Successfully !!",
             toastLength: Toast.LENGTH_SHORT,
@@ -139,11 +142,8 @@ class _NgoAddpostState extends State<NgoAddpost> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          setState(() {
-            isLoading = false;
-          });
           setFields();
-          Navigator.of(context).pushReplacementNamed(NgoAddpost.routeName);
+          Navigator.of(context).pop();
         });
       } else {
         setState(() {
@@ -154,16 +154,33 @@ class _NgoAddpostState extends State<NgoAddpost> {
     }
   }
 
-  Future _getFromGallery() async {
+  Future _getFromGallery(int index) async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      setState(() {
-        postImages.add(File(pickedFile.path));
-      });
+      if (index == 0) {
+        if (postImages.isEmpty) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[0] = File(pickedFile.path);
+        }
+      } else if (index == 1) {
+        if (postImages.length == 1) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[1] = File(pickedFile.path);
+        }
+      } else {
+        if (postImages.length == 2) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[2] = File(pickedFile.path);
+        }
+      }
+      setState(() {});
     }
   }
 
@@ -174,7 +191,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          toolbarHeight: 80,
+          toolbarHeight: 70,
           flexibleSpace: const RoundAppBar(
             title: '    Create Post',
           ),
@@ -184,9 +201,13 @@ class _NgoAddpostState extends State<NgoAddpost> {
             padding: const EdgeInsets.all(16.0),
             child: isLoading
                 ? Container(
-                    margin: const EdgeInsets.only(top: 27),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
+                    height: 200,
+                    margin: const EdgeInsets.only(top: 60),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/loading.gif',
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   )
                 : Form(
@@ -199,7 +220,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                             _addImage(
                               imageFile:
                                   postImages.isNotEmpty ? postImages[0] : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(0),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -207,7 +228,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                                       ? postImages[1]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(1),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -215,7 +236,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                                       ? postImages[2]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(2),
                             ),
                           ],
                         ),
@@ -452,29 +473,6 @@ class _NgoAddpostState extends State<NgoAddpost> {
                         ElevatedButton(
                           onPressed: () {
                             _createPost(context);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Posted Successfully!'),
-                                  content:
-                                      const Text('Your post has been posted.'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => NgoBottomBar(),
-                                            ),
-                                            (route) => false);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
                           },
                           child: Text(
                             'Post',
@@ -511,9 +509,12 @@ class _addImage extends StatelessWidget {
           ? SizedBox(
               width: 100,
               height: 100,
-              child: Image.file(
-                imageFile!,
-                fit: BoxFit.cover,
+              child: InkWell(
+                onTap: onTap,
+                child: Image.file(
+                  imageFile!,
+                  fit: BoxFit.cover,
+                ),
               ),
             )
           : SizedBox(

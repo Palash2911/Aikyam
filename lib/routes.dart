@@ -17,27 +17,27 @@ import 'package:flutter/material.dart';
 
 var approutes = <String, WidgetBuilder>{
   //Inital Route
-  '/': (context) => SplashScreen(),
+  '/': (context) => const SplashScreen(),
 
   //Login Routes
   LogIn.routeName: (context) => LogIn(),
-  OtpScreen.routeName: (context) => OtpScreen(),
-  Choose.routeName: (context) => Choose(),
+  OtpScreen.routeName: (context) => const OtpScreen(),
+  Choose.routeName: (context) => const Choose(),
 
   //Registration Routes
-  UserRegister.routeName: (context) => UserRegister(),
-  NgoRegister.routeName: (context) => NgoRegister(),
+  UserRegister.routeName: (context) => const UserRegister(),
+  NgoRegister.routeName: (context) => const NgoRegister(),
 
   //User Routes
-  UserBottomBar.routeName: (context) => UserBottomBar(),
+  UserBottomBar.routeName: (context) => const UserBottomBar(),
   HomeScreen.routeName: (context) => HomeScreen(),
-  ChatScreen.routeName: (context) => ChatScreen(),
-  ActivityScreen.routeName: (context) => ActivityScreen(),
+  ChatScreen.routeName: (context) => const ChatScreen(),
+  ActivityScreen.routeName: (context) => const ActivityScreen(),
 
   //Ngo Routes
-  NgoBottomBar.routeName: (context) => NgoBottomBar(),
-  NHomeScreen.routeName: (context) => NHomeScreen(),
-  NgoChatScreen.routeName: (context) => NgoChatScreen(),
-  NgoAddpost.routeName: (context) => NgoAddpost(),
-  NgoActivityScreen.routeName: (context) => NgoActivityScreen(),
+  NgoBottomBar.routeName: (context) => const NgoBottomBar(),
+  NHomeScreen.routeName: (context) => const NHomeScreen(),
+  NgoChatScreen.routeName: (context) => const NgoChatScreen(),
+  NgoAddpost.routeName: (context) => const NgoAddpost(),
+  NgoActivityScreen.routeName: (context) => const NgoActivityScreen(),
 };

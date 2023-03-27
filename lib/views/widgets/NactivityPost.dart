@@ -52,7 +52,7 @@ class _NActivityPostState extends State<NActivityPost> {
           msg: "Post Deleted!",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );

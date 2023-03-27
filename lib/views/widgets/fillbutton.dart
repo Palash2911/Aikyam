@@ -15,12 +15,12 @@ class AppButton extends StatelessWidget {
     return Expanded(
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(text),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12), // <-- Radius
           ),
         ),
+        child: Text(text),
       ),
     );
   }

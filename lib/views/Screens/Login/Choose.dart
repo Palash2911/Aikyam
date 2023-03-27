@@ -48,7 +48,7 @@ class _ChooseState extends State<Choose> {
                 const SizedBox(height: 100),
                 Text(
                   "Tell us more",
-                  style: kTextPopB16.merge(TextStyle(fontSize: 21)),
+                  style: kTextPopB16.merge(const TextStyle(fontSize: 21)),
                 ),
               ],
             ),

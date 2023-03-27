@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,11 +103,11 @@ class Auth extends ChangeNotifier {
         user = true;
         CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
         await ngo.doc(_auth.currentUser?.uid).get().then(
-              (datasnapshot) => {
-                if (!datasnapshot.exists)
+              (datasnapshots) => {
+                if (!datasnapshots.exists)
                   {user = false}
                 else
-                  {user = true, _profilePic = datasnapshot['ProfilePic'], _uName = datasnapshot["Name"]}
+                  {user = true, _profilePic = datasnapshots['ProfilePic'], _uName = datasnapshots["Name"]}
               },
             );
         if (user) {

@@ -37,7 +37,7 @@ class ChatListItem extends StatelessWidget {
           style: kTextPopR12,
         ),
         trailing: isOnline
-            ? Icon(Icons.circle, color: Colors.green)
-            : Icon(Icons.circle, color: Colors.grey));
+            ? const Icon(Icons.circle, color: Colors.green)
+            : const Icon(Icons.circle, color: Colors.grey));
   }
 }
