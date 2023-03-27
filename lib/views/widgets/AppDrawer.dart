@@ -63,7 +63,12 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfile(isUser: true,authToken: authToken,)),
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(
+                    isUser: true,
+                    authToken: authToken,
+                  ),
+                ),
               );
             },
           ),
@@ -121,13 +126,14 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
             currentAccountPicture: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NgoProfile(
-                        authToken: authToken,
-                        isUser: true,
-                      ),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NgoProfile(
+                      authToken: authToken,
+                      isUser: true,
+                    ),
+                  ),
+                );
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -137,10 +143,6 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
                     backgroundImage: pp.isNotEmpty
                         ? Image.network(pp).image
                         : const AssetImage('assets/images/ngo.png'),
-                  ),
-                  Text(
-                    name,
-                    style: kTextPopM16.copyWith(color: ksecondaryColor),
                   ),
                 ],
               ),

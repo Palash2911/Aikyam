@@ -154,16 +154,33 @@ class _NgoAddpostState extends State<NgoAddpost> {
     }
   }
 
-  Future _getFromGallery() async {
+  Future _getFromGallery(int index) async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      setState(() {
-        postImages.add(File(pickedFile.path));
-      });
+      if (index == 0) {
+        if (postImages.isEmpty) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[0] = File(pickedFile.path);
+        }
+      } else if (index == 1) {
+        if (postImages.length == 1) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[1] = File(pickedFile.path);
+        }
+      } else {
+        if (postImages.length == 2) {
+          postImages.add(File(pickedFile.path));
+        } else {
+          postImages[2] = File(pickedFile.path);
+        }
+      }
+      setState(() {});
     }
   }
 
@@ -203,7 +220,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                             _addImage(
                               imageFile:
                                   postImages.isNotEmpty ? postImages[0] : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(0),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -211,7 +228,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                                       ? postImages[1]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(1),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -219,7 +236,7 @@ class _NgoAddpostState extends State<NgoAddpost> {
                                       ? postImages[2]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(2),
                             ),
                           ],
                         ),

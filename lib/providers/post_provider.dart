@@ -78,37 +78,37 @@ class PostProvider extends ChangeNotifier {
 
   Future updatePost(Post post) async {
     try {
-      List<dynamic> postImages = [];
-      if (post.photos.isNotEmpty) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
-            .putFile(post.photos[0]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
-      if (post.photos.length >= 2) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
-            .putFile(post.photos[1]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
-      if (post.photos.length >= 3) {
-        var storage = FirebaseStorage.instance;
-        TaskSnapshot taskSnapshot = await storage
-            .ref()
-            .child(
-            'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
-            .putFile(post.photos[2]);
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-        postImages.add(downloadUrl);
-      }
+      // List<dynamic> postImages = [];
+      // if (post.photos.isNotEmpty) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}1'}')
+      //       .putFile(post.photos[0]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
+      // if (post.photos.length >= 2) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}2'}')
+      //       .putFile(post.photos[1]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
+      // if (post.photos.length >= 3) {
+      //   var storage = FirebaseStorage.instance;
+      //   TaskSnapshot taskSnapshot = await storage
+      //       .ref()
+      //       .child(
+      //       'Posts/${'${post.ngoid}${DateFormat('h:mm a').format(DateTime.now())}3'}')
+      //       .putFile(post.photos[2]);
+      //   final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      //   postImages.add(downloadUrl);
+      // }
       CollectionReference posts =
           FirebaseFirestore.instance.collection('Posts');
       await posts.doc(post.id).update({

@@ -91,6 +91,8 @@ class _NgoEditPost extends State<NgoEditPost> {
         _stateController.text = value.state;
         _cityController.text = value.city;
         postImages = value.photos;
+        var inx = categories.indexWhere((element) => (element == value.category));
+        selectedCategory = categories[inx];
       }
     });
     setState(() {
@@ -167,17 +169,42 @@ class _NgoEditPost extends State<NgoEditPost> {
     }
   }
 
-  Future _getFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
+  Future _getFromGallery(int index) async {
+    Fluttertoast.showToast(
+      msg: "Cannot Edit Pictures",
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: kprimaryColor,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
-    if (pickedFile != null) {
-      setState(() {
-        postImages.add(File(pickedFile.path));
-      });
-    }
+    // PickedFile? pickedFile = await ImagePicker().getImage(
+    //   source: ImageSource.gallery,
+    //   maxWidth: 1800,
+    //   maxHeight: 1800,
+    // );
+    // if (pickedFile != null) {
+    //   if (index == 0) {
+    //     if (postImages.isEmpty) {
+    //       postImages.add(pickedFile.path);
+    //     } else {
+    //       postImages[0] = pickedFile.path;
+    //     }
+    //   } else if (index == 1) {
+    //     if (postImages.length == 1) {
+    //       postImages.add(pickedFile.path);
+    //     } else {
+    //       postImages[1] = pickedFile.path;
+    //     }
+    //   } else {
+    //     if (postImages.length == 2) {
+    //       postImages.add(File(pickedFile.path));
+    //     } else {
+    //       postImages[2] = File(pickedFile.path);
+    //     }
+    //   }
+    //   setState(() {});
+    // }
   }
 
   @override
@@ -212,7 +239,7 @@ class _NgoEditPost extends State<NgoEditPost> {
                             _addImage(
                               imageFile:
                                   postImages.isNotEmpty ? postImages[0] : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(0),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -220,7 +247,7 @@ class _NgoEditPost extends State<NgoEditPost> {
                                       ? postImages[1]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(0),
                             ),
                             _addImage(
                               imageFile: postImages.isNotEmpty
@@ -228,7 +255,7 @@ class _NgoEditPost extends State<NgoEditPost> {
                                       ? postImages[2]
                                       : null
                                   : null,
-                              onTap: _getFromGallery,
+                              onTap: () => _getFromGallery(0),
                             ),
                           ],
                         ),
@@ -504,9 +531,12 @@ class _addImage extends StatelessWidget {
           ? SizedBox(
               width: 100,
               height: 100,
-              child: Image.network(
-                imageFile!,
-                fit: BoxFit.cover,
+              child: InkWell(
+                onTap: onTap,
+                child: Image.network(
+                  imageFile!,
+                  fit: BoxFit.cover,
+                ),
               ),
             )
           : SizedBox(

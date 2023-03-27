@@ -130,7 +130,7 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
           msg: "Profile Updated Successfully!",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );
