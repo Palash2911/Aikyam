@@ -48,7 +48,7 @@ class _ProfileTileState extends State<ProfileTile> {
           msg: "Accepted !",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -65,7 +65,7 @@ class _ProfileTileState extends State<ProfileTile> {
           msg: "Rejected !",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: kprimaryColor,
           textColor: Colors.white,
           fontSize: 16.0,
         );

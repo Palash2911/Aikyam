@@ -134,7 +134,7 @@ class _NgoEditPost extends State<NgoEditPost> {
             msg: "Something went wrong!",
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor: kprimaryColor,
             textColor: Colors.white,
             fontSize: 16.0,
           );

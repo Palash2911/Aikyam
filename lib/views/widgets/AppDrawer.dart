@@ -5,6 +5,7 @@ import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserAppdrawer extends StatefulWidget {
   const UserAppdrawer({super.key});
@@ -30,6 +31,12 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
     name = authProvider.uName;
     authToken = authProvider.token;
     setState(() {});
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse("https://forms.gle/C4Do4vggkFcHiN4MA"))) {
+      throw Exception('Could not launch');
+    }
   }
 
   @override
@@ -73,6 +80,11 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.help),
+            title: const Text('help and support'),
+            onTap: () {},
+          ),
+          ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('LogOut'),
             onTap: () {
@@ -111,6 +123,12 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
     name = authProvider.uName;
     authToken = authProvider.token;
     setState(() {});
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse("https://forms.gle/C4Do4vggkFcHiN4MA"))) {
+      throw Exception('Could not launch');
+    }
   }
 
   @override
@@ -165,7 +183,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.help),
-            title: const Text('help and support'),
+            title: const Text('Help And Support'),
             onTap: () {},
           ),
           ListTile(
