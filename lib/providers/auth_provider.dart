@@ -96,7 +96,10 @@ class Auth extends ChangeNotifier {
               if (!datasnapshot.exists)
                 {user = false}
               else
-                {_profilePic = datasnapshot['ProfilePic'], _uName = datasnapshot["Name"]}
+                {
+                  _profilePic = datasnapshot['ProfilePic'],
+                  _uName = datasnapshot["Name"]
+                }
             },
           );
       if (!user) {
@@ -107,7 +110,11 @@ class Auth extends ChangeNotifier {
                 if (!datasnapshots.exists)
                   {user = false}
                 else
-                  {user = true, _profilePic = datasnapshots['ProfilePic'], _uName = datasnapshots["Name"]}
+                  {
+                    user = true,
+                    _profilePic = datasnapshots['ProfilePic'],
+                    _uName = datasnapshots["Name"]
+                  }
               },
             );
         if (user) {
@@ -133,13 +140,9 @@ class Auth extends ChangeNotifier {
 
   Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove('UID');
-    prefs.remove('UserType');
-    prefs.remove('Profile');
-    prefs.remove('ProfilePic');
-    prefs.remove("UserName");
-    prefs.clear();
-    await _auth.signOut();
+    await prefs.clear().then((value) async {
+      await _auth.signOut();
+    });
     notifyListeners();
   }
 
