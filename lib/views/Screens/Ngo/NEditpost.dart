@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
@@ -9,7 +7,6 @@ import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -497,7 +494,7 @@ class _NgoEditPost extends State<NgoEditPost> {
                             _updatePost(context);
                           },
                           child: Text(
-                            'Post',
+                            'Update Post',
                             style: kTextPopB16,
                           ),
                         )

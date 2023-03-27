@@ -50,23 +50,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          toolbarHeight: 85,
-          flexibleSpace: const RoundAppBar(
-            title: 'Chat',
+    return RefreshIndicator(
+      onRefresh: fetchChat,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            toolbarHeight: 85,
+            flexibleSpace: const RoundAppBar(
+              title: 'Chat',
+            ),
           ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height -
-                  kBottomNavigationBarHeight,
-              child: RefreshIndicator(
-                onRefresh: fetchChat,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height -
+                    kBottomNavigationBarHeight,
                 child: Column(
                   children: [
                     Expanded(

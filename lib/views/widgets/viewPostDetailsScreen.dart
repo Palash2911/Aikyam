@@ -187,8 +187,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                               children: [
                                 const Icon(Icons.person),
                                 const SizedBox(width: 5),
-                                Text(noVol.toString(), style: kTextPopB14),
-                                Text(' volunteers required',
+                                Text("$noVol Volunteers Required",
                                     style: kTextPopB14),
                               ],
                             ),
@@ -207,15 +206,6 @@ class _ViewDetailsState extends State<ViewDetails> {
                             ),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                   const Icon(Icons.person),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                        '${noVol.toString()} Volunteers Required',
-                                        style: kTextPopB14),
-                                  ],
-                                ),
                                 const SizedBox(height: 5),
                                 Row(
                                   children: [

@@ -114,6 +114,9 @@ class _NgoRegisterState extends State<NgoRegister> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+        setState(() {
+          isLoading = false;
+        });
       } else {
         await ngoProvider
             .registerNgo(
