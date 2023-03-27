@@ -6,6 +6,7 @@ import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
@@ -27,6 +28,7 @@ class _PostState extends State<PostItem> {
   bool _isApply = true;
   bool _isLoading = false;
   var profile = "";
+  var applyStatus = "";
 
   @override
   void didChangeDependencies() {
@@ -38,6 +40,13 @@ class _PostState extends State<PostItem> {
     await Provider.of<NgoProvider>(context, listen: false)
         .getNgoDetails(widget.post.ngoid)
         .then((value) {
+      var date = DateTime.now();
+      var postDate = DateFormat('MMMM d, y').parse(widget.post.date);
+      if (!date.isAfter(postDate)) {
+        applyStatus = "Expired";
+      } else {
+        applyStatus = widget.applyStatus;
+      }
       setState(() {
         profile = value!.firebaseUrl;
       });
@@ -98,7 +107,9 @@ class _PostState extends State<PostItem> {
                       height: 50.0,
                       width: 50.0,
                       color: Colors.grey,
-                      child: profile.isNotEmpty ? Image.network(profile) : Image.asset('assets/images/user.png'),
+                      child: profile.isNotEmpty
+                          ? Image.network(profile)
+                          : Image.asset('assets/images/user.png'),
                     ),
                   ),
                 ),
@@ -111,7 +122,7 @@ class _PostState extends State<PostItem> {
                       children: [
                         Text(
                           widget.post.ngoname,
-                          style: kTextPopM16,
+                          style: kTextPopB14,
                         ),
                       ],
                     ),
@@ -124,7 +135,7 @@ class _PostState extends State<PostItem> {
                 ),
                 const Spacer(),
                 GestureDetector(
-                   onTap: () {
+                  onTap: () {
                     Fluttertoast.showToast(
                       msg: "Feature Coming Soon..!!",
                       toastLength: Toast.LENGTH_SHORT,
@@ -198,50 +209,74 @@ class _PostState extends State<PostItem> {
             Row(
               children: [
                 const SizedBox(width: 10.0),
-                Expanded(
-                  child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                            builder: (context) => ViewDetails(
-                              pid: widget.post.id,
-                              ngoname: widget.post.ngoname,
-                              ngocity: widget.post.ncity,
-                              drivecity: widget.post.city,
-                              driveaddress: widget.post.address,
-                              driveDate: widget.post.date,
-                              applyStatus: widget.applyStatus,
-                              userType: widget.userType,
-                              category: widget.post.category,
-                              driveTime: widget.post.time,
-                              title: widget.post.driveTitle,
-                              desc: widget.post.description,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Text("View Details")),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: _isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ElevatedButton(
-                          onPressed: () {
-                            if (widget.applyStatus != "Applied" &&
-                                widget.applyStatus != "YOUR POST") {
-                              applyPost();
-                              setState(() {
-                                _isApply = false;
-                                _isLoading = true;
-                              });
-                            }
-                          },
+                applyStatus == "Expired"
+                    ? const Expanded(
+                        child: OutlinedButton(
+                          onPressed: null,
                           child: Text(
-                            _isApply ? widget.applyStatus : 'Applied',
+                            "View Details",
+                            style: TextStyle(color: Colors.black54),
                           ),
                         ),
-                ),
+                      )
+                    : Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ViewDetails(
+                                    pid: widget.post.id,
+                                    ngoname: widget.post.ngoname,
+                                    ngocity: widget.post.ncity,
+                                    drivecity: widget.post.city,
+                                    driveaddress: widget.post.address,
+                                    driveDate: widget.post.date,
+                                    applyStatus: widget.applyStatus,
+                                    userType: widget.userType,
+                                    category: widget.post.category,
+                                    driveTime: widget.post.time,
+                                    title: widget.post.driveTitle,
+                                    desc: widget.post.description,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text("View Details")),
+                      ),
+                const SizedBox(width: 10.0),
+                applyStatus == "Expired"
+                    ? Expanded(
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black54),
+                          ),
+                          child: const Text(
+                            'Expired',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: _isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : ElevatedButton(
+                                onPressed: () {
+                                  if (widget.applyStatus != "Applied" &&
+                                      widget.applyStatus != "YOUR POST") {
+                                    applyPost();
+                                    setState(() {
+                                      _isApply = false;
+                                      _isLoading = true;
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  _isApply ? widget.applyStatus : 'Applied',
+                                ),
+                              ),
+                      ),
               ],
             ),
           ],

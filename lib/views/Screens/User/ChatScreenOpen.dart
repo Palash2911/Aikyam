@@ -1,6 +1,8 @@
 import 'package:aikyam/models/chats.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/chat_provider.dart';
+import 'package:aikyam/views/Screens/Ngo/NgoProfileScreen.dart';
+import 'package:aikyam/views/Screens/User/UserProfileScreen.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/chatMessageBubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -146,34 +148,59 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
           : SafeArea(
               child: Column(
                 children: [
-                  Card(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              height: 70.0,
-                              width: 70.0,
-                              color: Colors.red,
-                              child: Image.asset('assets/images/ngo.png'),
+                  InkWell(
+                    onTap: () {
+                      if(rType == "Ngo") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NgoProfile(
+                              authToken: widget.receiverId,
+                              isUser: false,
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.rName, style: kTextPopM16),
-                            ],
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserProfile(
+                              authToken: widget.receiverId,
+                              isUser: false,
+                            ),
                           ),
-                        ],
+                        );
+                      }
+                    },
+                    child: Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20.0),
+                          bottomRight: Radius.circular(20.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Container(
+                                height: 70.0,
+                                width: 70.0,
+                                color: Colors.red,
+                                child: Image.asset('assets/images/ngo.png'),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(widget.rName, style: kTextPopM16),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

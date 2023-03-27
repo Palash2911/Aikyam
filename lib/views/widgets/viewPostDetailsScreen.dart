@@ -140,16 +140,17 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     const SizedBox(width: 4),
                                     Text(
                                       widget.driveDate,
-                                      style: kTextPopM16,
+                                      style: kTextPopB14,
                                     ),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     const Icon(Icons.watch_later_outlined),
+                                    const SizedBox(width: 2),
                                     Text(
                                       widget.driveTime,
-                                      style: kTextPopM16,
+                                      style: kTextPopB14,
                                     ),
                                   ],
                                 )
@@ -221,7 +222,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   children: [
                                     const Icon(Icons.location_on),
                                     const SizedBox(width: 5),
-                                    Text('Drive Location: ',
+                                    Text('Location: ',
                                         style: kTextPopB14),
                                     Expanded(
                                       child: Text(
@@ -237,7 +238,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   children: [
                                     const Icon(Icons.category),
                                     const SizedBox(width: 5),
-                                    Text('Drive category: ',
+                                    Text('Category: ',
                                         style: kTextPopB14),
                                     Expanded(
                                       child: Text(
