@@ -120,9 +120,11 @@ class _NgoProfileState extends State<NgoProfile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              name,
-                              style: kTextPopB24,
+                            Flexible(
+                              child: Text(
+                                name,
+                                style: kTextPopB24,
+                              ),
                             ),
                             widget.isUser
                                 ? ClipRRect(
