@@ -124,25 +124,27 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
         address: address,
         webUrl: website,
       ),
-    ).then((value) {
+    ).then((value) async {
       if (isLoading) {
-        Fluttertoast.showToast(
-          msg: "Profile Updated Successfully!",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: kprimaryColor,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NgoProfile(
-              isUser: true,
-              authToken: authToken,
+        await Provider.of<Auth>(context).autoLogin().then((value) {
+          Fluttertoast.showToast(
+            msg: "Profile Updated Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NgoProfile(
+                isUser: true,
+                authToken: authToken,
+              ),
             ),
-          ),
-        );
+          );
+        });
       }
     });
   }

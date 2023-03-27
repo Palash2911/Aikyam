@@ -116,25 +116,30 @@ class _EditUserState extends State<EditUser> {
         firebaseUrl: firebaseUrl,
       ),
     )
-        .then((value) {
+        .then((value) async {
       if (isLoading) {
-        Fluttertoast.showToast(
-          msg: "Profile Updated Successfully!",
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: kprimaryColor,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UserProfile(
-              isUser: true,
-              authToken: authToken,
+        await Provider.of<Auth>(context).autoLogin().then((value) {
+          Fluttertoast.showToast(
+            msg: "Profile Updated Successfully!",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: kprimaryColor,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserProfile(
+                isUser: true,
+                authToken: authToken,
+              ),
             ),
-          ),
-        );
+          );
+        });
       }
     });
   }

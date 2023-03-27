@@ -82,7 +82,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
           ListTile(
             leading: const Icon(Icons.help),
             title: const Text('help and support'),
-            onTap: () {},
+            onTap: _launchUrl,
           ),
           ListTile(
             leading: const Icon(Icons.logout),
@@ -184,7 +184,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
           ListTile(
             leading: const Icon(Icons.help),
             title: const Text('Help And Support'),
-            onTap: () {},
+            onTap: _launchUrl,
           ),
           ListTile(
             leading: const Icon(Icons.logout),
