@@ -1,6 +1,7 @@
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
+import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/Post.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({
@@ -61,6 +63,19 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
+  void _chatScreen() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => ChatScreenOpen(
+          receiverId: widget.authToken,
+          senderType: "Ngo",
+          rName: name,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,51 +111,52 @@ class _UserProfileState extends State<UserProfile> {
                               name,
                               style: kTextPopB24,
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(25.0),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5.0, horizontal: 15.0),
-                                color: kprimaryColor,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
+                            widget.isUser
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 15.0),
+                                      color: kprimaryColor,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
                                               builder: (context) =>
-                                                  EditUser()));
-                                    },
-                                    child: widget.isUser
-                                        ? Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.edit,
-                                                size: 24.0,
-                                                color: ksecondaryColor,
-                                              ),
-                                              const SizedBox(width: 10.0),
-                                              Text('Edit',
-                                                  style: kTextPopB14.copyWith(
-                                                      color: ksecondaryColor)),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.chat_bubble,
-                                                size: 24.0,
-                                                color: ksecondaryColor,
-                                              ),
-                                              const SizedBox(width: 10.0),
-                                              Text('Chat',
-                                                  style: kTextPopB14.copyWith(
-                                                      color: ksecondaryColor)),
-                                            ],
-                                          )),
-                              ),
-                            ),
+                                                  const EditUser(),
+                                            ),
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              size: 24.0,
+                                              color: ksecondaryColor,
+                                            ),
+                                            const SizedBox(width: 10.0),
+                                            Text(
+                                              'Edit',
+                                              style: kTextPopB14.copyWith(
+                                                  color: ksecondaryColor),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    backgroundColor: kprimaryColor,
+                                    foregroundColor: ksecondaryColor,
+                                    child: IconButton(
+                                        onPressed: () {
+                                          _chatScreen();
+                                        },
+                                        icon:
+                                            const Icon(Icons.message_rounded)),
+                                  ),
                           ],
                         ),
                         const SizedBox(height: 5.0),

@@ -19,17 +19,33 @@ class _ChatScreenState extends State<ChatScreen> {
   final auth = FirebaseAuth.instance;
   CollectionReference? chatRef;
   var isInit = true;
+  var chatExists = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (isInit) {
-      chatRef = FirebaseFirestore.instance
-          .collection("Users")
-          .doc(auth.currentUser!.uid)
-          .collection("Chats");
+      fetchChat();
     }
     isInit = false;
+  }
+
+  Future<void> fetchChat() async {
+    chatRef = FirebaseFirestore.instance
+        .collection("Users")
+        .doc(auth.currentUser!.uid)
+        .collection("Chats");
+    await chatRef!.get().then((value) {
+      if (value.docs.isEmpty) {
+        setState(() {
+          chatExists = true;
+        });
+      } else {
+        setState(() {
+          chatExists = false;
+        });
+      }
+    });
   }
 
   @override
@@ -45,70 +61,71 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
-                child: Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: chatRef!.snapshots(),
-                    builder: (context, snapshot) {
-                      {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          if (snapshot.data!.docs.isEmpty) {
-                            return Center(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 300.0,
-                                    child: Image.asset(
-                                      'assets/images/startchat.png',
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Text(
-                                    "Start Chatting !",
-                                    style: kTextPopM16,
-                                  ),
-                                ],
-                              ),
+          child: RefreshIndicator(
+            onRefresh: fetchChat,
+            child: SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10.0),
+                  child: Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: chatRef!.snapshots(),
+                      builder: (context, snapshot) {
+                        {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
                             );
                           } else {
-                            return ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs.map((document) {
-                                return ChatListItem(
-                                  name: document['SName'],
-                                  message: document["RecentMessage"],
-                                  isOnline: true,
-                                  imageUrl: "assets/images/ngo.png",
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatScreenOpen(
-                                          receiverId: document.id,
-                                          senderType: "Users",
-                                          rName: document["SName"],
-                                        ),
+                            if (snapshot.data!.docs.isEmpty || !chatExists) {
+                              return Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 300.0,
+                                      child: Image.asset(
+                                        'assets/images/startchat.png',
+                                        fit: BoxFit.contain,
                                       ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                            );
+                                    ),
+                                    const SizedBox(height: 20.0),
+                                    Text(
+                                      "Start Chatting !",
+                                      style: kTextPopM16,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs.map((document) {
+                                  return ChatListItem(
+                                    name: document['SName'],
+                                    message: document["RecentMessage"],
+                                    isOnline: true,
+                                    imageUrl: "assets/images/ngo.png",
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatScreenOpen(
+                                            receiverId: document.id,
+                                            senderType: "Users",
+                                            rName: document["SName"],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              );
+                            }
                           }
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
                 ),
               ),
