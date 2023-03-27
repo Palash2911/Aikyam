@@ -1,20 +1,17 @@
-import 'package:aikyam/models/post.dart';
-import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/providers/user_provider.dart';
 import 'package:aikyam/views/Screens/User/ChatScreenOpen.dart';
 import 'package:aikyam/views/Screens/User/EditProfile.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/Post.dart';
 import 'package:aikyam/views/widgets/UActivityPostItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({
+    super.key,
     required this.authToken,
     required this.isUser,
   });
@@ -26,9 +23,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  bool _isSelected = true;
   bool isUserPov = true;
-  bool _isAboutActive = true;
   var name = "";
   var profileUrl = "";
   var bio = "";
@@ -36,20 +31,19 @@ class _UserProfileState extends State<UserProfile> {
   var interest = "";
   var email = "";
   var phone = "";
-
-  void _toggleButton() {
-    setState(() {
-      _isAboutActive = !_isAboutActive;
-    });
-  }
+  var isInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _fetchDetails();
+    if (isInit) {
+      _fetchDetails();
+    }
+    isInit = false;
   }
 
   void _fetchDetails() async {
+    print(widget.authToken);
     await Provider.of<UserProvider>(context)
         .getUserDetails(widget.authToken)
         .then((value) {
@@ -86,99 +80,96 @@ class _UserProfileState extends State<UserProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 110,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/cover.png'),
-                              fit: BoxFit.cover,
-                            ),
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 110,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/cover.png'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(height: 36.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              name,
-                              style: kTextPopB24,
-                            ),
-                            widget.isUser
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0, horizontal: 15.0),
-                                      color: kprimaryColor,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EditUser(),
-                                            ),
-                                          );
-                                        },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.edit,
-                                              size: 24.0,
-                                              color: ksecondaryColor,
-                                            ),
-                                            const SizedBox(width: 10.0),
-                                            Text(
-                                              'Edit',
-                                              style: kTextPopB14.copyWith(
-                                                  color: ksecondaryColor),
-                                            ),
-                                          ],
-                                        ),
+                      ),
+                      const SizedBox(height: 36.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            name,
+                            style: kTextPopB24,
+                          ),
+                          widget.isUser
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0, horizontal: 15.0),
+                                    color: kprimaryColor,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EditUser(),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.edit,
+                                            size: 24.0,
+                                            color: ksecondaryColor,
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            'Edit',
+                                            style: kTextPopB14.copyWith(
+                                                color: ksecondaryColor),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  )
-                                : CircleAvatar(
-                                    backgroundColor: kprimaryColor,
-                                    foregroundColor: ksecondaryColor,
-                                    child: IconButton(
-                                        onPressed: () {
-                                          _chatScreen();
-                                        },
-                                        icon:
-                                            const Icon(Icons.message_rounded)),
                                   ),
-                          ],
-                        ),
-                        const SizedBox(height: 5.0),
-                        Text(
-                          bio,
-                          style: kTextPopR14,
-                        )
-                      ],
-                    ),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: kprimaryColor,
+                                  foregroundColor: ksecondaryColor,
+                                  child: IconButton(
+                                      onPressed: () {
+                                        _chatScreen();
+                                      },
+                                      icon: const Icon(Icons.message_rounded)),
+                                ),
+                        ],
+                      ),
+                      const SizedBox(height: 5.0),
+                      Text(
+                        bio,
+                        style: kTextPopR14,
+                      )
+                    ],
                   ),
-                  Positioned(
-                    top: 60,
-                    left: MediaQuery.of(context).size.width / 5 - 64,
-                    child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: profileUrl.isNotEmpty
-                          ? Image.network(profileUrl).image
-                          : const AssetImage('assets/images/user.png'),
-                    ),
+                ),
+                Positioned(
+                  top: 60,
+                  left: MediaQuery.of(context).size.width / 5 - 64,
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: profileUrl.isNotEmpty
+                        ? Image.network(profileUrl).image
+                        : const AssetImage('assets/images/user.png'),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
@@ -189,7 +180,7 @@ class _UserProfileState extends State<UserProfile> {
                     const TabBarProperties(indicatorColor: Colors.transparent),
                 tabs: [
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     color: kprimaryColor,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -208,7 +199,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     color: kprimaryColor,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -233,7 +224,7 @@ class _UserProfileState extends State<UserProfile> {
                       interest: interest,
                       email: email,
                       phone: phone),
-                  _Post()
+                  _Post(uid: widget.authToken),
                 ],
                 onChange: (index) {},
               ),
@@ -247,7 +238,6 @@ class _UserProfileState extends State<UserProfile> {
 
 class _About extends StatelessWidget {
   const _About({
-    super.key,
     required this.occupation,
     required this.interest,
     required this.email,
@@ -296,6 +286,10 @@ class _About extends StatelessWidget {
 }
 
 class _Post extends StatefulWidget {
+  final String uid;
+
+  const _Post({required this.uid});
+
   @override
   State<_Post> createState() => _PostState();
 }
@@ -307,7 +301,7 @@ class _PostState extends State<_Post> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    applyRef = applyRef.doc(auth.currentUser!.uid).collection("AppliedPost");
+    applyRef = applyRef.doc(widget.uid).collection("AppliedPost");
   }
 
   @override

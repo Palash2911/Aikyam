@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:aikyam/views/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -28,15 +29,28 @@ class HomeAppBar extends StatelessWidget {
               child: Container(
                 decoration: kfillbox10,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    focusColor: ksecondaryColor,
-                    hintText: 'Search',
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    suffixIcon: Icon(
-                      FeatherIcons.search,
-                      color: kprimaryColor,
+                child: InkWell(
+                  onTap: () {
+                    Fluttertoast.showToast(
+                      msg: "Work In Progress !",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: kprimaryColor,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
+                  child: TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      focusColor: ksecondaryColor,
+                      hintText: 'Search',
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      suffixIcon: Icon(
+                        FeatherIcons.search,
+                        color: kprimaryColor,
+                      ),
                     ),
                   ),
                 ),

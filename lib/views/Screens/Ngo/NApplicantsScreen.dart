@@ -1,9 +1,7 @@
-import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:aikyam/views/widgets/userRequestTile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -95,8 +93,7 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                   city: document['PhoneNo'],
                                   imageUrl: document['ProfilePic'],
                                   uid: document.id,
-                                  applicationStatus:
-                                      document["ApplicationStatus"],
+                                  applicationStatus: document["ApplicationStatus"],
                                   userType: document["UserType"],
                                 );
                               }).toList(),
