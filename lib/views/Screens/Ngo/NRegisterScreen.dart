@@ -150,7 +150,7 @@ class _NgoRegisterState extends State<NgoRegister> {
             fontSize: 16.0,
           );
         }).then((_) async {
-          await Provider.of<Auth>(context).autoLogin().then((value) {
+          await Provider.of<Auth>(context, listen: false).autoLogin().then((value) {
             Fluttertoast.showToast(
               msg: "Successfully Registered !",
               toastLength: Toast.LENGTH_SHORT,

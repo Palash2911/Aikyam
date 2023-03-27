@@ -42,7 +42,7 @@ class _PostState extends State<PostItem> {
         .then((value) {
       var date = DateTime.now();
       var postDate = DateFormat('MMMM d, y').parse(widget.post.date);
-      if (!date.isAfter(postDate)) {
+      if (date.isAfter(postDate)) {
         applyStatus = "Expired";
       } else {
         applyStatus = widget.applyStatus;
