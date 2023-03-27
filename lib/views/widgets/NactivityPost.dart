@@ -180,7 +180,7 @@ class _NActivityPostState extends State<NActivityPost> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.access_time_rounded),
+                Icon(Icons.calendar_month_rounded),
                 SizedBox(width: 5),
                 Text('Date: ', style: kTextPopB14),
                 Expanded(
