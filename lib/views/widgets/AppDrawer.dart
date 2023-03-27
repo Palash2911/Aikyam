@@ -34,7 +34,7 @@ class _UserAppdrawerState extends State<UserAppdrawer> {
   }
 
   Future<void> _launchUrl() async {
-    if (!await launchUrl(Uri.parse("https://forms.gle/C4Do4vggkFcHiN4MA"))) {
+    if (!await launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeTFJ_-ezuk-eTapWJxRtkfW_DDPOfYcwltPNTqCUadkZ9NxA/viewform"))) {
       throw Exception('Could not launch');
     }
   }
@@ -126,7 +126,7 @@ class _NgoAppdrawerState extends State<NgoAppdrawer> {
   }
 
   Future<void> _launchUrl() async {
-    if (!await launchUrl(Uri.parse("https://forms.gle/C4Do4vggkFcHiN4MA"))) {
+    if (!await launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSeTFJ_-ezuk-eTapWJxRtkfW_DDPOfYcwltPNTqCUadkZ9NxA/viewform"))) {
       throw Exception('Could not launch');
     }
   }
