@@ -53,7 +53,7 @@ class Addpost extends StatelessWidget {
                           Flexible(
                             flex: 1,
                             child: Image.asset(
-                              'assets/images/Individual.png',
+                              'assets/images/add.png',
                               height: 90.0,
                               width: 90.0,
                             ),

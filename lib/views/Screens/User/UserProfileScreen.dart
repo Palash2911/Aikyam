@@ -99,9 +99,11 @@ class _UserProfileState extends State<UserProfile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            name,
-                            style: kTextPopB24,
+                          Flexible(
+                            child: Text(
+                              name,
+                              style: kTextPopB24,
+                            ),
                           ),
                           widget.isUser
                               ? ClipRRect(
