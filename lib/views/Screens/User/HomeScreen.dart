@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
-                          stream: postRef.snapshots(),
+                          stream: postRef.orderBy("Date", descending: false).snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return const Center(
