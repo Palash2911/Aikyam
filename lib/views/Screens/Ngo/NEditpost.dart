@@ -4,7 +4,6 @@ import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -92,7 +91,6 @@ class _NgoEditPost extends State<NgoEditPost> {
         _stateController.text = value.state;
         _cityController.text = value.city;
         postImages = value.photos;
-        print(postImages);
       }
     });
     setState(() {
@@ -156,7 +154,7 @@ class _NgoEditPost extends State<NgoEditPost> {
           setFields();
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (ctx) => NgoActivityScreen(),
+              builder: (ctx) => const NgoActivityScreen(),
             ),
           );
         });

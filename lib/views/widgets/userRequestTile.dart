@@ -42,7 +42,7 @@ class _ProfileTileState extends State<ProfileTile> {
   void applyReject(String ar) async {
     if (ar == "Accept") {
       await Provider.of<PostProvider>(context, listen: false)
-          .acceptdeleteUser("Accept", widget.pid, widget.uid)
+          .acceptRejectUser("Accept", widget.pid, widget.uid)
           .then((value) {
         Fluttertoast.showToast(
           msg: "Accepted !",
@@ -59,7 +59,7 @@ class _ProfileTileState extends State<ProfileTile> {
       });
     } else {
       await Provider.of<PostProvider>(context, listen: false)
-          .acceptdeleteUser("Reject", widget.pid, widget.uid)
+          .acceptRejectUser("Reject", widget.pid, widget.uid)
           .then((value) {
         Fluttertoast.showToast(
           msg: "Rejected !",

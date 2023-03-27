@@ -3,7 +3,6 @@ import 'package:aikyam/models/ngo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
 
 class NgoProvider extends ChangeNotifier {
   Future registerNgo(Ngo ngo) async {
@@ -83,6 +82,7 @@ class NgoProvider extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future updateNgo(Ngo ngo) async {

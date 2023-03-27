@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           toolbarHeight: 85,
-          flexibleSpace: HomeAppBar(),
+          flexibleSpace: const HomeAppBar(),
           leading: IconButton(
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();

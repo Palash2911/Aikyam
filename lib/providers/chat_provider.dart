@@ -134,7 +134,6 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future sendMessageN(Chats chat) async {
-    print(chat.isUser);
     try {
       CollectionReference messageNRef = FirebaseFirestore.instance
           .collection('Ngo')

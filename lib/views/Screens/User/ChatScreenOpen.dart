@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class ChatScreenOpen extends StatefulWidget {
   const ChatScreenOpen({
+    super.key,
     required this.receiverId,
     required this.senderType,
     required this.rName,
@@ -47,7 +48,6 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
         .checkSenderType(widget.receiverId)
         .then((value) async {
       rType = (!value ? "Users" : "Ngo");
-      print(rType);
       await Provider.of<ChatProvider>(context, listen: false)
           .createMessageRoom(widget.receiverId, auth.currentUser!.uid,
               widget.senderType, widget.rName, sname)
@@ -200,9 +200,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "Start Chatting !",
                                     style: kTextPopM16,
@@ -227,7 +225,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -235,7 +233,7 @@ class _ChatScreenOpenState extends State<ChatScreenOpen> {
                             controller: _textController,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
-                                icon: Icon(Icons.send),
+                                icon: const Icon(Icons.send),
                                 onPressed: () {
                                   if (_textController.text.isNotEmpty) {
                                     setState(() {

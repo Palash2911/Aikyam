@@ -36,7 +36,7 @@ class _UserBottomBarState extends State<UserBottomBar> {
 }
 
 List<Widget> _buildScreens() {
-  return [HomeScreen(), ChatScreen(), ActivityScreen()];
+  return [HomeScreen(), const ChatScreen(), const ActivityScreen()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {

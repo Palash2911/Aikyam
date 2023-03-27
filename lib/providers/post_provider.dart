@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +129,6 @@ class PostProvider extends ChangeNotifier {
       });
       notifyListeners();
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
@@ -146,7 +143,6 @@ class PostProvider extends ChangeNotifier {
 
       var aName = "";
       var profilePic = "";
-      print(userType);
       if (userType == "User") {
         await users.doc(auth.currentUser!.uid).get().then((snapshot) {
           aName = snapshot['Name'];
@@ -209,7 +205,7 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-  Future acceptdeleteUser(String ar, String pid, String uid) async {
+  Future acceptRejectUser(String ar, String pid, String uid) async {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     CollectionReference ngo = FirebaseFirestore.instance.collection('Ngo');
     CollectionReference posts = FirebaseFirestore.instance

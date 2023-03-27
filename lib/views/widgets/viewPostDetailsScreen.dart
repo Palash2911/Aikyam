@@ -1,9 +1,6 @@
 import 'package:aikyam/providers/post_provider.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:aikyam/views/widgets/fillbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 class ViewDetails extends StatefulWidget {
@@ -99,7 +96,7 @@ class _ViewDetailsState extends State<ViewDetails> {
           : SafeArea(
               child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -109,27 +106,25 @@ class _ViewDetailsState extends State<ViewDetails> {
                           ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
-                              child: Container(
-                                child: Image.asset('assets/images/ngo.png'),
-                              ),
+                              child: Image.asset('assets/images/ngo.png'),
                             ),
                             title: Text(
                               widget.ngoname,
                               style: kTextPopM16,
                             ),
-                            subtitle: Text('more info'),
+                            subtitle: const Text('More Info'),
                           ),
                           const Divider(),
                           Text(
                             widget.title,
                             style: kTextPopM16,
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: kpostColor,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -141,8 +136,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.calendar_today),
-                                    SizedBox(width: 4),
+                                    const Icon(Icons.calendar_today),
+                                    const SizedBox(width: 4),
                                     Text(
                                       widget.driveDate,
                                       style: kTextPopM16,
@@ -151,7 +146,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(Icons.watch_later_outlined),
+                                    const Icon(Icons.watch_later_outlined),
                                     Text(
                                       widget.driveTime,
                                       style: kTextPopM16,
@@ -161,8 +156,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                               ],
                             ),
                           ),
-                          Divider(),
-                          SizedBox(width: 12.0),
+                          const Divider(),
+                          const SizedBox(width: 12.0),
                           Container(
                             height: 250,
                             color: Colors.grey[300],
@@ -173,17 +168,37 @@ class _ViewDetailsState extends State<ViewDetails> {
                                   return Image.network(_imgPost[index]);
                                 })),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Text(widget.desc, style: kTextPopR16),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Divider(),
+                          const SizedBox(width: 12.0),
+                          const Divider(),
                           Container(
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: kpostColor,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.person),
+                                const SizedBox(width: 5),
+                                Text(noVol.toString(), style: kTextPopB14),
+                                Text(' volunteers required',
+                                    style: kTextPopB14),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: kpostColor,
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -194,27 +209,28 @@ class _ViewDetailsState extends State<ViewDetails> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.person),
-                                    SizedBox(width: 5),
-                                    Text('${noVol.toString()} Volunteers Required',
+                                   const Icon(Icons.person),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                        '${noVol.toString()} Volunteers Required',
                                         style: kTextPopB14),
                                   ],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    Icon(Icons.location_city),
-                                    SizedBox(width: 5),
+                                    const Icon(Icons.location_city),
+                                    const SizedBox(width: 5),
                                     Text('City: ', style: kTextPopB14),
                                     Text(widget.ngocity, style: kTextPopR14)
                                   ],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.location_on),
-                                    SizedBox(width: 5),
+                                    const Icon(Icons.location_on),
+                                    const SizedBox(width: 5),
                                     Text('Drive Location: ',
                                         style: kTextPopB14),
                                     Expanded(
@@ -225,12 +241,12 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.category),
-                                    SizedBox(width: 5),
+                                    const Icon(Icons.category),
+                                    const SizedBox(width: 5),
                                     Text('Drive category: ',
                                         style: kTextPopB14),
                                     Expanded(
@@ -249,7 +265,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(9.0),
                             child: _isApplyLoading
-                                ? const CircularProgressIndicator()
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : ElevatedButton(
                                     onPressed: () {
                                       if (widget.applyStatus != "Applied" &&

@@ -262,13 +262,13 @@ class _About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Information', style: kTextPopB16),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ListTile(
             title: Text('Occupation', style: kTextPopM16),
             subtitle: Text(occupation, style: kTextPopR14),
@@ -277,10 +277,10 @@ class _About extends StatelessWidget {
             title: Text('Interest', style: kTextPopM16),
             subtitle: Text(interest, style: kTextPopR14),
           ),
-          SizedBox(height: 10),
-          Divider(),
+          const SizedBox(height: 10),
+          const Divider(),
           Text('Contact', style: kTextPopB16),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ListTile(
             title: Text('Email id', style: kTextPopM16),
             subtitle: Text(email, style: kTextPopR14),

@@ -71,9 +71,7 @@ class _NgoChatScreenState extends State<NgoChatScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "Start Chatting !",
                                     style: kTextPopM16,

@@ -358,7 +358,6 @@ class _NgoEditProfileState extends State<NgoEditProfile> {
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.green.shade100,
-                                    // border: Border.all(color: kprimaryColor, width: 2),
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   child: Row(

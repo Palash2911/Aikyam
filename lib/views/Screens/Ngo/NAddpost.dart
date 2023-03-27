@@ -1,12 +1,6 @@
-import 'package:aikyam/providers/auth_provider.dart';
 import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/NRegisterScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/editPostScreen.dart';
-import 'package:aikyam/views/Screens/User/UActivityScreen.dart';
-import 'package:aikyam/views/Screens/User/UserRegister.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Addpost extends StatelessWidget {
   static var routeName = "/add-post";
@@ -17,10 +11,11 @@ class Addpost extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 200,),
+            const SizedBox(
+              height: 200,
+            ),
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
@@ -39,9 +34,11 @@ class Addpost extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NgoAddpost()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NgoAddpost(),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
@@ -65,8 +62,7 @@ class Addpost extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               "Here write something about create post option",
-                              style:
-                                  kTextPopR14.copyWith(color: kprimaryColor),
+                              style: kTextPopR14.copyWith(color: kprimaryColor),
                             ),
                           )
                         ],

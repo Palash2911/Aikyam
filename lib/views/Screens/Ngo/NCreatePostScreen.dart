@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:aikyam/models/post.dart';
 import 'package:aikyam/providers/ngo_provider.dart';
 import 'package:aikyam/providers/post_provider.dart';
-import 'package:aikyam/views/Screens/Ngo/ngoBottomBar.dart';
 import 'package:aikyam/views/constants.dart';
 import 'package:aikyam/views/widgets/roundAppBar.dart';
 import 'package:csc_picker/csc_picker.dart';

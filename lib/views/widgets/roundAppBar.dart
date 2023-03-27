@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:aikyam/views/constants.dart';
 
 class RoundAppBar extends StatelessWidget {
@@ -12,6 +11,11 @@ class RoundAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150.0,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+          color: kprimaryColor),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
         child: Text(
@@ -19,11 +23,6 @@ class RoundAppBar extends StatelessWidget {
           style: kTextPopB24.copyWith(color: ksecondaryColor),
         ),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
-          color: kprimaryColor),
     );
   }
 }

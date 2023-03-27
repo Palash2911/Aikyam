@@ -142,7 +142,16 @@ class _NActivityPostState extends State<NActivityPost> {
                   width: 15,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Fluttertoast.showToast(
+                      msg: "Feature Coming Soon..!!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: kprimaryColor,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
                   child: const Icon(
                     Icons.share,
                     size: 32.0,

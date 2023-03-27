@@ -33,7 +33,6 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authToken = Provider.of<Auth>(context, listen: false).token;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -77,7 +76,7 @@ class _ApplicantsScreenState extends State<ApplicantsScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                   ),
-                                  SizedBox(height: 20.0),
+                                  const SizedBox(height: 20.0),
                                   Text(
                                     "No Applicants Yet !",
                                     style: kTextPopM16,

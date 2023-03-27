@@ -11,6 +11,11 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.2,
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+          color: kprimaryColor),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         child: Row(
@@ -40,11 +45,6 @@ class HomeAppBar extends StatelessWidget {
           ],
         ),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
-          color: kprimaryColor),
     );
   }
 }

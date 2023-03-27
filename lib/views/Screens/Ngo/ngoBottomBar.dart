@@ -1,7 +1,4 @@
-import 'package:aikyam/providers/auth_provider.dart';
-import 'package:aikyam/views/Screens/Login/Login.dart';
 import 'package:aikyam/views/Screens/Ngo/NActivityScreen.dart';
-import 'package:aikyam/views/Screens/Ngo/NCreatePostScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NAddpost.dart';
 import 'package:aikyam/views/Screens/Ngo/NHomeScreen.dart';
 import 'package:aikyam/views/Screens/Ngo/NchatScreen.dart';
@@ -9,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:aikyam/views/constants.dart';
-import 'package:provider/provider.dart';
 
 class NgoBottomBar extends StatefulWidget {
   static var routeName = '/ngo_bottom_nav';
@@ -46,7 +42,6 @@ List<Widget> _buildScreens() {
     const NHomeScreen(),
     const NgoChatScreen(),
     const Addpost(),
-    // const NgoAddpost(),
     const NgoActivityScreen()
   ];
 }
