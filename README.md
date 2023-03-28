@@ -1,4 +1,4 @@
-# Aikyam
+![Group 140146](https://user-images.githubusercontent.com/47987136/228334170-781b397f-6d66-4385-965b-0d26a3d9da53.png)
 
 ### Problem Statement:
 There is a lack of efficient and effective communication between NGOs and individuals who are interested in volunteering for social causes. This leads to a significant gap in finding and recruiting volunteers for various events and drives organized by NGOs.
@@ -22,10 +22,19 @@ To address this problem, an app is built using Flutter and Firebase, which serve
 </div>
 
 
+### Firebase
 
+Firebase Storage            | Posts Database
+:-------------------------:|:-------------------------:|
+![firebase](https://user-images.githubusercontent.com/47987136/228322030-69ae43e9-8f50-4ef0-b93d-53a374bf39ed.jpeg)|![firebase](https://user-images.githubusercontent.com/47987136/228322044-9b4b3079-aab0-4978-bcb0-46b675b1a531.jpeg)|
+
+Users Database             | NGO Database
+:-------------------------:|:-------------------------:|
+![firebase](https://user-images.githubusercontent.com/47987136/228322047-23c4c923-369b-4258-b102-e17cce1f74b2.jpeg)|![firebase](https://user-images.githubusercontent.com/47987136/228322057-4c05fb73-6304-4a90-be9f-6ab2318dc498.jpeg)|
 
 
 ### Functionality & Concepts used:
+
 
 #### Frontend:
 We used Flutter as the main framework for our app, as flutter works seamlessly for building cross-platform apps.
@@ -40,42 +49,30 @@ The frontend is created using Flutter as the Framework hence Dart was used as th
 
 The backend of the app is built using Firebase's suite of tools and services, like Firebase Firestore, Firebase Cloud Store etc, which are designed to work seamlessly together to provide a complete backend solution for mobile apps.
 
-
 walk us through steps we could take to test the solution on real users and provide me three such test cases with feedbacks we might recieve
 
-- Conducted Usability testing:
-by doing this we evaulated how easy it is for users for navigate through the app and if our app is user friendly. For this we asked users to perform some tasks like creating a post, applying for a post and setting up profile etc.
+- Conducted usability testing:
+By doing this we evaulated how easy it is for users for navigate through the app and if our app is user friendly. For this we asked users to perform some tasks like creating a post, applying for a post and setting up profile etc.
 
-- feedback: The app has a very simple interface hence no problem while creating a post for the NGO side likewise its easy to apply for post as they were available on home screen
+- Feedback: The app has a very simple interface hence no problem while creating a post for the NGO side likewise its easy to apply for post as they were available on home screen
 
 - A/B Testing : In this testing we asked users to use 2 different version of the app having having different UI for the Home screen especially the post format.
 In the first version we had share, comments, apply, like in the same row which 
 was clumsy and unclear
 In the 2nd version we did a bit of UI Fixes and hence made the user experience smooth and hassle free.
 
-## Folder Structure
-<!-- ToDo -->
-tree -I 'build|ios|android|.dart_tool|.idea|.git'
+## Download Apk
+[<img alt="aikyam" width="200px" src="https://user-images.githubusercontent.com/47987136/228337784-dbb7a73b-f058-40c1-bed2-c4fa6d7bbb71.png" />](https://drive.google.com/drive/folders/1lkqBA2I1dGgTEYD8q54ewxZvEQmHNFsZ)
 
 
 
-<!-- ABOUT THE PROJECT -->
-## What is Our Problem?
-
-
-## What is Our Solution?
-
-
-## what inspired us to to select this specific goals and targets
+## What Inspired Us To Select This Specific Goals And Targets ?
 
 We ourselves were unable to contribute to drives and events as we were unaware about them. The main issue was lack of awareness whihc was caused  as we had no connection or collaboration with any NGO's
 Many NGO's are unable to conduct several events due to inadequate volunteers.
 By observing the issues of Both NGO's and Individuals, we came to a solution of finding a pathway between the two
 
-## Why You Should Choose Us?
 
-
-<!-- GOALS -->
 ## Our Goals
 Strengthen the means of implementation and revitalize the global partnership for sustainable development."
 The target under this goal is to "Enhance international support for implementing effective and targeted capacity-building in developing countries to support national plans to implement all the sustainable development goals.
@@ -84,36 +81,38 @@ In addition, our app is also contributing to UN's Sustainable Development Goal 1
 
 <table>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332340-ab9bd94b-90ba-4ada-81ff-46178ae2ee34.png" alt="image1" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332502-60aa94b4-aa59-4524-b05d-24cdafd09f6b.png" alt="image2" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332596-93b5fd76-3e4d-4a34-93ad-867f1ad5cb46.png" alt="image3" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332340-ab9bd94b-90ba-4ada-81ff-46178ae2ee34.png" alt="image1" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332502-60aa94b4-aa59-4524-b05d-24cdafd09f6b.png" alt="image2" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332596-93b5fd76-3e4d-4a34-93ad-867f1ad5cb46.png" alt="image3" width="100"></td>
   </tr>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332548-9bd2a639-672b-4af2-9014-34b8b31840cb.png" alt="image4" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332703-4aee4335-e520-4661-afee-c8bb52aec9d8.png" alt="image5" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332788-a96a68a6-5b61-4d6e-8bce-0d55b676c34f.png" alt="image6" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332548-9bd2a639-672b-4af2-9014-34b8b31840cb.png" alt="image4" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332703-4aee4335-e520-4661-afee-c8bb52aec9d8.png" alt="image5" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332788-a96a68a6-5b61-4d6e-8bce-0d55b676c34f.png" alt="image6" width="100"></td>
   </tr>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332835-3bd65247-a6fa-44c9-9330-24d6afb1e199.png" alt="image7" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332868-ebb2f600-3ad6-4962-b584-33f57d5bb961.png" alt="image8" width="200"></td>
-    <td><img src="https://user-images.githubusercontent.com/47987136/228332913-bf683759-3721-423f-b70a-a214bd746351.png" alt="image9" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332835-3bd65247-a6fa-44c9-9330-24d6afb1e199.png" alt="image7" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332868-ebb2f600-3ad6-4962-b584-33f57d5bb961.png" alt="image8" width="100"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332913-bf683759-3721-423f-b70a-a214bd746351.png" alt="image9" width="100"></td>
   </tr>
 </table>
 
 
-
-<!-- ABOUT ICARUS -->
 ## The Story of Aikyam
 While we were brainstorming for finding a memorable name for our App, We thought of using something that represents the core values of the App ie connection and collaboration, that is when we stumbled upon 'Aikyam' -a Sanskrit word that translates to "oneness" or "unity". This name perfectly captured our app's mission to bring together individuals and NGOs to work towards a common goal of promoting social causes and making a positive impact on communities.
 
-## Firebase
+### Creators :zap::dizzy:
+<table>
+		<tr>
+			<td align="center"><img src="https://user-images.githubusercontent.com/47987136/228346608-f897221d-3b49-44a5-b92d-ded04b3756da.jpeg"  width=100px;"><br /><sub><b>Dip Hire</b></sub><br/><a href="https://github.com/DipHire">👻💻🥴</a></td>
+		   <td align="center"><img src="https://user-images.githubusercontent.com/47987136/228345750-46f8ab4e-5533-4e7a-9667-137153e86718.jpg"  width=100px;"><br /><sub><b>Palash Rambhia</b></sub><br/><a href="https://github.com/palash2911">👩🏻‍💻🎯💻</a></td>
+			<td align="center"><img src="https://user-images.githubusercontent.com/47987136/228345760-dffaf8e4-ab87-47f5-8b37-a27af570ea73.jpg"  width=100px;"><br /><sub><b>Sakshi Thombre</b></sub><br/><a href="https://github.com/Sakshy18">🖋🎨🦄</a></td>					
+		</tr>
+		
+</table>
 
-Firebase             | Firebase
-:-------------------------:|:-------------------------:|
-![firebase](https://user-images.githubusercontent.com/47987136/228322030-69ae43e9-8f50-4ef0-b93d-53a374bf39ed.jpeg)|![firebase](https://user-images.githubusercontent.com/47987136/228322044-9b4b3079-aab0-4978-bcb0-46b675b1a531.jpeg)|
+![Group 140150](https://user-images.githubusercontent.com/47987136/228341496-628722c2-8b92-43f7-aaa8-57048d522366.png)
 
-Firebase             | Firebase
-:-------------------------:|:-------------------------:|
-![firebase](https://user-images.githubusercontent.com/47987136/228322047-23c4c923-369b-4258-b102-e17cce1f74b2.jpeg)|![firebase](https://user-images.githubusercontent.com/47987136/228322057-4c05fb73-6304-4a90-be9f-6ab2318dc498.jpeg)|
+
 
 
