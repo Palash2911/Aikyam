@@ -89,8 +89,7 @@ No Poverty               | Zero Hunger             |  Reduced Inequalities |  Re
 
 <!-- ABOUT ICARUS -->
 ## The Story of Aikyam
-Write How we choose the name Aikyam
-
+While we were brainstorming for finding a memorable name for our App, We thought of using something that represents the core values of the App ie connection and collaboration, that is when we stumbled upon 'Aikyam' -a Sanskrit word that translates to "oneness" or "unity". This name perfectly captured our app's mission to bring together individuals and NGOs to work towards a common goal of promoting social causes and making a positive impact on communities.
 
 ## Firebase
 
