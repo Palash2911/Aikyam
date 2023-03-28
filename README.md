@@ -82,9 +82,24 @@ The target under this goal is to "Enhance international support for implementing
 our app is addressing this target by providing a platform that enables NGOs and individuals to connect and collaborate more efficiently, which can lead to better implementation of sustainable development goals. The app also promotes a global partnership for sustainable development by facilitating communication and collaboration between NGOs and volunteers from different parts of the world.
 In addition, our app is also contributing to UN's Sustainable Development Goal 1, which is to "End poverty in all its forms everywhere." By providing a platform for NGOs to connect with volunteers, the app is helping to address social issues and promote volunteerism, which can contribute to reducing poverty and improving the overall well-being of society.
 
-No Poverty               | Zero Hunger             |  Reduced Inequalities |  Responsible consumption and production                |  Climate action
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://developers.google.com/community/images/gdsc-solution-challenge/goal-01_480.png?raw=true)|![](https://developers.google.com/community/images/gdsc-solution-challenge/goal-02_480.png?raw=true)|![](https://developers.google.com/community/images/gdsc-solution-challenge/goal-10_480.png?raw=true)|![](https://developers.google.com/community/images/gdsc-solution-challenge/goal-13_480.png?raw=true)|![](https://developers.google.com/community/images/gdsc-solution-challenge/goal-12_480.png?raw=true)|
+<table>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332340-ab9bd94b-90ba-4ada-81ff-46178ae2ee34.png" alt="image1" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332502-60aa94b4-aa59-4524-b05d-24cdafd09f6b.png" alt="image2" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332596-93b5fd76-3e4d-4a34-93ad-867f1ad5cb46.png" alt="image3" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332548-9bd2a639-672b-4af2-9014-34b8b31840cb.png" alt="image4" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332703-4aee4335-e520-4661-afee-c8bb52aec9d8.png" alt="image5" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332788-a96a68a6-5b61-4d6e-8bce-0d55b676c34f.png" alt="image6" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332835-3bd65247-a6fa-44c9-9330-24d6afb1e199.png" alt="image7" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332868-ebb2f600-3ad6-4962-b584-33f57d5bb961.png" alt="image8" width="200"></td>
+    <td><img src="https://user-images.githubusercontent.com/47987136/228332913-bf683759-3721-423f-b70a-a214bd746351.png" alt="image9" width="200"></td>
+  </tr>
+</table>
+
 
 
 <!-- ABOUT ICARUS -->
