@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:aikyam/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Aikyam Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
 
