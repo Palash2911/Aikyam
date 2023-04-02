@@ -62,7 +62,7 @@ was clumsy and unclear
 In the 2nd version we did a bit of UI Fixes and hence made the user experience smooth and hassle free.
 
 ## Download | Demo
-[<img alt="aikyam" width="200px" src="https://user-images.githubusercontent.com/47987136/228916924-eb168092-9f50-466f-be78-02ccc685e919.png" />](https://drive.google.com/drive/folders/1lkqBA2I1dGgTEYD8q54ewxZvEQmHNFsZ)      [<img alt="aikyam" width="200px" src="https://user-images.githubusercontent.com/47987136/228916936-28b63fc0-62a7-4e33-a64f-9dcd972736c6.png" />](https://youtu.be/t9YWiTdG624)
+[<img alt="aikyam" width="200px" src="https://user-images.githubusercontent.com/47987136/228916924-eb168092-9f50-466f-be78-02ccc685e919.png" />](https://drive.google.com/drive/folders/1lkqBA2I1dGgTEYD8q54ewxZvEQmHNFsZ)           [<img alt="aikyam" width="200px" src="https://user-images.githubusercontent.com/47987136/228916936-28b63fc0-62a7-4e33-a64f-9dcd972736c6.png" />](https://youtu.be/t9YWiTdG624)
 
 
 
