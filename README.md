@@ -105,7 +105,7 @@ While we were brainstorming for finding a memorable name for our App, We thought
 <table>
 		<tr>
 			<td align="center"><img src="https://user-images.githubusercontent.com/47987136/228346608-f897221d-3b49-44a5-b92d-ded04b3756da.jpeg"  width=100px;"><br /><sub><b>Dip Hire</b></sub><br/><a href="https://github.com/DipHire">👻💻🥴</a></td>
-		   <td align="center"><img src="https://user-images.githubusercontent.com/47987136/228345750-46f8ab4e-5533-4e7a-9667-137153e86718.jpg"  width=100px;"><br /><sub><b>Palash Rambhia</b></sub><br/><a href="https://github.com/palash2911">👩🏻‍💻🎯💻</a></td>
+		   <td align="center"><img src="https://user-images.githubusercontent.com/80753307/229345927-27f65378-27b7-4667-9c55-64e89c3ede5b.jpg"  width=100px;"><br /><sub><b>Palash Rambhia</b></sub><br/><a href="https://github.com/palash2911">👩🏻‍💻🎯💻</a></td>
 			<td align="center"><img src="https://user-images.githubusercontent.com/47987136/228345760-dffaf8e4-ab87-47f5-8b37-a27af570ea73.jpg"  width=100px;"><br /><sub><b>Sakshi Thombre</b></sub><br/><a href="https://github.com/Sakshy18">🖋🎨🦄</a></td>					
 		</tr>
 		
