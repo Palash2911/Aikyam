@@ -351,49 +351,6 @@ class _NgoAddpostState extends State<NgoAddpost> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.next,
-                                  controller: _dateController,
-                                  decoration: InputDecoration(
-                                    hintText: "Date of drive",
-                                    hintStyle: kTextPopR14,
-                                    icon: const Icon(
-                                        Icons.calendar_today_rounded),
-                                    filled: true,
-                                    fillColor: Colors.green.shade100,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Date Not Set !';
-                                    }
-                                    return null;
-                                  },
-                                  readOnly: true,
-                                  onTap: () async {
-                                    DateTime? pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1950),
-                                        lastDate: DateTime(2024));
-                                    if (pickedDate != null) {
-                                      String formattedDate =
-                                          DateFormat.yMMMMd('en_US')
-                                              .format(pickedDate);
-                                      setState(() {
-                                        _dateController.text = formattedDate;
-                                      });
-                                    } else {}
-                                  },
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: TextFormField(
                                   textInputAction: TextInputAction.next,

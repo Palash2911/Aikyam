@@ -56,7 +56,6 @@ class _NHomeScreenState extends State<NHomeScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          brightness: Brightness.dark,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           toolbarHeight: 85,
